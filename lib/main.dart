@@ -1,11 +1,11 @@
-import 'package:docusense_ai/screens/landing_screen.dart';
+// In main.dart or wherever you setup providers
+import 'package:docusense_ai/app.dart';
+import 'package:docusense_ai/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:docusense_ai/providers/auth_state.dart';
-import 'package:docusense_ai/providers/file_state.dart';
-//import 'package:docusense_ai/providers/quiz_state.dart';
+import 'providers/pdf_provider.dart';
+import 'providers/file_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,22 +20,25 @@ class SecureVault extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthState()),
-        ChangeNotifierProvider(create: (_) => FileState()),
-        //ChangeNotifierProvider(create: (_) => QuizState()),
+        ChangeNotifierProvider(create: (_) => FileProvider()),
+        ChangeNotifierProxyProvider<FileProvider, PdfProvider>(
+          create: (context) => PdfProvider(fileProvider: FileProvider()),
+          update: (context, fileProvider, pdfProvider) =>
+              PdfProvider(fileProvider: fileProvider)..setContext(context),
+        ),
       ],
       child: MaterialApp(
-        title: 'Smart Document Assistant',
-        theme: ThemeData(
-          primaryColor: const Color(0xFF1a73e8),
-          primaryColorDark: const Color(0xFF0d47a1),
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            secondary: const Color(0xFF4285f4),
-          ),
-          fontFamily: 'Segoe UI',
-        ),
-        home: const LandingScreen(),
+        title: 'ChatPDF',
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: const Color(0xFF8A2BE2),
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: const Color(0xFF8A2BE2),
+            secondary: const Color(0xFF6A0DAD),
+          ),
+          useMaterial3: true,
+        ),
+        home: const App(),
       ),
     );
   }

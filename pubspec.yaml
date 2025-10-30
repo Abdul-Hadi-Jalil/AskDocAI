@@ -45,6 +45,8 @@ dependencies:
   google_generative_ai: ^0.4.7
   google_sign_in: ^6.2.1
   provider: ^6.1.5+1
+  flutter_localization: ^0.3.3
+  simple_animations: ^5.2.0
 
 dev_dependencies:
   flutter_test:

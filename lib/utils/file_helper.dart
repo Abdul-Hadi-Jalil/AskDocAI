@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:doc_text_extractor/doc_text_extractor.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-import 'package:docusense_ai/providers/file_state.dart';
 
 class FileHelper {
   // this function will allow user to select a file from device and extract the text from it
@@ -39,7 +37,7 @@ class FileHelper {
 
     if (content != null && content.isNotEmpty) {
       // Update FileState using Provider
-      context.read<FileState>().setFile(file.name, content);
+      // context.read<FileState>().setFile(file.name, content);
     }
 
     return content;
