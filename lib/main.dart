@@ -1,6 +1,7 @@
 // In main.dart or wherever you setup providers
 import 'package:docusense_ai/app.dart';
 import 'package:docusense_ai/firebase_options.dart';
+import 'package:docusense_ai/providers/summary_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ void main() async {
   runApp(const SecureVault());
 }
 
+// In main.dart - update MultiProvider
 class SecureVault extends StatelessWidget {
   const SecureVault({super.key});
 
@@ -25,6 +27,11 @@ class SecureVault extends StatelessWidget {
           create: (context) => PdfProvider(fileProvider: FileProvider()),
           update: (context, fileProvider, pdfProvider) =>
               PdfProvider(fileProvider: fileProvider)..setContext(context),
+        ),
+        ChangeNotifierProxyProvider<FileProvider, SummaryProvider>(
+          create: (context) => SummaryProvider(fileProvider: FileProvider()),
+          update: (context, fileProvider, summaryProvider) =>
+              SummaryProvider(fileProvider: fileProvider),
         ),
       ],
       child: MaterialApp(

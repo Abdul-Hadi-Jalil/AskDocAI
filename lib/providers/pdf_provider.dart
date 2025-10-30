@@ -1,5 +1,6 @@
 import 'package:docusense_ai/providers/file_provider.dart';
 import 'package:docusense_ai/utils/file_helper.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import '../models/app_state.dart';
 
@@ -35,42 +36,55 @@ class PdfProvider extends ChangeNotifier {
   }
 
   // Updated method that works with your existing FileHelper
+  // In PdfProvider - update the selectAndUploadFile method
   Future<void> selectAndUploadFile() async {
-    //if (_context == null) return;
+    if (_context == null) return;
 
     try {
-      final content = await FileHelper.pickAndReadFile(_context!);
+      // Use FilePicker to get the actual file with metadata
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'txt', 'doc', 'docx', 'md'],
+      );
 
-      if (content != null && content.isNotEmpty) {
-        // FileHelper doesn't return the file name, so we'll use a placeholder
-        // You can modify this later if you update FileHelper
-        _fileProvider.setFile(
-          'uploaded_document.pdf', // Default name
-          content,
-          path: 'local_file',
-        );
+      if (result != null && result.files.single.path != null) {
+        PlatformFile file = result.files.first;
 
-        // Show success message
-        if (_context != null && _context!.mounted) {
-          ScaffoldMessenger.of(_context!).showSnackBar(
-            const SnackBar(
-              content: Text('File loaded successfully!'),
-              backgroundColor: Colors.green,
-            ),
+        // Extract text content using your existing FileHelper
+        final content = await FileHelper.pickAndReadFile(_context!);
+
+        if (content != null && content.isNotEmpty) {
+          // Set file with real metadata
+          _fileProvider.setFile(
+            file.name, // Real file name
+            content,
+            path: file.path,
+            size: file.size, // Real file size in bytes
+            platformFile: file, // Store the platform file
           );
+
+          // Show success message
+          if (_context != null && _context!.mounted) {
+            ScaffoldMessenger.of(_context!).showSnackBar(
+              SnackBar(
+                content: Text('${file.name} loaded successfully!'),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
+        } else if (content == null) {
+          // User canceled or error reading
+          if (_context != null && _context!.mounted) {
+            ScaffoldMessenger.of(_context!).showSnackBar(
+              const SnackBar(content: Text('Could not read file content')),
+            );
+          }
         }
-      } else if (content == null) {
-        // User canceled
+      } else {
+        // User canceled file selection
         if (_context != null && _context!.mounted) {
           ScaffoldMessenger.of(_context!).showSnackBar(
             const SnackBar(content: Text('File selection canceled')),
-          );
-        }
-      } else {
-        // Empty content
-        if (_context != null && _context!.mounted) {
-          ScaffoldMessenger.of(_context!).showSnackBar(
-            const SnackBar(content: Text('Could not read file content')),
           );
         }
       }
