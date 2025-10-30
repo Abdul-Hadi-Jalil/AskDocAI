@@ -24,7 +24,6 @@ class MCQWidget extends StatefulWidget {
 
 class _MCQWidgetState extends State<MCQWidget> {
   bool _showHint = false;
-  final bool _showExplanation = false;
 
   @override
   Widget build(BuildContext context) {

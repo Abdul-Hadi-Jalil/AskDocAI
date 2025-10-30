@@ -1,8 +1,11 @@
 // screens/summary_screen.dart
+import 'package:docusense_ai/models/app_state.dart';
 import 'package:docusense_ai/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/pdf_provider.dart';
+import '../providers/file_provider.dart';
+import '../providers/summary_provider.dart';
 import '../widgets/app_bar.dart';
 
 class SummaryScreen extends StatefulWidget {
@@ -13,32 +16,51 @@ class SummaryScreen extends StatefulWidget {
 }
 
 class _SummaryScreenState extends State<SummaryScreen> {
-  bool _isLoading = false;
+  @override
+  void initState() {
+    super.initState();
+    // Auto-generate summary when screen loads if file exists
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final fileProvider = Provider.of<FileProvider>(context, listen: false);
+      final summaryProvider = Provider.of<SummaryProvider>(
+        context,
+        listen: false,
+      );
+
+      if (fileProvider.hasFile && summaryProvider.summary == null) {
+        summaryProvider.generateSummary();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final pdfProvider = Provider.of<PdfProvider>(context);
-    final fileName = pdfProvider.uploadedFileName ?? 'document.pdf';
+    final fileProvider = Provider.of<FileProvider>(context);
+    final summaryProvider = Provider.of<SummaryProvider>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const CustomAppBar(), // Use the shared CustomAppBar
+      appBar: const CustomAppBar(),
       body: Column(
         children: [
-          // File Header only (remove the custom app bar from here)
-          _buildFileHeader(fileName, pdfProvider),
+          // File Header
+          _buildFileHeader(fileProvider),
           // Summary Content
           Expanded(
-            child: _isLoading
+            child: summaryProvider.isLoading
                 ? _buildLoadingIndicator()
-                : _buildSummaryContent(fileName),
+                : summaryProvider.error != null
+                ? _buildErrorState(summaryProvider.error!, summaryProvider)
+                : summaryProvider.summary != null
+                ? _buildSummaryContent(summaryProvider.summary!, fileProvider)
+                : _buildEmptyState(fileProvider, summaryProvider),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildFileHeader(String fileName, PdfProvider pdfProvider) {
+  Widget _buildFileHeader(FileProvider fileProvider) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       color: AppConstants.lightPurple,
@@ -73,16 +95,18 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    fileName,
+                    fileProvider.fileName ?? 'No file uploaded',
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: AppConstants.textColor,
                     ),
                   ),
-                  const Text(
-                    '2.4 MB • 24 pages',
-                    style: TextStyle(
+                  Text(
+                    fileProvider.hasFile
+                        ? fileProvider.formattedFileSize
+                        : 'Upload a file to generate summary',
+                    style: const TextStyle(
                       fontSize: 12,
                       color: AppConstants.subtitleColor,
                     ),
@@ -92,64 +116,210 @@ class _SummaryScreenState extends State<SummaryScreen> {
             ],
           ),
           // File Actions
-          Row(
-            children: [
-              IconButton(
-                onPressed: _changeFile,
-                icon: const Icon(
-                  Icons.swap_horiz,
-                  color: AppConstants.primaryColor,
-                  size: 20,
+          if (fileProvider.hasFile)
+            Row(
+              children: [
+                IconButton(
+                  onPressed: _changeFile,
+                  icon: const Icon(
+                    Icons.swap_horiz,
+                    color: AppConstants.primaryColor,
+                    size: 20,
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: _showFileInfo,
-                icon: const Icon(
-                  Icons.info_outline,
-                  color: AppConstants.primaryColor,
-                  size: 20,
+                IconButton(
+                  onPressed: () => _showFileInfo(fileProvider),
+                  icon: const Icon(
+                    Icons.info_outline,
+                    color: AppConstants.primaryColor,
+                    size: 20,
+                  ),
                 ),
+              ],
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 40,
+            height: 40,
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                AppConstants.primaryColor,
               ),
-            ],
+              strokeWidth: 3,
+            ),
+          ),
+          SizedBox(height: 16),
+          Text(
+            'Analyzing document and generating summary...',
+            style: TextStyle(color: AppConstants.subtitleColor, fontSize: 16),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'This may take a few moments',
+            style: TextStyle(color: AppConstants.subtitleColor, fontSize: 12),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSummaryContent(String fileName) {
+  Widget _buildErrorState(String error, SummaryProvider summaryProvider) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error_outline, color: Colors.red, size: 48),
+            const SizedBox(height: 16),
+            Text(
+              'Failed to generate summary',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: AppConstants.textColor,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              error,
+              style: TextStyle(color: AppConstants.subtitleColor, fontSize: 14),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: summaryProvider.generateSummary,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppConstants.primaryColor,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Try Again'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(
+    FileProvider fileProvider,
+    SummaryProvider summaryProvider,
+  ) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.description_outlined,
+              color: AppConstants.primaryColor,
+              size: 64,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              fileProvider.hasFile
+                  ? 'Generate Summary'
+                  : 'No Document Uploaded',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: AppConstants.textColor,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              fileProvider.hasFile
+                  ? 'Tap below to analyze your document and generate a comprehensive summary'
+                  : 'Upload a document first to generate an AI-powered summary',
+              style: TextStyle(color: AppConstants.subtitleColor, fontSize: 14),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            if (fileProvider.hasFile)
+              ElevatedButton(
+                onPressed: summaryProvider.generateSummary,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppConstants.primaryColor,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 12,
+                  ),
+                ),
+                child: const Text('Generate Summary'),
+              )
+            else
+              ElevatedButton(
+                onPressed: _navigateToHome,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppConstants.primaryColor,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 12,
+                  ),
+                ),
+                child: const Text('Upload Document'),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSummaryContent(String summary, FileProvider fileProvider) {
+    final parsedSections = _parseSummarySections(summary);
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
           // Summary Header
-          _buildSummaryHeader(),
+          _buildSummaryHeader(fileProvider.fileName ?? 'Document'),
           const SizedBox(height: 25),
-          // Stats Cards
-          _buildStatsCards(),
+
+          // Executive Summary Section
+          if (parsedSections['executive'] != null)
+            _buildSummarySection(
+              icon: Icons.description,
+              title: 'Executive Summary',
+              content: parsedSections['executive']!,
+            ),
+
+          const SizedBox(height: 20),
+
+          // Key Findings Section
+          if (parsedSections['findings'] != null)
+            _buildKeyFindingsSection(parsedSections['findings']!),
+
+          const SizedBox(height: 20),
+
+          // Main Topics Section
+          if (parsedSections['topics'] != null)
+            _buildMainTopicsSection(parsedSections['topics']!),
+
+          const SizedBox(height: 20),
+
+          // Conclusions Section
+          if (parsedSections['conclusions'] != null)
+            _buildSummarySection(
+              icon: Icons.lightbulb_outline,
+              title: 'Conclusions & Recommendations',
+              content: parsedSections['conclusions']!,
+            ),
+
           const SizedBox(height: 25),
-          // Executive Summary
-          _buildSummarySection(
-            icon: Icons.description,
-            title: 'Executive Summary',
-            content:
-                'This document explores the transformative impact of artificial intelligence on modern education systems. It examines how AI technologies are reshaping teaching methodologies, student assessment, and administrative processes in educational institutions worldwide.',
-          ),
-          const SizedBox(height: 20),
-          // Key Findings
-          _buildKeyFindingsSection(),
-          const SizedBox(height: 20),
-          // Main Topics
-          _buildMainTopicsSection(),
-          const SizedBox(height: 20),
-          // Recommendations
-          _buildSummarySection(
-            icon: Icons.lightbulb_outline,
-            title: 'Recommendations',
-            content:
-                'The document recommends a phased approach to AI implementation, starting with pilot programs. It emphasizes teacher training and developing clear ethical guidelines before full-scale implementation.',
-          ),
-          const SizedBox(height: 25),
+
           // Action Buttons
           _buildActionButtons(),
           const SizedBox(height: 20),
@@ -158,8 +328,58 @@ class _SummaryScreenState extends State<SummaryScreen> {
     );
   }
 
-  Widget _buildSummaryHeader() {
-    return const Column(
+  Map<String, String> _parseSummarySections(String summary) {
+    final sections = <String, String>{};
+
+    try {
+      // Simple parsing logic - you can enhance this based on your actual response format
+      final lines = summary.split('\n');
+      String currentSection = '';
+      StringBuffer currentContent = StringBuffer();
+
+      for (final line in lines) {
+        if (line.contains('EXECUTIVE SUMMARY:')) {
+          _saveSection(sections, currentSection, currentContent);
+          currentSection = 'executive';
+          currentContent = StringBuffer();
+        } else if (line.contains('KEY FINDINGS:')) {
+          _saveSection(sections, currentSection, currentContent);
+          currentSection = 'findings';
+          currentContent = StringBuffer();
+        } else if (line.contains('MAIN TOPICS COVERED:')) {
+          _saveSection(sections, currentSection, currentContent);
+          currentSection = 'topics';
+          currentContent = StringBuffer();
+        } else if (line.contains('CONCLUSIONS & RECOMMENDATIONS:')) {
+          _saveSection(sections, currentSection, currentContent);
+          currentSection = 'conclusions';
+          currentContent = StringBuffer();
+        } else if (currentSection.isNotEmpty) {
+          currentContent.writeln(line);
+        }
+      }
+
+      _saveSection(sections, currentSection, currentContent);
+    } catch (e) {
+      // If parsing fails, show the entire summary in executive section
+      sections['executive'] = summary;
+    }
+
+    return sections;
+  }
+
+  void _saveSection(
+    Map<String, String> sections,
+    String section,
+    StringBuffer content,
+  ) {
+    if (section.isNotEmpty && content.toString().trim().isNotEmpty) {
+      sections[section] = content.toString().trim();
+    }
+  }
+
+  Widget _buildSummaryHeader(String fileName) {
+    return Column(
       children: [
         Text(
           'Document Summary',
@@ -169,28 +389,10 @@ class _SummaryScreenState extends State<SummaryScreen> {
             color: AppConstants.textColor,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
-          'Key insights from your document',
+          'AI-generated insights from "$fileName"',
           style: TextStyle(fontSize: 14, color: AppConstants.subtitleColor),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildStatsCards() {
-    return const Row(
-      children: [
-        Expanded(
-          child: _StatCard(value: '24', label: 'Pages'),
-        ),
-        SizedBox(width: 10),
-        Expanded(
-          child: _StatCard(value: '5', label: 'Key Topics'),
-        ),
-        SizedBox(width: 10),
-        Expanded(
-          child: _StatCard(value: '12', label: 'Main Points'),
         ),
       ],
     );
@@ -232,7 +434,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
               const SizedBox(width: 12),
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                   color: AppConstants.textColor,
@@ -244,7 +446,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
           // Content
           Text(
             content,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               color: AppConstants.subtitleColor,
               height: 1.6,
@@ -255,7 +457,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
     );
   }
 
-  Widget _buildKeyFindingsSection() {
+  Widget _buildKeyFindingsSection(String findingsContent) {
+    final points = _extractBulletPoints(findingsContent);
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -301,28 +505,15 @@ class _SummaryScreenState extends State<SummaryScreen> {
           ),
           const SizedBox(height: 15),
           // Key Points
-          const _KeyPoint(
-            text:
-                'AI-powered personalized learning increases student engagement by 47% compared to traditional methods',
-          ),
-          const _KeyPoint(
-            text:
-                'Automated assessment tools reduce teacher workload by 62% while improving feedback quality',
-          ),
-          const _KeyPoint(
-            text:
-                'Predictive analytics can identify at-risk students with 89% accuracy 6 weeks before traditional methods',
-          ),
-          const _KeyPoint(
-            text:
-                'Ethical concerns around data privacy remain the primary barrier to AI adoption in education',
-          ),
+          ...points.map((point) => _KeyPoint(text: point)).toList(),
         ],
       ),
     );
   }
 
-  Widget _buildMainTopicsSection() {
+  Widget _buildMainTopicsSection(String topicsContent) {
+    final topics = _extractBulletPoints(topicsContent);
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -368,42 +559,34 @@ class _SummaryScreenState extends State<SummaryScreen> {
           ),
           const SizedBox(height: 15),
           // Topics
-          const _TopicItem(
-            title: 'Personalized Learning',
-            description:
-                'Adaptive algorithms that tailor educational content to individual student needs',
-          ),
-          const _TopicItem(
-            title: 'Intelligent Tutoring',
-            description:
-                'AI systems that provide real-time feedback and guidance to students',
-          ),
-          const _TopicItem(
-            title: 'Administrative Automation',
-            description:
-                'Streamlining administrative tasks through AI-powered systems',
-          ),
-          const _TopicItem(
-            title: 'Data Analytics',
-            description:
-                'Using student data to improve educational outcomes and institutional efficiency',
-          ),
-          const _TopicItem(
-            title: 'Ethical Considerations',
-            description:
-                'Addressing privacy, bias, and accessibility concerns in AI implementation',
-          ),
+          ...topics.map((topic) => _TopicItem(title: topic)).toList(),
         ],
       ),
     );
   }
 
+  List<String> _extractBulletPoints(String content) {
+    return content
+        .split('\n')
+        .where(
+          (line) => line.trim().startsWith('-') || line.trim().startsWith('•'),
+        )
+        .map((line) => line.replaceFirst(RegExp(r'^[-\•]\s*'), '').trim())
+        .where((point) => point.isNotEmpty)
+        .toList();
+  }
+
   Widget _buildActionButtons() {
+    final summaryProvider = Provider.of<SummaryProvider>(
+      context,
+      listen: false,
+    );
+
     return Row(
       children: [
         Expanded(
           child: OutlinedButton(
-            onPressed: _regenerateSummary,
+            onPressed: summaryProvider.generateSummary,
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 12),
               shape: RoundedRectangleBorder(
@@ -460,48 +643,21 @@ class _SummaryScreenState extends State<SummaryScreen> {
     );
   }
 
-  Widget _buildLoadingIndicator() {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 30,
-            height: 30,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                AppConstants.primaryColor,
-              ),
-              strokeWidth: 3,
-            ),
-          ),
-          SizedBox(height: 16),
-          Text(
-            'Generating summary...',
-            style: TextStyle(color: AppConstants.subtitleColor),
-          ),
-        ],
-      ),
+  void _changeFile() {
+    final pdfProvider = Provider.of<PdfProvider>(context, listen: false);
+    final summaryProvider = Provider.of<SummaryProvider>(
+      context,
+      listen: false,
     );
+
+    pdfProvider.selectAndUploadFile().then((_) {
+      summaryProvider.clearSummary();
+    });
   }
 
-  void _regenerateSummary() {
-    setState(() {
-      _isLoading = true;
-    });
-
-    // Simulate API call delay
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Summary regenerated with latest AI analysis'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-    });
+  void _navigateToHome() {
+    final pdfProvider = Provider.of<PdfProvider>(context, listen: false);
+    pdfProvider.changeTab(BottomNavItem.home);
   }
 
   void _shareSummary() {
@@ -513,29 +669,20 @@ class _SummaryScreenState extends State<SummaryScreen> {
     );
   }
 
-  void _changeFile() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Change file functionality would open here'),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
-
-  void _showFileInfo() {
+  void _showFileInfo(FileProvider fileProvider) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('File Information'),
-        content: const Column(
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Name: research_paper.pdf'),
-            Text('Size: 2.4 MB'),
-            Text('Pages: 24'),
-            Text('Last Modified: 2 days ago'),
-            Text('Word Count: 12,450'),
+            Text('Name: ${fileProvider.fileName ?? 'Unknown'}'),
+            Text('Size: ${fileProvider.formattedFileSize}'),
+            Text(
+              'Type: ${fileProvider.fileName?.split('.').last ?? 'Unknown'}',
+            ),
           ],
         ),
         actions: [
@@ -549,53 +696,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
   }
 }
 
-// Stat Card Widget
-class _StatCard extends StatelessWidget {
-  final String value;
-  final String label;
-
-  const _StatCard({required this.value, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: AppConstants.primaryColor,
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppConstants.subtitleColor,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// Key Point Widget
+// _KeyPoint widget
 class _KeyPoint extends StatelessWidget {
   final String text;
 
@@ -633,12 +734,11 @@ class _KeyPoint extends StatelessWidget {
   }
 }
 
-// Topic Item Widget
+// _TopicItem widget
 class _TopicItem extends StatelessWidget {
   final String title;
-  final String description;
 
-  const _TopicItem({required this.title, required this.description});
+  const _TopicItem({required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -657,27 +757,13 @@ class _TopicItem extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppConstants.textColor,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  description,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: AppConstants.subtitleColor,
-                    height: 1.4,
-                  ),
-                ),
-              ],
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppConstants.subtitleColor,
+                height: 1.4,
+              ),
             ),
           ),
         ],

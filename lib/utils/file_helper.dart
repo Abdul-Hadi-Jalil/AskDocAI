@@ -5,8 +5,8 @@ import 'package:doc_text_extractor/doc_text_extractor.dart';
 import 'package:flutter/widgets.dart';
 
 class FileHelper {
-  // this function will allow user to select a file from device and extract the text from it
-  static Future<String?> pickAndReadFile(BuildContext context) async {
+  // This function returns both file content and metadata
+  static Future<Map<String, dynamic>?> pickAndReadFileWithInfo() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowedExtensions: ['txt', 'docx', 'doc', 'pdf', 'md'],
       type: FileType.custom,
@@ -19,32 +19,56 @@ class FileHelper {
     final file = result.files.first;
     String? content;
 
+    // Extract text content based on file type
     if (file.extension == "txt" && file.bytes != null) {
       content = utf8.decode(file.bytes!);
     } else if (file.extension == "pdf" && file.path != null) {
       try {
         final extractor = TextExtractor();
-        final result = await extractor.extractText(file.path!, isUrl: false);
-        content = result.text;
+        final extractResult = await extractor.extractText(
+          file.path!,
+          isUrl: false,
+        );
+        content = extractResult.text;
       } catch (e) {
         print('Failed to read PDF: $e');
+        return null;
       }
-    } else if (file.extension == "docx" || file.extension == "doc") {
-      final extractor = TextExtractor();
-      final result = await extractor.extractText(file.path!, isUrl: false);
-      content = result.text;
+    } else if ((file.extension == "docx" || file.extension == "doc") &&
+        file.path != null) {
+      try {
+        final extractor = TextExtractor();
+        final extractResult = await extractor.extractText(
+          file.path!,
+          isUrl: false,
+        );
+        content = extractResult.text;
+      } catch (e) {
+        print('Failed to read document: $e');
+        return null;
+      }
     }
 
     if (content != null && content.isNotEmpty) {
-      // Update FileState using Provider
-      // context.read<FileState>().setFile(file.name, content);
+      return {
+        'content': content,
+        'name': file.name,
+        'size': file.size,
+        'path': file.path,
+        'extension': file.extension,
+      };
     }
 
-    return content;
+    return null;
+  }
+
+  // Keep the original method for backward compatibility (but it won't be used)
+  static Future<String?> pickAndReadFile(BuildContext context) async {
+    final result = await pickAndReadFileWithInfo();
+    return result?['content'];
   }
 
   // Function to create chunks of the file content
-  // Function to create chunks of ~100 words ending at full stops
   static List<String> createChunks(String content, {int wordsPerChunk = 100}) {
     if (content.trim().isEmpty) return [];
 

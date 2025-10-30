@@ -1,13 +1,13 @@
+// providers/pdf_provider.dart
 import 'package:docusense_ai/providers/file_provider.dart';
 import 'package:docusense_ai/utils/file_helper.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import '../models/app_state.dart';
 
 class PdfProvider extends ChangeNotifier {
   AppState _state = const AppState();
   BuildContext? _context;
-  final FileProvider _fileProvider; // Add file provider dependency
+  final FileProvider _fileProvider;
 
   PdfProvider({required FileProvider fileProvider})
     : _fileProvider = fileProvider;
@@ -35,56 +35,53 @@ class PdfProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Updated method that works with your existing FileHelper
-  // In PdfProvider - update the selectAndUploadFile method
   Future<void> selectAndUploadFile() async {
     if (_context == null) return;
 
     try {
-      // Use FilePicker to get the actual file with metadata
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['pdf', 'txt', 'doc', 'docx', 'md'],
-      );
+      // Use the method that returns both content and file info
+      final fileInfo = await FileHelper.pickAndReadFileWithInfo();
 
-      if (result != null && result.files.single.path != null) {
-        PlatformFile file = result.files.first;
+      if (fileInfo != null && fileInfo['content'] != null) {
+        // Extract values with proper type handling
+        final String fileName = fileInfo['name']?.toString() ?? 'document.pdf';
+        final String fileContent = fileInfo['content']?.toString() ?? '';
+        final String? filePath = fileInfo['path']?.toString();
+        final int? fileSize = fileInfo['size'] is int
+            ? fileInfo['size'] as int
+            : (fileInfo['size'] != null
+                  ? int.tryParse(fileInfo['size'].toString())
+                  : null);
 
-        // Extract text content using your existing FileHelper
-        final content = await FileHelper.pickAndReadFile(_context!);
+        // Set file with real metadata
+        _fileProvider.setFile(
+          fileName, // Real file name
+          fileContent, // File content
+          path: filePath, // Real file path
+          size: fileSize, // Real file size in bytes
+        );
 
-        if (content != null && content.isNotEmpty) {
-          // Set file with real metadata
-          _fileProvider.setFile(
-            file.name, // Real file name
-            content,
-            path: file.path,
-            size: file.size, // Real file size in bytes
-            platformFile: file, // Store the platform file
+        // Show success message with real file name
+        if (_context != null && _context!.mounted) {
+          ScaffoldMessenger.of(_context!).showSnackBar(
+            SnackBar(
+              content: Text('$fileName loaded successfully!'),
+              backgroundColor: Colors.green,
+            ),
           );
-
-          // Show success message
-          if (_context != null && _context!.mounted) {
-            ScaffoldMessenger.of(_context!).showSnackBar(
-              SnackBar(
-                content: Text('${file.name} loaded successfully!'),
-                backgroundColor: Colors.green,
-              ),
-            );
-          }
-        } else if (content == null) {
-          // User canceled or error reading
-          if (_context != null && _context!.mounted) {
-            ScaffoldMessenger.of(_context!).showSnackBar(
-              const SnackBar(content: Text('Could not read file content')),
-            );
-          }
         }
-      } else {
-        // User canceled file selection
+      } else if (fileInfo == null) {
+        // User canceled
         if (_context != null && _context!.mounted) {
           ScaffoldMessenger.of(_context!).showSnackBar(
             const SnackBar(content: Text('File selection canceled')),
+          );
+        }
+      } else {
+        // Empty content or read error
+        if (_context != null && _context!.mounted) {
+          ScaffoldMessenger.of(_context!).showSnackBar(
+            const SnackBar(content: Text('Could not read file content')),
           );
         }
       }

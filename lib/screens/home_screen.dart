@@ -43,7 +43,6 @@ class _HomeContent extends StatelessWidget {
             const _WelcomeSection(),
             const SizedBox(height: 30),
             const UploadSection(),
-            // ChatPreview removed - navigation handles chat screen
           ],
         ),
       ),
