@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 class MCQ {
@@ -29,22 +28,30 @@ class MCQ {
 
   static List<MCQ> listFromJson(String jsonString) {
     try {
-      // Clean the response - remove markdown code blocks
+      // Clean the response - remove markdown code blocks and extra whitespace
       String cleanJson = jsonString.trim();
 
-      // Remove ```json and ``` markers
+      // Remove ```json and ``` markers if present
       if (cleanJson.startsWith('```json')) {
-        cleanJson = cleanJson.substring(7); // Remove ```json
+        cleanJson = cleanJson.substring(7);
+      } else if (cleanJson.startsWith('```')) {
+        cleanJson = cleanJson.substring(3);
       }
+
       if (cleanJson.endsWith('```')) {
-        cleanJson = cleanJson.substring(0, cleanJson.length - 3); // Remove ```
+        cleanJson = cleanJson.substring(0, cleanJson.length - 3);
       }
+
       cleanJson = cleanJson.trim();
 
       debugPrint('🧹 Cleaned JSON: $cleanJson');
 
       final data = jsonDecode(cleanJson);
       final List quizList = data['quiz'] ?? [];
+
+      if (quizList.isEmpty) {
+        throw Exception('No quiz questions found in response');
+      }
 
       debugPrint('📊 Found ${quizList.length} questions');
 

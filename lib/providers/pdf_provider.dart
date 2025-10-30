@@ -36,7 +36,7 @@ class PdfProvider extends ChangeNotifier {
 
   // Updated method that works with your existing FileHelper
   Future<void> selectAndUploadFile() async {
-    if (_context == null) return;
+    //if (_context == null) return;
 
     try {
       final content = await FileHelper.pickAndReadFile(_context!);
