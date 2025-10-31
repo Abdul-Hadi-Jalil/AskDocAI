@@ -505,7 +505,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
           ),
           const SizedBox(height: 15),
           // Key Points
-          ...points.map((point) => _KeyPoint(text: point)).toList(),
+          ...points.map((point) => _KeyPoint(text: point)),
         ],
       ),
     );
@@ -559,7 +559,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
           ),
           const SizedBox(height: 15),
           // Topics
-          ...topics.map((topic) => _TopicItem(title: topic)).toList(),
+          ...topics.map((topic) => _TopicItem(title: topic)),
         ],
       ),
     );

@@ -3,22 +3,18 @@ import 'package:docusense_ai/providers/file_provider.dart';
 import 'package:docusense_ai/utils/file_helper.dart';
 import 'package:flutter/material.dart';
 import '../models/app_state.dart';
+import "package:docusense_ai/main.dart";
 
 class PdfProvider extends ChangeNotifier {
   AppState _state = const AppState();
-  BuildContext? _context;
   final FileProvider _fileProvider;
+  bool _isProcessingFile = false;
 
   PdfProvider({required FileProvider fileProvider})
     : _fileProvider = fileProvider;
 
   AppState get state => _state;
-
-  void setContext(BuildContext context) {
-    _context = context;
-  }
-
-  BuildContext? get context => _context;
+  bool get isProcessingFile => _isProcessingFile;
 
   // Get file info from file provider
   String? get uploadedFileName => _fileProvider.fileName;
@@ -36,7 +32,9 @@ class PdfProvider extends ChangeNotifier {
   }
 
   Future<void> selectAndUploadFile() async {
-    if (_context == null) return;
+    if (_isProcessingFile) return;
+
+    _setState(isProcessingFile: true);
 
     try {
       // Use the method that returns both content and file info
@@ -61,41 +59,50 @@ class PdfProvider extends ChangeNotifier {
           size: fileSize, // Real file size in bytes
         );
 
-        // Show success message with real file name
-        if (_context != null && _context!.mounted) {
-          ScaffoldMessenger.of(_context!).showSnackBar(
-            SnackBar(
-              content: Text('$fileName loaded successfully!'),
-              backgroundColor: Colors.green,
-            ),
-          );
-        }
+        // Show success message using global key
+        scaffoldMessengerKey.currentState?.showSnackBar(
+          SnackBar(
+            content: Text('$fileName loaded successfully!'),
+            backgroundColor: Colors.green,
+            duration: const Duration(seconds: 3),
+          ),
+        );
       } else if (fileInfo == null) {
         // User canceled
-        if (_context != null && _context!.mounted) {
-          ScaffoldMessenger.of(_context!).showSnackBar(
-            const SnackBar(content: Text('File selection canceled')),
-          );
-        }
+        scaffoldMessengerKey.currentState?.showSnackBar(
+          const SnackBar(
+            content: Text('File selection canceled'),
+            duration: Duration(seconds: 2),
+          ),
+        );
       } else {
         // Empty content or read error
-        if (_context != null && _context!.mounted) {
-          ScaffoldMessenger.of(_context!).showSnackBar(
-            const SnackBar(content: Text('Could not read file content')),
-          );
-        }
+        scaffoldMessengerKey.currentState?.showSnackBar(
+          const SnackBar(
+            content: Text('Could not read file content'),
+            duration: Duration(seconds: 2),
+          ),
+        );
       }
     } catch (e) {
-      if (_context != null && _context!.mounted) {
-        ScaffoldMessenger.of(
-          _context!,
-        ).showSnackBar(SnackBar(content: Text('Error: ${e.toString()}')));
-      }
+      scaffoldMessengerKey.currentState?.showSnackBar(
+        SnackBar(
+          content: Text('Error: ${e.toString()}'),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    } finally {
+      _setState(isProcessingFile: false);
     }
   }
 
   void resetUpload() {
     _fileProvider.clearFile();
+    notifyListeners();
+  }
+
+  void _setState({bool? isProcessingFile}) {
+    if (isProcessingFile != null) _isProcessingFile = isProcessingFile;
     notifyListeners();
   }
 }

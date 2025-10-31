@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:doc_text_extractor/doc_text_extractor.dart';
-import 'package:flutter/widgets.dart';
 
 class FileHelper {
   // This function returns both file content and metadata
@@ -62,8 +60,8 @@ class FileHelper {
     return null;
   }
 
-  // Keep the original method for backward compatibility (but it won't be used)
-  static Future<String?> pickAndReadFile(BuildContext context) async {
+  // Updated method without context parameter
+  static Future<String?> pickAndReadFile() async {
     final result = await pickAndReadFileWithInfo();
     return result?['content'];
   }
