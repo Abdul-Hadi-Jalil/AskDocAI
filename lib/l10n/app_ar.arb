@@ -1,0 +1,20 @@
+{
+    "appTitle": "DocuSense AI",
+    "tagline": "مساعدك الذكي للمستندات",
+    "loadingApplication": "جاري تحميل التطبيق",
+    "pleaseUploadPdfFirst": "يرجى تحميل ملف PDF أولاً للبدء في الدردشة",
+    "home": "الرئيسية",
+    "chat": "الدردشة",
+    "quiz": "الاختبار",
+    "summary": "ملخص",
+    "signIn": "تسجيل الدخول",
+    "signOut": "تسجيل الخروج",
+    "uploadFile": "رفع ملف",
+    "startQuiz": "بدء الاختبار",
+    "next": "التالي",
+    "previous": "السابق",
+    "submit": "إرسال",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "copyright": "© 2025 DocuSense AI"
+}

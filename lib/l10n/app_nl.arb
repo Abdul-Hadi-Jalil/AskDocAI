@@ -1,0 +1,20 @@
+{
+    "appTitle": "DocuSense AI",
+    "tagline": "Uw AI-aangedreven Documentassistent",
+    "loadingApplication": "Applicatie laden",
+    "pleaseUploadPdfFirst": "Upload eerst een PDF om te chatten",
+    "home": "Home",
+    "chat": "Chat",
+    "quiz": "Quiz",
+    "summary": "Samenvatting",
+    "signIn": "Inloggen",
+    "signOut": "Uitloggen",
+    "uploadFile": "Bestand Uploaden",
+    "startQuiz": "Start Quiz",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "submit": "Indienen",
+    "loading": "Laden...",
+    "error": "Er is een fout opgetreden",
+    "copyright": "© 2025 DocuSense AI"
+}

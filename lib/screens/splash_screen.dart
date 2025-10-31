@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
-import 'package:docusense_ai/app.dart'; // Import your App class
+import 'package:docusense_ai/app.dart';
+import 'package:docusense_ai/app_localization.dart'; // Add this import
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -182,10 +183,10 @@ class _SplashScreenState extends State<SplashScreen>
                                   ),
                                 ),
                                 const SizedBox(height: 20),
-                                // App name
-                                const Text(
-                                  'DocuSense AI',
-                                  style: TextStyle(
+                                // App name - Localized
+                                Text(
+                                  AppLocalizations.of(context).appTitle,
+                                  style: const TextStyle(
                                     fontSize: 36,
                                     fontWeight: FontWeight.w800,
                                     color: Colors.white,
@@ -199,10 +200,10 @@ class _SplashScreenState extends State<SplashScreen>
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                // Tagline
-                                const Text(
-                                  'Your AI-Powered Document Assistant',
-                                  style: TextStyle(
+                                // Tagline - Localized
+                                Text(
+                                  AppLocalizations.of(context).tagline,
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white,
@@ -231,13 +232,15 @@ class _SplashScreenState extends State<SplashScreen>
                           // Progress bar
                           Column(
                             children: [
-                              // Progress info
+                              // Progress info - Localized
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Loading application',
+                                    AppLocalizations.of(
+                                      context,
+                                    ).loadingApplication,
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
@@ -298,9 +301,9 @@ class _SplashScreenState extends State<SplashScreen>
 
                           const Spacer(),
 
-                          // Footer
+                          // Footer - Localized
                           Text(
-                            '© 2025 DocuSense AI',
+                            AppLocalizations.of(context).copyright,
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.white.withOpacity(0.6),

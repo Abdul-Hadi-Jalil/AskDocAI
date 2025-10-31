@@ -1,0 +1,20 @@
+{
+    "appTitle": "DocuSense AI",
+    "tagline": "Tu Asistente de Documentos con IA",
+    "loadingApplication": "Cargando aplicación",
+    "pleaseUploadPdfFirst": "Por favor, sube un PDF primero para chatear",
+    "home": "Inicio",
+    "chat": "Chat",
+    "quiz": "Cuestionario",
+    "summary": "Resumen",
+    "signIn": "Iniciar Sesión",
+    "signOut": "Cerrar Sesión",
+    "uploadFile": "Subir Archivo",
+    "startQuiz": "Comenzar Quiz",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "copyright": "© 2025 DocuSense AI"
+}

@@ -1,0 +1,20 @@
+{
+    "appTitle": "DocuSense AI",
+    "tagline": "Votre Assistant Documentaire IA",
+    "loadingApplication": "Chargement de l'application",
+    "pleaseUploadPdfFirst": "Veuillez d'abord télécharger un PDF pour chatter",
+    "home": "Accueil",
+    "chat": "Chat",
+    "quiz": "Quiz",
+    "summary": "Résumé",
+    "signIn": "Se Connecter",
+    "signOut": "Se Déconnecter",
+    "uploadFile": "Télécharger Fichier",
+    "startQuiz": "Commencer le Quiz",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "submit": "Soumettre",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "copyright": "© 2025 DocuSense AI"
+}

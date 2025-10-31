@@ -1,0 +1,20 @@
+{
+    "appTitle": "DocuSense AI",
+    "tagline": "Ihr KI-gestützter Dokumentenassistent",
+    "loadingApplication": "Anwendung wird geladen",
+    "pleaseUploadPdfFirst": "Bitte laden Sie zuerst eine PDF hoch, um zu chatten",
+    "home": "Startseite",
+    "chat": "Chat",
+    "quiz": "Quiz",
+    "summary": "Zusammenfassung",
+    "signIn": "Anmelden",
+    "signOut": "Abmelden",
+    "uploadFile": "Datei Hochladen",
+    "startQuiz": "Quiz Starten",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "submit": "Einreichen",
+    "loading": "Lädt...",
+    "error": "Ein Fehler ist aufgetreten",
+    "copyright": "© 2025 DocuSense AI"
+}
