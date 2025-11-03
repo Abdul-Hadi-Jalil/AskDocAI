@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:docusense_ai/providers/language_provider.dart';
-import 'package:docusense_ai/app_localization.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});

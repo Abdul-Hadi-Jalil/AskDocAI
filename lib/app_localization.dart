@@ -87,6 +87,15 @@ class AppLocalizations {
       'regenerate': 'Regenerate',
       'shareSummary': 'Share Summary',
       'shareFunctionality': 'Share functionality would open here',
+
+      // New strings for features section
+      'whatYouCanDo': 'What You Can Do',
+      'chatDescription':
+          'Chat with your document and ask questions about its content',
+      'summaryDescription':
+          'Get a concise summary of the key points in your document',
+      'quizDescription':
+          'Test your knowledge with questions based on your document',
     },
     'es': {
       'appTitle': 'DocuSense AI',
@@ -165,6 +174,15 @@ class AppLocalizations {
           'No se generaron preguntas válidas para el cuestionario',
       'answerAllQuestions':
           'Por favor responde todas las %total preguntas. Has respondido %answered.',
+
+      // New strings for features section
+      'whatYouCanDo': 'Lo que puedes hacer',
+      'chatDescription':
+          'Habla con tu documento y haz preguntas sobre su contenido',
+      'summaryDescription':
+          'Obtén un resumen conciso de los puntos clave del documento',
+      'quizDescription':
+          'Pon a prueba tu conocimiento con preguntas basadas en el documento',
     },
     'fr': {
       'appTitle': 'DocuSense AI',
@@ -243,6 +261,15 @@ class AppLocalizations {
       'noValidQuizQuestions': 'Aucune question de quiz valide n\'a été générée',
       'answerAllQuestions':
           'Veuillez répondre à toutes les %total questions. Vous avez répondu à %answered.',
+
+      // New strings for features section
+      'whatYouCanDo': 'Ce que vous pouvez faire',
+      'chatDescription':
+          'Discutez avec votre document et posez des questions sur son contenu',
+      'summaryDescription':
+          'Obtenez un résumé concis des points clés du document',
+      'quizDescription':
+          'Testez vos connaissances avec des questions basées sur le document',
     },
     'de': {
       'appTitle': 'DocuSense AI',
@@ -319,6 +346,15 @@ class AppLocalizations {
       'noValidQuizQuestions': 'Es wurden keine gültigen Quizfragen generiert',
       'answerAllQuestions':
           'Bitte beantworten Sie alle %total Fragen. Sie haben %answered beantwortet.',
+
+      // New strings for features section
+      'whatYouCanDo': 'Was Sie tun können',
+      'chatDescription':
+          'Sprechen Sie mit Ihrem Dokument und stellen Sie Fragen zu seinem Inhalt',
+      'summaryDescription':
+          'Erhalten Sie eine prägnante Zusammenfassung der wichtigsten Punkte des Dokuments',
+      'quizDescription':
+          'Testen Sie Ihr Wissen mit Fragen basierend auf dem Dokument',
     },
     'nl': {
       'appTitle': 'DocuSense AI',
@@ -395,6 +431,13 @@ class AppLocalizations {
       'noValidQuizQuestions': 'Er zijn geen geldige quizvragen gegenereerd',
       'answerAllQuestions':
           'Beantwoord alle %total vragen. U heeft %answered beantwoord.',
+
+      // New strings for features section
+      'whatYouCanDo': 'Wat je kunt doen',
+      'chatDescription': 'Praat met je document en stel vragen over de inhoud',
+      'summaryDescription':
+          'Krijg een beknopte samenvatting van de belangrijkste punten in het document',
+      'quizDescription': 'Test je kennis met vragen gebaseerd op het document',
     },
     'ar': {
       'appTitle': 'DocuSense AI',
@@ -465,6 +508,12 @@ class AppLocalizations {
       'noValidQuizQuestions': 'لم يتم إنشاء أسئلة اختبار صالحة',
       'answerAllQuestions':
           'يرجى الإجابة على جميع الأسئلة %total. لقد أجبت على %answered.',
+
+      // New strings for features section
+      'whatYouCanDo': 'ما يمكنك القيام به',
+      'chatDescription': 'تحدث مع مستندك واطرح أسئلة حول محتواه',
+      'summaryDescription': 'احصل على ملخص موجز للنقاط الرئيسية في المستند',
+      'quizDescription': 'اختبر معرفتك بأسئلة مبنية على المستند',
     },
     'zh': {
       'appTitle': 'DocuSense AI',
@@ -534,6 +583,12 @@ class AppLocalizations {
       'failedToGenerateQuiz': '生成测验失败',
       'noValidQuizQuestions': '未生成有效的测验问题',
       'answerAllQuestions': '请回答所有%total个问题。您已回答了%answered个。',
+
+      // New strings for features section
+      'whatYouCanDo': '您可以做什么',
+      'chatDescription': '与您的文档聊天并就其内容提问',
+      'summaryDescription': '获取文档关键要点的简明摘要',
+      'quizDescription': '通过基于文档的问题测试您的知识',
     },
   };
 
@@ -748,6 +803,16 @@ class AppLocalizations {
       _localizedValues[locale.languageCode]!['noValidQuizQuestions']!;
   String get answerAllQuestions =>
       _localizedValues[locale.languageCode]!['answerAllQuestions']!;
+
+  // New getters for features section
+  String get whatYouCanDo =>
+      _localizedValues[locale.languageCode]!['whatYouCanDo']!;
+  String get chatDescription =>
+      _localizedValues[locale.languageCode]!['chatDescription']!;
+  String get summaryDescription =>
+      _localizedValues[locale.languageCode]!['summaryDescription']!;
+  String get quizDescription =>
+      _localizedValues[locale.languageCode]!['quizDescription']!;
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

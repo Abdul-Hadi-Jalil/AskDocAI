@@ -1,9 +1,10 @@
+import 'package:docusense_ai/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/pdf_provider.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/upload_section.dart';
-import '../app_localization.dart'; // Add this import
+import '../widgets/features_section.dart'; // Add this import
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -43,6 +44,8 @@ class _HomeContent extends StatelessWidget {
           children: [
             const _WelcomeSection(),
             const SizedBox(height: 30),
+            FeaturesSection(), // Add this line
+            const SizedBox(height: 30),
             const UploadSection(),
           ],
         ),
@@ -65,9 +68,9 @@ class _WelcomeSection extends StatelessWidget {
         Text(
           AppLocalizations.of(context).uploadAndChatDescription,
           style: const TextStyle(
-            fontSize: 16, 
-            color: Color(0xFF666666), 
-            height: 1.5
+            fontSize: 16,
+            color: Color(0xFF666666),
+            height: 1.5,
           ),
           textAlign: TextAlign.center,
         ),
@@ -77,14 +80,13 @@ class _WelcomeSection extends StatelessWidget {
 
   Widget _buildLocalizedHeading(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context);
-    
+
     // For languages that work well with the highlighted approach
     if (appLocalizations.locale.languageCode == 'en' ||
         appLocalizations.locale.languageCode == 'es' ||
         appLocalizations.locale.languageCode == 'fr' ||
         appLocalizations.locale.languageCode == 'de' ||
         appLocalizations.locale.languageCode == 'nl') {
-      
       return RichText(
         text: TextSpan(
           style: const TextStyle(
