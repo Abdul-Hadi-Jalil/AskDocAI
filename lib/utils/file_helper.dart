@@ -29,7 +29,6 @@ class FileHelper {
         );
         content = extractResult.text;
       } catch (e) {
-        print('Failed to read PDF: $e');
         return null;
       }
     } else if ((file.extension == "docx" || file.extension == "doc") &&

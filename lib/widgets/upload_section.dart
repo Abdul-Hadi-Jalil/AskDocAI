@@ -1,4 +1,3 @@
-// widgets/upload_section.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/pdf_provider.dart';
@@ -153,11 +152,24 @@ class _UploadSectionState extends State<UploadSection> {
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
+                if (fileProvider.fileSize != null) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    fileProvider.formattedFileSize,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppConstants.subtitleColor.withOpacity(0.7),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),
           IconButton(
-            onPressed: () => fileProvider.clearFile(),
+            onPressed: () {
+              fileProvider.clearFile();
+              fileProvider.clearSelection();
+            },
             icon: Icon(Icons.close, color: AppConstants.subtitleColor),
           ),
         ],

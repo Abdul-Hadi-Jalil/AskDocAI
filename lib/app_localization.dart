@@ -96,6 +96,7 @@ class AppLocalizations {
           'Get a concise summary of the key points in your document',
       'quizDescription':
           'Test your knowledge with questions based on your document',
+      'recentFiles': 'Recent Files',
     },
     'es': {
       'appTitle': 'DocuSense AI',
@@ -181,6 +182,7 @@ class AppLocalizations {
           'Habla con tu documento y haz preguntas sobre su contenido',
       'summaryDescription':
           'Obtén un resumen conciso de los puntos clave del documento',
+      'recentFiles': 'Archivos Recientes',
       'quizDescription':
           'Pon a prueba tu conocimiento con preguntas basadas en el documento',
     },
@@ -258,6 +260,7 @@ class AppLocalizations {
       'uploadPdfFirstForQuiz':
           'Veuillez d\'abord télécharger un PDF pour générer un quiz',
       'failedToGenerateQuiz': 'Échec de la génération du quiz',
+      'recentFiles': 'Fichiers Récents',
       'noValidQuizQuestions': 'Aucune question de quiz valide n\'a été générée',
       'answerAllQuestions':
           'Veuillez répondre à toutes les %total questions. Vous avez répondu à %answered.',
@@ -303,6 +306,7 @@ class AppLocalizations {
       'uploadedJustNow': 'Hochgeladen: Gerade eben',
       'fileSize': 'Größe: %fileSize',
       'fileName': 'Name: %fileName',
+      'recentFiles': 'Kürzliche Dateien',
       'ok': 'OK',
       'noFileSelected': 'Keine Datei ausgewählt',
       'fileInformation': 'Dateiinformationen',
@@ -357,6 +361,7 @@ class AppLocalizations {
           'Testen Sie Ihr Wissen mit Fragen basierend auf dem Dokument',
     },
     'nl': {
+      'recentFiles': 'Recente Bestanden',
       'appTitle': 'DocuSense AI',
       'tagline': 'Uw AI-aangedreven Documentassistent',
       'loadingApplication': 'Applicatie laden',
@@ -442,6 +447,7 @@ class AppLocalizations {
     'ar': {
       'appTitle': 'DocuSense AI',
       'tagline': 'مساعدك الذكي للمستندات',
+      'recentFiles': 'الملفات الحديثة',
       'loadingApplication': 'جاري تحميل التطبيق',
       'pleaseUploadPdfFirst': 'يرجى تحميل ملف PDF أولاً للبدء في الدردشة',
       'home': 'الرئيسية',
@@ -521,6 +527,7 @@ class AppLocalizations {
       'loadingApplication': '正在加载应用程序',
       'pleaseUploadPdfFirst': '请先上传PDF文件开始聊天',
       'home': '首页',
+      'recentFiles': '最近文件',
       'chat': '聊天',
       'quiz': '测验',
       'summary': '摘要',
@@ -631,6 +638,9 @@ class AppLocalizations {
   String get signOut {
     return _localizedValues[locale.languageCode]!['signOut']!;
   }
+
+  String get recentFiles =>
+      _localizedValues[locale.languageCode]!['recentFiles']!;
 
   String get uploadFile {
     return _localizedValues[locale.languageCode]!['uploadFile']!;

@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import '../providers/pdf_provider.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/upload_section.dart';
-import '../widgets/features_section.dart'; // Add this import
+import '../widgets/features_section.dart';
+import '../widgets/recent_files_section.dart'; // Add this import
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -44,9 +45,10 @@ class _HomeContent extends StatelessWidget {
           children: [
             const _WelcomeSection(),
             const SizedBox(height: 30),
-            FeaturesSection(), // Add this line
+            FeaturesSection(),
             const SizedBox(height: 30),
             const UploadSection(),
+            const RecentFilesSection(), // Add this line
           ],
         ),
       ),
