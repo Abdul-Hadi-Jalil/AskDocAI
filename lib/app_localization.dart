@@ -31,6 +31,13 @@ class AppLocalizations {
       'error': 'An error occurred',
       'copyright': '© 2025 DocuSense AI',
       'selectLanguage': 'Select Language',
+      'chatWithAny': 'Chat with any ',
+      'document': 'Document',
+      'uploadAndChatDescription':
+          'Upload a PDF and start chatting with your document',
+      'uploadPdfHere': 'Upload PDF here',
+      'tapToSelectFile': 'Tap to select a file',
+      'uploadPdf': 'Upload PDF',
     },
     'es': {
       'appTitle': 'DocuSense AI',
@@ -52,6 +59,13 @@ class AppLocalizations {
       'error': 'Ocurrió un error',
       'copyright': '© 2025 DocuSense AI',
       'selectLanguage': 'Seleccionar idioma',
+      'chatWithAny': 'Chatea con cualquier ',
+      'document': 'Documento',
+      'uploadAndChatDescription':
+          'Sube un PDF y comienza a chatear con tu documento',
+      'uploadPdfHere': 'Subir PDF aquí',
+      'tapToSelectFile': 'Toca para seleccionar un archivo',
+      'uploadPdf': 'Subir PDF',
     },
     'fr': {
       'appTitle': 'DocuSense AI',
@@ -74,6 +88,13 @@ class AppLocalizations {
       'error': 'Une erreur est survenue',
       'copyright': '© 2025 DocuSense AI',
       'selectLanguage': 'Choisir la langue',
+      'chatWithAny': 'Discutez avec n\'importe quel ',
+      'document': 'Document',
+      'uploadAndChatDescription':
+          'Téléchargez un PDF et commencez à discuter avec votre document',
+      'uploadPdfHere': 'Télécharger PDF ici',
+      'tapToSelectFile': 'Appuyez pour sélectionner un fichier',
+      'uploadPdf': 'Télécharger PDF',
     },
     'de': {
       'appTitle': 'DocuSense AI',
@@ -96,6 +117,9 @@ class AppLocalizations {
       'error': 'Ein Fehler ist aufgetreten',
       'copyright': '© 2025 DocuSense AI',
       'selectLanguage': 'Sprache auswählen',
+      'uploadPdfHere': 'PDF hier hochladen',
+      'tapToSelectFile': 'Tippen, um eine Datei auszuwählen',
+      'uploadPdf': 'PDF hochladen',
     },
     'nl': {
       'appTitle': 'DocuSense AI',
@@ -117,6 +141,13 @@ class AppLocalizations {
       'error': 'Er is een fout opgetreden',
       'copyright': '© 2025 DocuSense AI',
       'selectLanguage': 'Selecteer taal',
+      'chatWithAny': 'Chat met elk ',
+      'document': 'Document',
+      'uploadAndChatDescription':
+          'Upload een PDF en begin te chatten met je document',
+      'uploadPdfHere': 'PDF hier uploaden',
+      'tapToSelectFile': 'Tik om een bestand te selecteren',
+      'uploadPdf': 'PDF uploaden',
     },
     'ar': {
       'appTitle': 'DocuSense AI',
@@ -138,6 +169,9 @@ class AppLocalizations {
       'error': 'حدث خطأ',
       'copyright': '© 2025 DocuSense AI',
       'selectLanguage': 'اختر اللغة',
+      'chatWithAny': 'تحدث مع أي ',
+      'document': 'مستند',
+      'uploadAndChatDescription': 'قم بتحميل ملف PDF وابدأ الدردشة مع مستندك',
     },
     'zh': {
       'appTitle': 'DocuSense AI',
@@ -159,6 +193,12 @@ class AppLocalizations {
       'error': '发生错误',
       'copyright': '© 2025 DocuSense AI',
       'selectLanguage': '选择语言',
+      'chatWithAny': '与任何',
+      'document': '文档聊天',
+      'uploadAndChatDescription': '上传PDF文件并开始与您的文档聊天',
+      'uploadPdfHere': '在此上传PDF',
+      'tapToSelectFile': '点击选择文件',
+      'uploadPdf': '上传PDF',
     },
   };
 
@@ -236,6 +276,30 @@ class AppLocalizations {
 
   String get selectLanguage {
     return _localizedValues[locale.languageCode]!['selectLanguage']!;
+  }
+
+  String get chatWithAny {
+    return _localizedValues[locale.languageCode]!['chatWithAny']!;
+  }
+
+  String get document {
+    return _localizedValues[locale.languageCode]!['document']!;
+  }
+
+  String get uploadAndChatDescription {
+    return _localizedValues[locale.languageCode]!['uploadAndChatDescription']!;
+  }
+
+  String get uploadPdfHere {
+    return _localizedValues[locale.languageCode]!['uploadPdfHere']!;
+  }
+
+  String get tapToSelectFile {
+    return _localizedValues[locale.languageCode]!['tapToSelectFile']!;
+  }
+
+  String get uploadPdf {
+    return _localizedValues[locale.languageCode]!['uploadPdf']!;
   }
 }
 

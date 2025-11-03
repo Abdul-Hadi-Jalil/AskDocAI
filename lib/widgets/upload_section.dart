@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/pdf_provider.dart';
 import '../providers/file_provider.dart';
 import '../utils/constants.dart';
+import 'package:docusense_ai/app_localization.dart';
 
 class UploadSection extends StatefulWidget {
   const UploadSection({super.key});
@@ -49,7 +50,7 @@ class _UploadSectionState extends State<UploadSection> {
                     borderRadius: BorderRadius.circular(12),
                     color: Colors.white,
                   ),
-                  child: const Column(
+                  child: Column(
                     children: [
                       Icon(
                         Icons.cloud_upload_outlined,
@@ -58,7 +59,7 @@ class _UploadSectionState extends State<UploadSection> {
                       ),
                       SizedBox(height: 15),
                       Text(
-                        'Upload PDF here',
+                        AppLocalizations.of(context).uploadPdf,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -67,7 +68,7 @@ class _UploadSectionState extends State<UploadSection> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Tap to select a file',
+                        AppLocalizations.of(context).tapToSelectFile,
                         style: TextStyle(
                           fontSize: 14,
                           color: AppConstants.subtitleColor,
@@ -93,13 +94,13 @@ class _UploadSectionState extends State<UploadSection> {
                     elevation: 4,
                     shadowColor: AppConstants.primaryColor.withOpacity(0.3),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.cloud_upload, size: 20),
                       SizedBox(width: 8),
                       Text(
-                        'Upload PDF',
+                        AppLocalizations.of(context).uploadPdf,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

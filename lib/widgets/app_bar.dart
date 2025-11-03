@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:docusense_ai/providers/language_provider.dart';
+import 'package:docusense_ai/app_localization.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -76,8 +77,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               elevation: 0,
             ),
-            child: const Text(
-              'Sign In',
+            child: Text(
+              AppLocalizations.of(context).signIn,
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),

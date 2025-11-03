@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/pdf_provider.dart';
 import '../models/app_state.dart';
 import '../utils/constants.dart';
+import 'package:docusense_ai/app_localization.dart';
 
 class CustomBottomNav extends StatelessWidget {
   const CustomBottomNav({super.key});
@@ -34,26 +35,26 @@ class CustomBottomNav extends StatelessWidget {
             children: [
               _NavItem(
                 icon: Icons.home,
-                label: 'Home',
+                label: AppLocalizations.of(context).home,
                 isActive: pdfProvider.state.currentTab == BottomNavItem.home,
                 onTap: () => pdfProvider.changeTab(BottomNavItem.home),
               ),
               _NavItem(
                 icon: Icons.chat,
-                label: 'Chat',
+                label: AppLocalizations.of(context).chat,
                 isActive: pdfProvider.state.currentTab == BottomNavItem.chat,
                 onTap: () => pdfProvider.changeTab(BottomNavItem.chat),
               ),
               _NavItem(
                 icon: Icons.summarize,
-                label: 'Summarize',
+                label: AppLocalizations.of(context).summary,
                 isActive:
                     pdfProvider.state.currentTab == BottomNavItem.summarize,
                 onTap: () => pdfProvider.changeTab(BottomNavItem.summarize),
               ),
               _NavItem(
                 icon: Icons.quiz,
-                label: 'Quiz',
+                label: AppLocalizations.of(context).quiz,
                 isActive: pdfProvider.state.currentTab == BottomNavItem.quiz,
                 onTap: () => pdfProvider.changeTab(BottomNavItem.quiz),
               ),
