@@ -1,4 +1,4 @@
-// screens/quiz_screen.dart
+import 'package:docusense_ai/app_localization.dart'; // Add this import
 import 'package:docusense_ai/utils/gemini_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +7,7 @@ import '../models/mcq.dart';
 import '../widgets/quiz/mcq_widget.dart';
 import '../widgets/quiz/results_banner.dart';
 import '../widgets/app_bar.dart';
+import '../widgets/file_header.dart'; // Add this import
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -28,59 +29,9 @@ class _QuizScreenState extends State<QuizScreen> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBar(),
+        appBar: const CustomAppBar(),
         backgroundColor: Colors.white,
         body: _isLoading ? _buildLoading() : _buildQuizContent(pdfProvider),
-      ),
-    );
-  }
-
-  Widget _buildFileHeader(PdfProvider pdfProvider) {
-    return Container(
-      color: const Color(0xFFF9F7FC),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      child: Row(
-        children: [
-          // File Icon
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF8A2BE2), Color(0xFF6A0DAD)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Icon(
-              Icons.picture_as_pdf,
-              color: Colors.white,
-              size: 18,
-            ),
-          ),
-          const SizedBox(width: 12),
-          // File Details
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  pdfProvider.uploadedFileName ?? 'No file uploaded',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF333333),
-                  ),
-                ),
-                const Text(
-                  'Quiz Generator',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF777777)),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -88,8 +39,7 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget _buildLoading() {
     return Column(
       children: [
-        // App Bar (fixed during loading)
-        // Loading content
+        const FileHeader(showInfoButton: false),
         Expanded(
           child: Center(
             child: Column(
@@ -99,9 +49,12 @@ class _QuizScreenState extends State<QuizScreen> {
                   valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8A2BE2)),
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'Generating quiz from your document...',
-                  style: TextStyle(color: Color(0xFF666666), fontSize: 16),
+                Text(
+                  AppLocalizations.of(context).generatingQuiz,
+                  style: const TextStyle(
+                    color: Color(0xFF666666),
+                    fontSize: 16,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 if (_errorMessage != null)
@@ -124,8 +77,8 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget _buildQuizContent(PdfProvider pdfProvider) {
     return Column(
       children: [
-        // Fixed File Header
-        _buildFileHeader(pdfProvider),
+        // File Header - Using the shared widget
+        const FileHeader(showInfoButton: false),
 
         // Scrollable Quiz Content
         Expanded(
@@ -137,9 +90,9 @@ class _QuizScreenState extends State<QuizScreen> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      const Text(
-                        'Document Quiz',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context).documentQuiz,
+                        style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
                           color: Color(0xFF333333),
@@ -148,8 +101,10 @@ class _QuizScreenState extends State<QuizScreen> {
                       const SizedBox(height: 8),
                       Text(
                         _mcqs.isEmpty
-                            ? 'Generate a quiz based on your uploaded document'
-                            : 'Test your understanding of the document',
+                            ? AppLocalizations.of(
+                                context,
+                              ).generateQuizDescription
+                            : AppLocalizations.of(context).testUnderstanding,
                         style: const TextStyle(
                           fontSize: 14,
                           color: Color(0xFF777777),
@@ -189,14 +144,16 @@ class _QuizScreenState extends State<QuizScreen> {
                         ),
                         elevation: 4,
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.quiz, size: 20),
-                          SizedBox(width: 12),
+                          const Icon(Icons.quiz, size: 20),
+                          const SizedBox(width: 12),
                           Text(
-                            'Generate Quiz from Document',
-                            style: TextStyle(
+                            AppLocalizations.of(
+                              context,
+                            ).generateQuizFromDocument,
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
@@ -255,14 +212,16 @@ class _QuizScreenState extends State<QuizScreen> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.refresh, size: 18),
-                                SizedBox(width: 8),
+                                const Icon(Icons.refresh, size: 18),
+                                const SizedBox(width: 8),
                                 Text(
-                                  'Regenerate Quiz',
-                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                  AppLocalizations.of(context).regenerateQuiz,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ],
                             ),
@@ -299,8 +258,10 @@ class _QuizScreenState extends State<QuizScreen> {
                                 const SizedBox(width: 8),
                                 Text(
                                   _answersChecked
-                                      ? 'Try Again'
-                                      : 'Check Answers',
+                                      ? AppLocalizations.of(context).tryAgain
+                                      : AppLocalizations.of(
+                                          context,
+                                        ).checkAnswers,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -321,11 +282,10 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   Future<void> _generateQuiz(PdfProvider pdfProvider) async {
-    // Check if a file is uploaded
     if (pdfProvider.uploadedFileContent == null ||
         pdfProvider.uploadedFileContent!.isEmpty) {
       setState(() {
-        _errorMessage = 'Please upload a PDF first to generate a quiz';
+        _errorMessage = AppLocalizations.of(context).uploadPdfFirstForQuiz;
       });
       return;
     }
@@ -338,20 +298,18 @@ class _QuizScreenState extends State<QuizScreen> {
     });
 
     try {
-      // Call the Gemini service to generate quiz
       final quizResponse = await generateQuiz(
         fileContent: pdfProvider.uploadedFileContent,
       );
 
       if (quizResponse.contains('⚠️') || quizResponse.isEmpty) {
-        throw Exception('Failed to generate quiz from Gemini');
+        throw Exception(AppLocalizations.of(context).failedToGenerateQuiz);
       }
 
-      // Parse the response into MCQ objects
       final List<MCQ> generatedMCQs = MCQ.listFromJson(quizResponse);
 
       if (generatedMCQs.isEmpty) {
-        throw Exception('No valid quiz questions were generated');
+        throw Exception(AppLocalizations.of(context).noValidQuizQuestions);
       }
 
       setState(() {
@@ -363,7 +321,8 @@ class _QuizScreenState extends State<QuizScreen> {
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _errorMessage = 'Failed to generate quiz: ${e.toString()}';
+        _errorMessage =
+            '${AppLocalizations.of(context).failedToGenerateQuiz}: ${e.toString()}';
         _mcqs.clear();
       });
       print('Error generating quiz: $e');
@@ -386,7 +345,9 @@ class _QuizScreenState extends State<QuizScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Please answer all $totalQuestions questions. You have answered $answeredCount.',
+            AppLocalizations.of(context).answerAllQuestions
+                .replaceAll('%answered', answeredCount.toString())
+                .replaceAll('%total', totalQuestions.toString()),
           ),
           duration: const Duration(seconds: 2),
         ),

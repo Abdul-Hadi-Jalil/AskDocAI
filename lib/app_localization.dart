@@ -51,6 +51,19 @@ class AppLocalizations {
       'name': 'Name',
       'noFile': 'No file',
       'size': 'Size',
+      'generatingQuiz': 'Generating quiz from your document...',
+      'documentQuiz': 'Document Quiz',
+      'generateQuizDescription':
+          'Generate a quiz based on your uploaded document',
+      'testUnderstanding': 'Test your understanding of the document',
+      'generateQuizFromDocument': 'Generate Quiz from Document',
+      'regenerateQuiz': 'Regenerate Quiz',
+      'checkAnswers': 'Check Answers',
+      'uploadPdfFirstForQuiz': 'Please upload a PDF first to generate a quiz',
+      'failedToGenerateQuiz': 'Failed to generate quiz',
+      'noValidQuizQuestions': 'No valid quiz questions were generated',
+      'answerAllQuestions':
+          'Please answer all %total questions. You have answered %answered.',
 
       // Add to each language in _localizedValues:
       'analyzingDocument': 'Analyzing document and generating summary...',
@@ -137,6 +150,21 @@ class AppLocalizations {
       'regenerate': 'Regenerar',
       'shareSummary': 'Compartir Resumen',
       'shareFunctionality': 'La funcionalidad de compartir se abriría aquí',
+      'generatingQuiz': 'Generando cuestionario desde tu documento...',
+      'documentQuiz': 'Cuestionario del Documento',
+      'generateQuizDescription':
+          'Genera un cuestionario basado en tu documento subido',
+      'testUnderstanding': 'Pon a prueba tu comprensión del documento',
+      'generateQuizFromDocument': 'Generar Cuestionario del Documento',
+      'regenerateQuiz': 'Regenerar Cuestionario',
+      'checkAnswers': 'Verificar Respuestas',
+      'uploadPdfFirstForQuiz':
+          'Por favor, sube un PDF primero para generar un cuestionario',
+      'failedToGenerateQuiz': 'Error al generar el cuestionario',
+      'noValidQuizQuestions':
+          'No se generaron preguntas válidas para el cuestionario',
+      'answerAllQuestions':
+          'Por favor responde todas las %total preguntas. Has respondido %answered.',
     },
     'fr': {
       'appTitle': 'DocuSense AI',
@@ -201,6 +229,20 @@ class AppLocalizations {
       'regenerate': 'Régénérer',
       'shareSummary': 'Partager le Résumé',
       'shareFunctionality': 'La fonctionnalité de partage s\'ouvrirait ici',
+      'generatingQuiz': 'Génération du quiz à partir de votre document...',
+      'documentQuiz': 'Quiz du Document',
+      'generateQuizDescription':
+          'Générez un quiz basé sur votre document téléchargé',
+      'testUnderstanding': 'Testez votre compréhension du document',
+      'generateQuizFromDocument': 'Générer le Quiz du Document',
+      'regenerateQuiz': 'Régénérer le Quiz',
+      'checkAnswers': 'Vérifier les Réponses',
+      'uploadPdfFirstForQuiz':
+          'Veuillez d\'abord télécharger un PDF pour générer un quiz',
+      'failedToGenerateQuiz': 'Échec de la génération du quiz',
+      'noValidQuizQuestions': 'Aucune question de quiz valide n\'a été générée',
+      'answerAllQuestions':
+          'Veuillez répondre à toutes les %total questions. Vous avez répondu à %answered.',
     },
     'de': {
       'appTitle': 'DocuSense AI',
@@ -263,6 +305,20 @@ class AppLocalizations {
       'regenerate': 'Neu generieren',
       'shareSummary': 'Zusammenfassung teilen',
       'shareFunctionality': 'Teilen-Funktionalität würde hier geöffnet werden',
+      'generatingQuiz': 'Quiz wird aus Ihrem Dokument generiert...',
+      'documentQuiz': 'Dokumenten-Quiz',
+      'generateQuizDescription':
+          'Generieren Sie ein Quiz basierend auf Ihrem hochgeladenen Dokument',
+      'testUnderstanding': 'Testen Sie Ihr Verständnis des Dokuments',
+      'generateQuizFromDocument': 'Quiz aus Dokument generieren',
+      'regenerateQuiz': 'Quiz neu generieren',
+      'checkAnswers': 'Antworten überprüfen',
+      'uploadPdfFirstForQuiz':
+          'Bitte laden Sie zuerst ein PDF hoch, um ein Quiz zu generieren',
+      'failedToGenerateQuiz': 'Quiz konnte nicht generiert werden',
+      'noValidQuizQuestions': 'Es wurden keine gültigen Quizfragen generiert',
+      'answerAllQuestions':
+          'Bitte beantworten Sie alle %total Fragen. Sie haben %answered beantwortet.',
     },
     'nl': {
       'appTitle': 'DocuSense AI',
@@ -326,6 +382,19 @@ class AppLocalizations {
       'regenerate': 'Opnieuw genereren',
       'shareSummary': 'Samenvatting delen',
       'shareFunctionality': 'Deelfunctionaliteit zou hier openen',
+      'generatingQuiz': 'Quiz genereren vanuit uw document...',
+      'documentQuiz': 'Document Quiz',
+      'generateQuizDescription':
+          'Genereer een quiz op basis van uw geüploade document',
+      'testUnderstanding': 'Test uw begrip van het document',
+      'generateQuizFromDocument': 'Quiz genereren van Document',
+      'regenerateQuiz': 'Quiz opnieuw genereren',
+      'checkAnswers': 'Antwoorden controleren',
+      'uploadPdfFirstForQuiz': 'Upload eerst een PDF om een quiz te genereren',
+      'failedToGenerateQuiz': 'Kan quiz niet genereren',
+      'noValidQuizQuestions': 'Er zijn geen geldige quizvragen gegenereerd',
+      'answerAllQuestions':
+          'Beantwoord alle %total vragen. U heeft %answered beantwoord.',
     },
     'ar': {
       'appTitle': 'DocuSense AI',
@@ -383,6 +452,19 @@ class AppLocalizations {
       'regenerate': 'إعادة إنشاء',
       'shareSummary': 'مشاركة الملخص',
       'shareFunctionality': 'ستفتح وظيفة المشاركة هنا',
+      'generatingQuiz': 'جاري إنشاء الاختبار من مستندك...',
+      'documentQuiz': 'اختبار المستند',
+      'generateQuizDescription':
+          'قم بإنشاء اختبار بناءً على المستند الذي قمت برفعه',
+      'testUnderstanding': 'اختبر فهمك للمستند',
+      'generateQuizFromDocument': 'إنشاء اختبار من المستند',
+      'regenerateQuiz': 'إعادة إنشاء الاختبار',
+      'checkAnswers': 'التحقق من الإجابات',
+      'uploadPdfFirstForQuiz': 'يرجى رفع ملف PDF أولاً لإنشاء اختبار',
+      'failedToGenerateQuiz': 'فشل في إنشاء الاختبار',
+      'noValidQuizQuestions': 'لم يتم إنشاء أسئلة اختبار صالحة',
+      'answerAllQuestions':
+          'يرجى الإجابة على جميع الأسئلة %total. لقد أجبت على %answered.',
     },
     'zh': {
       'appTitle': 'DocuSense AI',
@@ -441,6 +523,17 @@ class AppLocalizations {
       'regenerate': '重新生成',
       'shareSummary': '分享摘要',
       'shareFunctionality': '分享功能将在此处打开',
+      'generatingQuiz': '正在从您的文档生成测验...',
+      'documentQuiz': '文档测验',
+      'generateQuizDescription': '基于您上传的文档生成测验',
+      'testUnderstanding': '测试您对文档的理解',
+      'generateQuizFromDocument': '从文档生成测验',
+      'regenerateQuiz': '重新生成测验',
+      'checkAnswers': '检查答案',
+      'uploadPdfFirstForQuiz': '请先上传PDF以生成测验',
+      'failedToGenerateQuiz': '生成测验失败',
+      'noValidQuizQuestions': '未生成有效的测验问题',
+      'answerAllQuestions': '请回答所有%total个问题。您已回答了%answered个。',
     },
   };
 
@@ -630,6 +723,31 @@ class AppLocalizations {
       _localizedValues[locale.languageCode]!['shareSummary']!;
   String get shareFunctionality =>
       _localizedValues[locale.languageCode]!['shareFunctionality']!;
+
+  // Add these to AppLocalizations class:
+
+  String get generatingQuiz =>
+      _localizedValues[locale.languageCode]!['generatingQuiz']!;
+  String get documentQuiz =>
+      _localizedValues[locale.languageCode]!['documentQuiz']!;
+  String get generateQuizDescription =>
+      _localizedValues[locale.languageCode]!['generateQuizDescription']!;
+  String get testUnderstanding =>
+      _localizedValues[locale.languageCode]!['testUnderstanding']!;
+  String get generateQuizFromDocument =>
+      _localizedValues[locale.languageCode]!['generateQuizFromDocument']!;
+  String get regenerateQuiz =>
+      _localizedValues[locale.languageCode]!['regenerateQuiz']!;
+  String get checkAnswers =>
+      _localizedValues[locale.languageCode]!['checkAnswers']!;
+  String get uploadPdfFirstForQuiz =>
+      _localizedValues[locale.languageCode]!['uploadPdfFirstForQuiz']!;
+  String get failedToGenerateQuiz =>
+      _localizedValues[locale.languageCode]!['failedToGenerateQuiz']!;
+  String get noValidQuizQuestions =>
+      _localizedValues[locale.languageCode]!['noValidQuizQuestions']!;
+  String get answerAllQuestions =>
+      _localizedValues[locale.languageCode]!['answerAllQuestions']!;
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
