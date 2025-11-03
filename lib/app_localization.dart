@@ -38,6 +38,42 @@ class AppLocalizations {
       'uploadPdfHere': 'Upload PDF here',
       'tapToSelectFile': 'Tap to select a file',
       'uploadPdf': 'Upload PDF',
+      'chatWelcomeMessage':
+          'Hello! I\'m ready to help you understand "%fileName". What would you like to know?',
+      'errorTryAgain': 'Sorry, I encountered an error. Please try again.',
+      'fileTypePdf': 'Type: PDF Document',
+      'uploadedJustNow': 'Uploaded: Just now',
+      'fileSize': 'Size: %fileSize',
+      'fileName': 'Name: %fileName',
+      'ok': 'OK',
+      'noFileSelected': 'No file selected',
+      'fileInformation': 'File Information',
+      'name': 'Name',
+      'noFile': 'No file',
+      'size': 'Size',
+
+      // Add to each language in _localizedValues:
+      'analyzingDocument': 'Analyzing document and generating summary...',
+      'mayTakeFewMoments': 'This may take a few moments',
+      'failedToGenerateSummary': 'Failed to generate summary',
+      'tryAgain': 'Try Again',
+      'generateSummary': 'Generate Summary',
+      'noDocumentUploaded': 'No Document Uploaded',
+      'tapToGenerateSummary':
+          'Tap below to analyze your document and generate a comprehensive summary',
+      'uploadFirstForSummary':
+          'Upload a document first to generate an AI-powered summary',
+      'uploadDocument': 'Upload Document',
+      'Document': 'Document',
+      'documentSummary': 'Document Summary',
+      'aiGeneratedInsights': 'AI-generated insights from',
+      'executiveSummary': 'Executive Summary',
+      'conclusionsRecommendations': 'Conclusions & Recommendations',
+      'keyFindings': 'Key Findings',
+      'mainTopics': 'Main Topics',
+      'regenerate': 'Regenerate',
+      'shareSummary': 'Share Summary',
+      'shareFunctionality': 'Share functionality would open here',
     },
     'es': {
       'appTitle': 'DocuSense AI',
@@ -66,6 +102,41 @@ class AppLocalizations {
       'uploadPdfHere': 'Subir PDF aquí',
       'tapToSelectFile': 'Toca para seleccionar un archivo',
       'uploadPdf': 'Subir PDF',
+      'chatWelcomeMessage':
+          '¡Hola! Estoy listo para ayudarte a entender "%fileName". ¿Qué te gustaría saber?',
+      'errorTryAgain':
+          'Lo siento, encontré un error. Por favor, inténtalo de nuevo.',
+      'fileTypePdf': 'Tipo: Documento PDF',
+      'uploadedJustNow': 'Subido: Hace un momento',
+      'fileSize': 'Tamaño: %fileSize',
+      'fileName': 'Nombre: %fileName',
+      'ok': 'Aceptar',
+      'noFileSelected': 'No se seleccionó archivo',
+      'fileInformation': 'Información del Archivo',
+      'name': 'Nombre',
+      'noFile': 'Sin archivo',
+      'size': 'Tamaño',
+      'analyzingDocument': 'Analizando documento y generando resumen...',
+      'mayTakeFewMoments': 'Esto puede tomar unos momentos',
+      'failedToGenerateSummary': 'Error al generar el resumen',
+      'tryAgain': 'Intentar de nuevo',
+      'generateSummary': 'Generar Resumen',
+      'noDocumentUploaded': 'Ningún Documento Subido',
+      'tapToGenerateSummary':
+          'Toca abajo para analizar tu documento y generar un resumen completo',
+      'uploadFirstForSummary':
+          'Sube un documento primero para generar un resumen con IA',
+      'uploadDocument': 'Subir Documento',
+      'Document': 'Documento',
+      'documentSummary': 'Resumen del Documento',
+      'aiGeneratedInsights': 'Información generada por IA de',
+      'executiveSummary': 'Resumen Ejecutivo',
+      'conclusionsRecommendations': 'Conclusiones y Recomendaciones',
+      'keyFindings': 'Hallazgos Clave',
+      'mainTopics': 'Temas Principales',
+      'regenerate': 'Regenerar',
+      'shareSummary': 'Compartir Resumen',
+      'shareFunctionality': 'La funcionalidad de compartir se abriría aquí',
     },
     'fr': {
       'appTitle': 'DocuSense AI',
@@ -95,6 +166,41 @@ class AppLocalizations {
       'uploadPdfHere': 'Télécharger PDF ici',
       'tapToSelectFile': 'Appuyez pour sélectionner un fichier',
       'uploadPdf': 'Télécharger PDF',
+      'chatWelcomeMessage':
+          'Bonjour ! Je suis prêt à vous aider à comprendre "%fileName". Que souhaitez-vous savoir ?',
+      'errorTryAgain':
+          'Désolé, j\'ai rencontré une erreur. Veuillez réessayer.',
+      'fileTypePdf': 'Type : Document PDF',
+      'uploadedJustNow': 'Téléchargé : À l\'instant',
+      'fileSize': 'Taille : %fileSize',
+      'fileName': 'Nom : %fileName',
+      'ok': 'OK',
+      'noFileSelected': 'Aucun fichier sélectionné',
+      'fileInformation': 'Informations du Fichier',
+      'name': 'Nom',
+      'noFile': 'Aucun fichier',
+      'size': 'Taille',
+      'analyzingDocument': 'Analyse du document et génération du résumé...',
+      'mayTakeFewMoments': 'Cela peut prendre quelques instants',
+      'failedToGenerateSummary': 'Échec de la génération du résumé',
+      'tryAgain': 'Réessayer',
+      'generateSummary': 'Générer le Résumé',
+      'noDocumentUploaded': 'Aucun Document Téléchargé',
+      'tapToGenerateSummary':
+          'Appuyez ci-dessous pour analyser votre document et générer un résumé complet',
+      'uploadFirstForSummary':
+          'Téléchargez d\'abord un document pour générer un résumé alimenté par IA',
+      'uploadDocument': 'Télécharger le Document',
+      'Document': 'Document',
+      'documentSummary': 'Résumé du Document',
+      'aiGeneratedInsights': 'Informations générées par IA de',
+      'executiveSummary': 'Résumé Exécutif',
+      'conclusionsRecommendations': 'Conclusions et Recommandations',
+      'keyFindings': 'Principales Constatations',
+      'mainTopics': 'Sujets Principaux',
+      'regenerate': 'Régénérer',
+      'shareSummary': 'Partager le Résumé',
+      'shareFunctionality': 'La fonctionnalité de partage s\'ouvrirait ici',
     },
     'de': {
       'appTitle': 'DocuSense AI',
@@ -120,6 +226,43 @@ class AppLocalizations {
       'uploadPdfHere': 'PDF hier hochladen',
       'tapToSelectFile': 'Tippen, um eine Datei auszuwählen',
       'uploadPdf': 'PDF hochladen',
+      'chatWelcomeMessage':
+          'Hallo! Ich bin bereit, Ihnen zu helfen, "%fileName" zu verstehen. Was möchten Sie wissen?',
+      'errorTryAgain':
+          'Entschuldigung, es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+      'fileTypePdf': 'Typ: PDF-Dokument',
+      'uploadedJustNow': 'Hochgeladen: Gerade eben',
+      'fileSize': 'Größe: %fileSize',
+      'fileName': 'Name: %fileName',
+      'ok': 'OK',
+      'noFileSelected': 'Keine Datei ausgewählt',
+      'fileInformation': 'Dateiinformationen',
+      'name': 'Name',
+      'noFile': 'Keine Datei',
+      'size': 'Größe',
+      'analyzingDocument':
+          'Dokument wird analysiert und Zusammenfassung generiert...',
+      'mayTakeFewMoments': 'Dies kann einige Momente dauern',
+      'failedToGenerateSummary':
+          'Zusammenfassung konnte nicht generiert werden',
+      'tryAgain': 'Erneut versuchen',
+      'generateSummary': 'Zusammenfassung generieren',
+      'noDocumentUploaded': 'Kein Dokument hochgeladen',
+      'tapToGenerateSummary':
+          'Tippen Sie unten, um Ihr Dokument zu analysieren und eine umfassende Zusammenfassung zu generieren',
+      'uploadFirstForSummary':
+          'Laden Sie zuerst ein Dokument hoch, um eine KI-gestützte Zusammenfassung zu generieren',
+      'uploadDocument': 'Dokument hochladen',
+      'Document': 'Dokument',
+      'documentSummary': 'Dokumentenzusammenfassung',
+      'aiGeneratedInsights': 'KI-generierte Einblicke aus',
+      'executiveSummary': 'Management-Zusammenfassung',
+      'conclusionsRecommendations': 'Schlussfolgerungen & Empfehlungen',
+      'keyFindings': 'Wichtige Erkenntnisse',
+      'mainTopics': 'Hauptthemen',
+      'regenerate': 'Neu generieren',
+      'shareSummary': 'Zusammenfassung teilen',
+      'shareFunctionality': 'Teilen-Funktionalität würde hier geöffnet werden',
     },
     'nl': {
       'appTitle': 'DocuSense AI',
@@ -148,6 +291,41 @@ class AppLocalizations {
       'uploadPdfHere': 'PDF hier uploaden',
       'tapToSelectFile': 'Tik om een bestand te selecteren',
       'uploadPdf': 'PDF uploaden',
+      'chatWelcomeMessage':
+          'Hallo! Ik ben klaar om u te helpen "%fileName" te begrijpen. Wat wilt u weten?',
+      'errorTryAgain':
+          'Sorry, ik heb een fout tegengekomen. Probeer het opnieuw.',
+      'fileTypePdf': 'Type: PDF-document',
+      'uploadedJustNow': 'Geüpload: Zojuist',
+      'fileSize': 'Grootte: %fileSize',
+      'fileName': 'Naam: %fileName',
+      'ok': 'OK',
+      'noFileSelected': 'Geen bestand geselecteerd',
+      'fileInformation': 'Bestandsinformatie',
+      'name': 'Naam',
+      'noFile': 'Geen bestand',
+      'size': 'Grootte',
+      'analyzingDocument': 'Document analyseren en samenvatting genereren...',
+      'mayTakeFewMoments': 'Dit kan even duren',
+      'failedToGenerateSummary': 'Kan samenvatting niet genereren',
+      'tryAgain': 'Opnieuw proberen',
+      'generateSummary': 'Samenvatting genereren',
+      'noDocumentUploaded': 'Geen document geüpload',
+      'tapToGenerateSummary':
+          'Tik hieronder om uw document te analyseren en een uitgebreide samenvatting te genereren',
+      'uploadFirstForSummary':
+          'Upload eerst een document om een AI-aangedreven samenvatting te genereren',
+      'uploadDocument': 'Document uploaden',
+      'Document': 'Document',
+      'documentSummary': 'Documentsamenvatting',
+      'aiGeneratedInsights': 'AI-gegenereerde inzichten van',
+      'executiveSummary': 'Executive Samenvatting',
+      'conclusionsRecommendations': 'Conclusies & Aanbevelingen',
+      'keyFindings': 'Belangrijke bevindingen',
+      'mainTopics': 'Hoofdonderwerpen',
+      'regenerate': 'Opnieuw genereren',
+      'shareSummary': 'Samenvatting delen',
+      'shareFunctionality': 'Deelfunctionaliteit zou hier openen',
     },
     'ar': {
       'appTitle': 'DocuSense AI',
@@ -172,6 +350,39 @@ class AppLocalizations {
       'chatWithAny': 'تحدث مع أي ',
       'document': 'مستند',
       'uploadAndChatDescription': 'قم بتحميل ملف PDF وابدأ الدردشة مع مستندك',
+      'chatWelcomeMessage':
+          'مرحباً! أنا مستعد لمساعدتك في فهم "%fileName". ماذا تريد أن تعرف؟',
+      'errorTryAgain': 'عذراً، واجهت خطأ. يرجى المحاولة مرة أخرى.',
+      'fileTypePdf': 'النوع: مستند PDF',
+      'uploadedJustNow': 'تم الرفع: الآن',
+      'fileSize': 'الحجم: %fileSize',
+      'fileName': 'الاسم: %fileName',
+      'ok': 'موافق',
+      'noFileSelected': 'لم يتم اختيار ملف',
+      'fileInformation': 'معلومات الملف',
+      'name': 'الاسم',
+      'noFile': 'لا يوجد ملف',
+      'size': 'الحجم',
+      'analyzingDocument': 'جاري تحليل المستند وإنشاء الملخص...',
+      'mayTakeFewMoments': 'قد يستغرق هذا بضع لحظات',
+      'failedToGenerateSummary': 'فشل في إنشاء الملخص',
+      'tryAgain': 'حاول مرة أخرى',
+      'generateSummary': 'إنشاء الملخص',
+      'noDocumentUploaded': 'لم يتم رفع أي مستند',
+      'tapToGenerateSummary': 'انقر أدناه لتحليل مستندك وإنشاء ملخص شامل',
+      'uploadFirstForSummary':
+          'قم برفع مستند أولاً لإنشاء ملخص مدعوم بالذكاء الاصطناعي',
+      'uploadDocument': 'رفع المستند',
+      'Document': 'المستند',
+      'documentSummary': 'ملخص المستند',
+      'aiGeneratedInsights': 'رؤى مولدة بالذكاء الاصطناعي من',
+      'executiveSummary': 'ملخص تنفيذي',
+      'conclusionsRecommendations': 'الاستنتاجات والتوصيات',
+      'keyFindings': 'النتائج الرئيسية',
+      'mainTopics': 'المواضيع الرئيسية',
+      'regenerate': 'إعادة إنشاء',
+      'shareSummary': 'مشاركة الملخص',
+      'shareFunctionality': 'ستفتح وظيفة المشاركة هنا',
     },
     'zh': {
       'appTitle': 'DocuSense AI',
@@ -199,6 +410,37 @@ class AppLocalizations {
       'uploadPdfHere': '在此上传PDF',
       'tapToSelectFile': '点击选择文件',
       'uploadPdf': '上传PDF',
+      'chatWelcomeMessage': '你好！我准备好帮您理解"%fileName"。您想了解什么？',
+      'errorTryAgain': '抱歉，我遇到了错误。请重试。',
+      'fileTypePdf': '类型：PDF文档',
+      'uploadedJustNow': '上传时间：刚刚',
+      'fileSize': '大小：%fileSize',
+      'fileName': '名称：%fileName',
+      'ok': '确定',
+      'noFileSelected': '未选择文件',
+      'fileInformation': '文件信息',
+      'name': '名称',
+      'noFile': '无文件',
+      'size': '大小',
+      'analyzingDocument': '正在分析文档并生成摘要...',
+      'mayTakeFewMoments': '这可能需要一些时间',
+      'failedToGenerateSummary': '生成摘要失败',
+      'tryAgain': '重试',
+      'generateSummary': '生成摘要',
+      'noDocumentUploaded': '未上传文档',
+      'tapToGenerateSummary': '点击下方分析您的文档并生成全面摘要',
+      'uploadFirstForSummary': '请先上传文档以生成AI驱动的摘要',
+      'uploadDocument': '上传文档',
+      'Document': '文档',
+      'documentSummary': '文档摘要',
+      'aiGeneratedInsights': 'AI生成的见解来自',
+      'executiveSummary': '执行摘要',
+      'conclusionsRecommendations': '结论与建议',
+      'keyFindings': '关键发现',
+      'mainTopics': '主要主题',
+      'regenerate': '重新生成',
+      'shareSummary': '分享摘要',
+      'shareFunctionality': '分享功能将在此处打开',
     },
   };
 
@@ -301,6 +543,93 @@ class AppLocalizations {
   String get uploadPdf {
     return _localizedValues[locale.languageCode]!['uploadPdf']!;
   }
+
+  String get chatWelcomeMessage {
+    return _localizedValues[locale.languageCode]!['chatWelcomeMessage']!;
+  }
+
+  String get errorTryAgain {
+    return _localizedValues[locale.languageCode]!['errorTryAgain']!;
+  }
+
+  String get fileTypePdf {
+    return _localizedValues[locale.languageCode]!['fileTypePdf']!;
+  }
+
+  String get uploadedJustNow {
+    return _localizedValues[locale.languageCode]!['uploadedJustNow']!;
+  }
+
+  String get fileSize {
+    return _localizedValues[locale.languageCode]!['fileSize']!;
+  }
+
+  String get fileName {
+    return _localizedValues[locale.languageCode]!['fileName']!;
+  }
+
+  String get ok {
+    return _localizedValues[locale.languageCode]!['ok']!;
+  }
+
+  String get noFileSelected {
+    return _localizedValues[locale.languageCode]!['noFileSelected']!;
+  }
+
+  String get fileInformation {
+    return _localizedValues[locale.languageCode]!['fileInformation']!;
+  }
+
+  String get name {
+    return _localizedValues[locale.languageCode]!['name']!;
+  }
+
+  String get noFile {
+    return _localizedValues[locale.languageCode]!['noFile']!;
+  }
+
+  String get size {
+    return _localizedValues[locale.languageCode]!['size']!;
+  }
+
+  // Add these to AppLocalizations class:
+
+  String get analyzingDocument =>
+      _localizedValues[locale.languageCode]!['analyzingDocument']!;
+  String get mayTakeFewMoments =>
+      _localizedValues[locale.languageCode]!['mayTakeFewMoments']!;
+  String get failedToGenerateSummary =>
+      _localizedValues[locale.languageCode]!['failedToGenerateSummary']!;
+  String get tryAgain => _localizedValues[locale.languageCode]!['tryAgain']!;
+  String get generateSummary =>
+      _localizedValues[locale.languageCode]!['generateSummary']!;
+  String get noDocumentUploaded =>
+      _localizedValues[locale.languageCode]!['noDocumentUploaded']!;
+  String get tapToGenerateSummary =>
+      _localizedValues[locale.languageCode]!['tapToGenerateSummary']!;
+  String get uploadFirstForSummary =>
+      _localizedValues[locale.languageCode]!['uploadFirstForSummary']!;
+  String get uploadDocument =>
+      _localizedValues[locale.languageCode]!['uploadDocument']!;
+  String get Document => _localizedValues[locale.languageCode]!['document']!;
+  String get documentSummary =>
+      _localizedValues[locale.languageCode]!['documentSummary']!;
+  String get aiGeneratedInsights =>
+      _localizedValues[locale.languageCode]!['aiGeneratedInsights']!;
+  String get executiveSummary =>
+      _localizedValues[locale.languageCode]!['executiveSummary']!;
+  String get conclusionsRecommendations =>
+      _localizedValues[locale.languageCode]!['conclusionsRecommendations']!;
+  String get keyFindings =>
+      _localizedValues[locale.languageCode]!['keyFindings']!;
+  String get mainTopics =>
+      _localizedValues[locale.languageCode]!['mainTopics']!;
+  String get regenerate =>
+      _localizedValues[locale.languageCode]!['regenerate']!;
+  String get shareSummary =>
+      _localizedValues[locale.languageCode]!['shareSummary']!;
+  String get shareFunctionality =>
+      _localizedValues[locale.languageCode]!['shareFunctionality']!;
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -1,4 +1,4 @@
-// screens/summary_screen.dart
+import 'package:docusense_ai/app_localization.dart'; // Add this import
 import 'package:docusense_ai/models/app_state.dart';
 import 'package:docusense_ai/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,7 @@ import '../providers/pdf_provider.dart';
 import '../providers/file_provider.dart';
 import '../providers/summary_provider.dart';
 import '../widgets/app_bar.dart';
+import '../widgets/file_header.dart';
 
 class SummaryScreen extends StatefulWidget {
   const SummaryScreen({super.key});
@@ -19,7 +20,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
   @override
   void initState() {
     super.initState();
-    // Auto-generate summary when screen loads if file exists
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final fileProvider = Provider.of<FileProvider>(context, listen: false);
       final summaryProvider = Provider.of<SummaryProvider>(
@@ -43,9 +43,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
       appBar: const CustomAppBar(),
       body: Column(
         children: [
-          // File Header
-          _buildFileHeader(fileProvider),
-          // Summary Content
+          FileHeader(),
           Expanded(
             child: summaryProvider.isLoading
                 ? _buildLoadingIndicator()
@@ -60,94 +58,12 @@ class _SummaryScreenState extends State<SummaryScreen> {
     );
   }
 
-  Widget _buildFileHeader(FileProvider fileProvider) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      color: AppConstants.lightPurple,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // File Info
-          Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      AppConstants.primaryColor,
-                      AppConstants.secondaryColor,
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(
-                  Icons.picture_as_pdf,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    fileProvider.fileName ?? 'No file uploaded',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppConstants.textColor,
-                    ),
-                  ),
-                  Text(
-                    fileProvider.hasFile
-                        ? fileProvider.formattedFileSize
-                        : 'Upload a file to generate summary',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppConstants.subtitleColor,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          // File Actions
-          if (fileProvider.hasFile)
-            Row(
-              children: [
-                IconButton(
-                  onPressed: _changeFile,
-                  icon: const Icon(
-                    Icons.swap_horiz,
-                    color: AppConstants.primaryColor,
-                    size: 20,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () => _showFileInfo(fileProvider),
-                  icon: const Icon(
-                    Icons.info_outline,
-                    color: AppConstants.primaryColor,
-                    size: 20,
-                  ),
-                ),
-              ],
-            ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildLoadingIndicator() {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             width: 40,
             height: 40,
             child: CircularProgressIndicator(
@@ -157,15 +73,21 @@ class _SummaryScreenState extends State<SummaryScreen> {
               strokeWidth: 3,
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
-            'Analyzing document and generating summary...',
-            style: TextStyle(color: AppConstants.subtitleColor, fontSize: 16),
+            AppLocalizations.of(context).analyzingDocument,
+            style: const TextStyle(
+              color: AppConstants.subtitleColor,
+              fontSize: 16,
+            ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
-            'This may take a few moments',
-            style: TextStyle(color: AppConstants.subtitleColor, fontSize: 12),
+            AppLocalizations.of(context).mayTakeFewMoments,
+            style: const TextStyle(
+              color: AppConstants.subtitleColor,
+              fontSize: 12,
+            ),
           ),
         ],
       ),
@@ -182,8 +104,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
             const Icon(Icons.error_outline, color: Colors.red, size: 48),
             const SizedBox(height: 16),
             Text(
-              'Failed to generate summary',
-              style: TextStyle(
+              AppLocalizations.of(context).failedToGenerateSummary,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: AppConstants.textColor,
@@ -192,7 +114,10 @@ class _SummaryScreenState extends State<SummaryScreen> {
             const SizedBox(height: 8),
             Text(
               error,
-              style: TextStyle(color: AppConstants.subtitleColor, fontSize: 14),
+              style: const TextStyle(
+                color: AppConstants.subtitleColor,
+                fontSize: 14,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -202,7 +127,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 backgroundColor: AppConstants.primaryColor,
                 foregroundColor: Colors.white,
               ),
-              child: const Text('Try Again'),
+              child: Text(AppLocalizations.of(context).tryAgain),
             ),
           ],
         ),
@@ -228,9 +153,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
             const SizedBox(height: 16),
             Text(
               fileProvider.hasFile
-                  ? 'Generate Summary'
-                  : 'No Document Uploaded',
-              style: TextStyle(
+                  ? AppLocalizations.of(context).generateSummary
+                  : AppLocalizations.of(context).noDocumentUploaded,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
                 color: AppConstants.textColor,
@@ -239,9 +164,12 @@ class _SummaryScreenState extends State<SummaryScreen> {
             const SizedBox(height: 8),
             Text(
               fileProvider.hasFile
-                  ? 'Tap below to analyze your document and generate a comprehensive summary'
-                  : 'Upload a document first to generate an AI-powered summary',
-              style: TextStyle(color: AppConstants.subtitleColor, fontSize: 14),
+                  ? AppLocalizations.of(context).tapToGenerateSummary
+                  : AppLocalizations.of(context).uploadFirstForSummary,
+              style: const TextStyle(
+                color: AppConstants.subtitleColor,
+                fontSize: 14,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -256,7 +184,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     vertical: 12,
                   ),
                 ),
-                child: const Text('Generate Summary'),
+                child: Text(AppLocalizations.of(context).generateSummary),
               )
             else
               ElevatedButton(
@@ -269,7 +197,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     vertical: 12,
                   ),
                 ),
-                child: const Text('Upload Document'),
+                child: Text(AppLocalizations.of(context).uploadDocument),
               ),
           ],
         ),
@@ -284,43 +212,39 @@ class _SummaryScreenState extends State<SummaryScreen> {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          // Summary Header
-          _buildSummaryHeader(fileProvider.fileName ?? 'Document'),
+          _buildSummaryHeader(
+            fileProvider.fileName ?? AppLocalizations.of(context).document,
+          ),
           const SizedBox(height: 25),
 
-          // Executive Summary Section
           if (parsedSections['executive'] != null)
             _buildSummarySection(
               icon: Icons.description,
-              title: 'Executive Summary',
+              title: AppLocalizations.of(context).executiveSummary,
               content: parsedSections['executive']!,
             ),
 
           const SizedBox(height: 20),
 
-          // Key Findings Section
           if (parsedSections['findings'] != null)
             _buildKeyFindingsSection(parsedSections['findings']!),
 
           const SizedBox(height: 20),
 
-          // Main Topics Section
           if (parsedSections['topics'] != null)
             _buildMainTopicsSection(parsedSections['topics']!),
 
           const SizedBox(height: 20),
 
-          // Conclusions Section
           if (parsedSections['conclusions'] != null)
             _buildSummarySection(
               icon: Icons.lightbulb_outline,
-              title: 'Conclusions & Recommendations',
+              title: AppLocalizations.of(context).conclusionsRecommendations,
               content: parsedSections['conclusions']!,
             ),
 
           const SizedBox(height: 25),
 
-          // Action Buttons
           _buildActionButtons(),
           const SizedBox(height: 20),
         ],
@@ -332,7 +256,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
     final sections = <String, String>{};
 
     try {
-      // Simple parsing logic - you can enhance this based on your actual response format
       final lines = summary.split('\n');
       String currentSection = '';
       StringBuffer currentContent = StringBuffer();
@@ -361,7 +284,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
       _saveSection(sections, currentSection, currentContent);
     } catch (e) {
-      // If parsing fails, show the entire summary in executive section
       sections['executive'] = summary;
     }
 
@@ -382,8 +304,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
     return Column(
       children: [
         Text(
-          'Document Summary',
-          style: TextStyle(
+          AppLocalizations.of(context).documentSummary,
+          style: const TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w700,
             color: AppConstants.textColor,
@@ -391,8 +313,11 @@ class _SummaryScreenState extends State<SummaryScreen> {
         ),
         const SizedBox(height: 8),
         Text(
-          'AI-generated insights from "$fileName"',
-          style: TextStyle(fontSize: 14, color: AppConstants.subtitleColor),
+          '${AppLocalizations.of(context).aiGeneratedInsights} "$fileName"',
+          style: const TextStyle(
+            fontSize: 14,
+            color: AppConstants.subtitleColor,
+          ),
         ),
       ],
     );
@@ -419,7 +344,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Section Header
           Row(
             children: [
               Container(
@@ -432,21 +356,22 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 child: Icon(icon, color: AppConstants.primaryColor, size: 16),
               ),
               const SizedBox(width: 12),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: AppConstants.textColor,
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppConstants.textColor,
+                  ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 15),
-          // Content
           Text(
             content,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               color: AppConstants.subtitleColor,
               height: 1.6,
@@ -476,7 +401,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Section Header
           Row(
             children: [
               Container(
@@ -493,9 +417,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 ),
               ),
               const SizedBox(width: 12),
-              const Text(
-                'Key Findings',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context).keyFindings,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                   color: AppConstants.textColor,
@@ -504,7 +428,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
             ],
           ),
           const SizedBox(height: 15),
-          // Key Points
           ...points.map((point) => _KeyPoint(text: point)),
         ],
       ),
@@ -530,7 +453,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Section Header
           Row(
             children: [
               Container(
@@ -547,9 +469,9 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 ),
               ),
               const SizedBox(width: 12),
-              const Text(
-                'Main Topics',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context).mainTopics,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                   color: AppConstants.textColor,
@@ -558,7 +480,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
             ],
           ),
           const SizedBox(height: 15),
-          // Topics
           ...topics.map((topic) => _TopicItem(title: topic)),
         ],
       ),
@@ -594,14 +515,18 @@ class _SummaryScreenState extends State<SummaryScreen> {
               ),
               side: const BorderSide(color: AppConstants.primaryColor),
             ),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.refresh, color: AppConstants.primaryColor, size: 16),
-                SizedBox(width: 8),
+                const Icon(
+                  Icons.refresh,
+                  color: AppConstants.primaryColor,
+                  size: 16,
+                ),
+                const SizedBox(width: 8),
                 Text(
-                  'Regenerate',
-                  style: TextStyle(
+                  AppLocalizations.of(context).regenerate,
+                  style: const TextStyle(
                     color: AppConstants.primaryColor,
                     fontWeight: FontWeight.w600,
                   ),
@@ -623,14 +548,14 @@ class _SummaryScreenState extends State<SummaryScreen> {
               elevation: 4,
               shadowColor: AppConstants.primaryColor.withOpacity(0.3),
             ),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.share, color: Colors.white, size: 16),
-                SizedBox(width: 8),
+                const Icon(Icons.share, color: Colors.white, size: 16),
+                const SizedBox(width: 8),
                 Text(
-                  'Share Summary',
-                  style: TextStyle(
+                  AppLocalizations.of(context).shareSummary,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                   ),
@@ -643,18 +568,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
     );
   }
 
-  void _changeFile() {
-    final pdfProvider = Provider.of<PdfProvider>(context, listen: false);
-    final summaryProvider = Provider.of<SummaryProvider>(
-      context,
-      listen: false,
-    );
-
-    pdfProvider.selectAndUploadFile().then((_) {
-      summaryProvider.clearSummary();
-    });
-  }
-
   void _navigateToHome() {
     final pdfProvider = Provider.of<PdfProvider>(context, listen: false);
     pdfProvider.changeTab(BottomNavItem.home);
@@ -662,41 +575,14 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
   void _shareSummary() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Share functionality would open here'),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
-
-  void _showFileInfo(FileProvider fileProvider) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('File Information'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Name: ${fileProvider.fileName ?? 'Unknown'}'),
-            Text('Size: ${fileProvider.formattedFileSize}'),
-            Text(
-              'Type: ${fileProvider.fileName?.split('.').last ?? 'Unknown'}',
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
+      SnackBar(
+        content: Text(AppLocalizations.of(context).shareFunctionality),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
 }
 
-// _KeyPoint widget
 class _KeyPoint extends StatelessWidget {
   final String text;
 
@@ -734,7 +620,6 @@ class _KeyPoint extends StatelessWidget {
   }
 }
 
-// _TopicItem widget
 class _TopicItem extends StatelessWidget {
   final String title;
 

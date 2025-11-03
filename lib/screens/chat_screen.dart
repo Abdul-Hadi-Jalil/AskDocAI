@@ -1,3 +1,4 @@
+import 'package:docusense_ai/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
@@ -5,8 +6,9 @@ import 'package:uuid/uuid.dart';
 import 'package:provider/provider.dart';
 import '../providers/pdf_provider.dart';
 import '../widgets/app_bar.dart';
+import '../widgets/file_header.dart'; // Import the new widget
 import '../utils/gemini_service.dart';
-import '../utils/constants.dart'; // Import your constants
+import '../utils/constants.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -23,7 +25,6 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    // Add welcome message when chat starts
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _addWelcomeMessage();
     });
@@ -37,8 +38,9 @@ class _ChatScreenState extends State<ChatScreen> {
       TextMessage(
         id: uuid.v4(),
         authorId: botUser.id,
-        text:
-            'Hello! I\'m ready to help you understand "$fileName". What would you like to know?',
+        text: AppLocalizations.of(
+          context,
+        ).chatWelcomeMessage.replaceAll('%fileName', fileName),
         createdAt: DateTime.now(),
       ),
     );
@@ -80,61 +82,19 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       );
     } catch (e) {
-      // Show error message
       _chatController.insertMessage(
         TextMessage(
           id: uuid.v4(),
           authorId: botUser.id,
-          text: 'Sorry, I encountered an error. Please try again.',
+          text: AppLocalizations.of(context).errorTryAgain,
           createdAt: DateTime.now(),
         ),
       );
     }
   }
 
-  void _showFileInfo() {
-    final pdfProvider = context.read<PdfProvider>();
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('File Information'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Name: ${pdfProvider.uploadedFileName ?? 'No file'}'),
-            Text(
-              'Size: ${_calculateFileSize(pdfProvider.uploadedFileContent)}',
-            ),
-            Text('Type: PDF Document'),
-            Text('Uploaded: Just now'),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  String _calculateFileSize(String? content) {
-    if (content == null) return '0 KB';
-    final sizeInBytes = content.length * 2;
-    if (sizeInBytes < 1024) return '$sizeInBytes B';
-    if (sizeInBytes < 1048576) {
-      return '${(sizeInBytes / 1024).toStringAsFixed(1)} KB';
-    }
-    return '${(sizeInBytes / 1048576).toStringAsFixed(1)} MB';
-  }
-
   @override
   Widget build(BuildContext context) {
-    final pdfProvider = context.watch<PdfProvider>();
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -143,86 +103,9 @@ class _ChatScreenState extends State<ChatScreen> {
             // Custom App Bar
             const CustomAppBar(),
 
-            // File Header
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppConstants.lightPurple, // Use your constant
-                border: Border(
-                  bottom: BorderSide(
-                    color: AppConstants.borderColor, // Use your constant
-                    width: 1,
-                  ),
-                ),
-              ),
-              child: Row(
-                children: [
-                  // File Icon
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [
-                          AppConstants.primaryColor,
-                          AppConstants.secondaryColor,
-                        ], // Use your constants
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(
-                        AppConstants.borderRadius,
-                      ), // Use your constant
-                    ),
-                    child: const Icon(
-                      Icons.picture_as_pdf,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
+            // File Header - Using the new widget (no parameters needed)
+            const FileHeader(),
 
-                  // File Details
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          pdfProvider.uploadedFileName ?? 'No file selected',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: AppConstants.textColor, // Use your constant
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          _calculateFileSize(pdfProvider.uploadedFileContent),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color:
-                                AppConstants.subtitleColor, // Use your constant
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // File Actions
-                  IconButton(
-                    onPressed: _showFileInfo,
-                    icon: const Icon(
-                      Icons.info_outline,
-                      color: AppConstants.primaryColor, // Use your constant
-                    ),
-                    tooltip: 'File Information',
-                  ),
-                ],
-              ),
-            ),
-
-            // Chat UI Section
             // Chat UI Section
             Expanded(
               child: Container(
@@ -233,17 +116,12 @@ class _ChatScreenState extends State<ChatScreen> {
                   theme: ChatTheme(
                     colors: ChatColors(
                       primary: AppConstants.primaryColor,
-                      onPrimary:
-                          Colors.white, // Text color on primary background
-                      surface: Colors.white, // Background color
-                      onSurface:
-                          AppConstants.textColor, // Text color on surface
-                      surfaceContainer:
-                          AppConstants.lightPurple, // Container color
-                      surfaceContainerLow:
-                          Colors.grey.shade100, // Lower elevation container
-                      surfaceContainerHigh:
-                          Colors.grey.shade200, // Higher elevation container
+                      onPrimary: Colors.white,
+                      surface: Colors.white,
+                      onSurface: AppConstants.textColor,
+                      surfaceContainer: AppConstants.lightPurple,
+                      surfaceContainerLow: Colors.grey.shade100,
+                      surfaceContainerHigh: Colors.grey.shade200,
                     ),
                     typography: ChatTypography(
                       bodyLarge: const TextStyle(
