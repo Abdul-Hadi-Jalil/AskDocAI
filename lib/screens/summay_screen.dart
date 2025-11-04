@@ -1,4 +1,4 @@
-import 'package:docusense_ai/app_localization.dart'; // Add this import
+import 'package:docusense_ai/app_localization.dart';
 import 'package:docusense_ai/models/app_state.dart';
 import 'package:docusense_ai/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +20,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final fileProvider = Provider.of<FileProvider>(context, listen: false);
-      final summaryProvider = Provider.of<SummaryProvider>(
-        context,
-        listen: false,
-      );
-
-      if (fileProvider.hasFile && summaryProvider.summary == null) {
-        summaryProvider.generateSummary();
-      }
-    });
+    // Remove the automatic summary generation
   }
 
   @override
