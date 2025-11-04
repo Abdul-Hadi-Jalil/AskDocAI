@@ -6,6 +6,7 @@ class RecentFile {
   final String path;
   final int size;
   final DateTime uploadDate;
+  final String content; // Add content to store file content
   bool isSelected;
 
   RecentFile({
@@ -13,6 +14,7 @@ class RecentFile {
     required this.path,
     required this.size,
     required this.uploadDate,
+    required this.content, // Add content parameter
     this.isSelected = false,
   });
 
@@ -21,6 +23,7 @@ class RecentFile {
     String? path,
     int? size,
     DateTime? uploadDate,
+    String? content,
     bool? isSelected,
   }) {
     return RecentFile(
@@ -28,9 +31,21 @@ class RecentFile {
       path: path ?? this.path,
       size: size ?? this.size,
       uploadDate: uploadDate ?? this.uploadDate,
+      content: content ?? this.content, // Include content in copyWith
       isSelected: isSelected ?? this.isSelected,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RecentFile &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          size == other.size;
+
+  @override
+  int get hashCode => name.hashCode ^ size.hashCode;
 }
 
 class FileProvider extends ChangeNotifier {
@@ -89,8 +104,8 @@ class FileProvider extends ChangeNotifier {
     _platformFile = platformFile;
 
     // Add to recent files when a new file is set
-    if (path != null && size != null) {
-      addToRecentFiles(name, path, size);
+    if (name.isNotEmpty && size != null) {
+      addToRecentFiles(name, path ?? '', size, content);
     }
 
     notifyListeners();
@@ -110,19 +125,21 @@ class FileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Recent Files Management
-  void addToRecentFiles(String name, String path, int size) {
-    // Remove if already exists (to update position)
-    _recentFiles.removeWhere((file) => file.path == path);
-
-    // Add new file to beginning
+  // Recent Files Management - UPDATED to include content
+  void addToRecentFiles(String name, String path, int size, String content) {
+    // Create the new file object
     final newFile = RecentFile(
       name: name,
       path: path,
       size: size,
       uploadDate: DateTime.now(),
+      content: content, // Store the file content
     );
 
+    // Remove any existing file with the same name AND size
+    _recentFiles.removeWhere((file) => file.name == name && file.size == size);
+
+    // Add new file to beginning
     _recentFiles.insert(0, newFile);
 
     // Keep only last 5 files
@@ -134,24 +151,34 @@ class FileProvider extends ChangeNotifier {
   }
 
   void selectRecentFile(RecentFile file) {
-    // Deselect all files
+    // Create a new list to ensure proper state updates
+    final updatedFiles = <RecentFile>[];
+
+    // Deselect all files and add to new list
     for (var recentFile in _recentFiles) {
-      recentFile.isSelected = false;
+      updatedFiles.add(
+        recentFile.copyWith(
+          isSelected:
+              recentFile.name == file.name && recentFile.size == file.size,
+        ),
+      );
     }
 
-    // Select the clicked file
-    final selectedIndex = _recentFiles.indexWhere((f) => f.path == file.path);
+    _recentFiles = updatedFiles;
+
+    // Find the selected file
+    final selectedIndex = _recentFiles.indexWhere(
+      (f) => f.name == file.name && f.size == file.size,
+    );
+
     if (selectedIndex != -1) {
-      _recentFiles[selectedIndex] = _recentFiles[selectedIndex].copyWith(
-        isSelected: true,
-      );
       _selectedFile = _recentFiles[selectedIndex];
 
-      // Set this as the current file
+      // Set this as the current file WITH CONTENT
       _fileName = file.name;
       _filePath = file.path;
       _fileSize = file.size;
-      // Note: We don't have the file content, but PDF provider will handle loading
+      _fileContent = file.content; // THIS IS THE KEY - set the file content
     }
 
     notifyListeners();
@@ -164,10 +191,21 @@ class FileProvider extends ChangeNotifier {
   }
 
   void clearSelection() {
-    for (var file in _recentFiles) {
-      file.isSelected = false;
-    }
+    // Create a new list with all files deselected
+    _recentFiles = _recentFiles
+        .map((file) => file.copyWith(isSelected: false))
+        .toList();
+
     _selectedFile = null;
     notifyListeners();
+  }
+
+  // Helper method to get unique recent files
+  List<RecentFile> get uniqueRecentFiles {
+    final uniqueFiles = <String, RecentFile>{};
+    for (var file in _recentFiles) {
+      uniqueFiles['${file.name}_${file.size}'] = file;
+    }
+    return uniqueFiles.values.toList();
   }
 }

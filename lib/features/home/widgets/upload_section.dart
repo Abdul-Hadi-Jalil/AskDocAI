@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/pdf_provider.dart';
-import '../providers/file_provider.dart';
-import '../utils/constants.dart';
+import '../../../providers/pdf_provider.dart';
+import '../../../providers/file_provider.dart';
+import '../../../utils/constants.dart';
 import 'package:docusense_ai/app_localization.dart';
 
 class UploadSection extends StatefulWidget {
