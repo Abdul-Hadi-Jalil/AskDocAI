@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:docusense_ai/features/home/widgets/features_section.dart';
-import 'package:docusense_ai/widgets/recent_files_section.dart';
+import 'package:docusense_ai/features/home/widgets/recent_files_section.dart';
 import 'package:docusense_ai/widgets/upload_section.dart';
 
 import 'welcome_section.dart';

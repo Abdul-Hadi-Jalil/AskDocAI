@@ -56,7 +56,7 @@ class AppLocalizations {
       'generateQuizDescription':
           'Generate a quiz based on your uploaded document',
       'testUnderstanding': 'Test your understanding of the document',
-      'generateQuizFromDocument': 'Generate Quiz from Document',
+      'generateQuizFromDocument': 'Generate Quiz',
       'regenerateQuiz': 'Regenerate Quiz',
       'checkAnswers': 'Check Answers',
       'uploadPdfFirstForQuiz': 'Please upload a PDF first to generate a quiz',
@@ -165,7 +165,7 @@ class AppLocalizations {
       'generateQuizDescription':
           'Genera un cuestionario basado en tu documento subido',
       'testUnderstanding': 'Pon a prueba tu comprensión del documento',
-      'generateQuizFromDocument': 'Generar Cuestionario del Documento',
+      'generateQuizFromDocument': 'Generar Cuestionario',
       'regenerateQuiz': 'Regenerar Cuestionario',
       'checkAnswers': 'Verificar Respuestas',
       'uploadPdfFirstForQuiz':
@@ -254,7 +254,7 @@ class AppLocalizations {
       'generateQuizDescription':
           'Générez un quiz basé sur votre document téléchargé',
       'testUnderstanding': 'Testez votre compréhension du document',
-      'generateQuizFromDocument': 'Générer le Quiz du Document',
+      'generateQuizFromDocument': 'Générer le Quiz',
       'regenerateQuiz': 'Régénérer le Quiz',
       'checkAnswers': 'Vérifier les Réponses',
       'uploadPdfFirstForQuiz':
@@ -341,7 +341,7 @@ class AppLocalizations {
       'generateQuizDescription':
           'Generieren Sie ein Quiz basierend auf Ihrem hochgeladenen Dokument',
       'testUnderstanding': 'Testen Sie Ihr Verständnis des Dokuments',
-      'generateQuizFromDocument': 'Quiz aus Dokument generieren',
+      'generateQuizFromDocument': 'Quiz generieren',
       'regenerateQuiz': 'Quiz neu generieren',
       'checkAnswers': 'Antworten überprüfen',
       'uploadPdfFirstForQuiz':
@@ -428,7 +428,7 @@ class AppLocalizations {
       'generateQuizDescription':
           'Genereer een quiz op basis van uw geüploade document',
       'testUnderstanding': 'Test uw begrip van het document',
-      'generateQuizFromDocument': 'Quiz genereren van Document',
+      'generateQuizFromDocument': 'Quiz genereren',
       'regenerateQuiz': 'Quiz opnieuw genereren',
       'checkAnswers': 'Antwoorden controleren',
       'uploadPdfFirstForQuiz': 'Upload eerst een PDF om een quiz te genereren',
@@ -506,7 +506,7 @@ class AppLocalizations {
       'generateQuizDescription':
           'قم بإنشاء اختبار بناءً على المستند الذي قمت برفعه',
       'testUnderstanding': 'اختبر فهمك للمستند',
-      'generateQuizFromDocument': 'إنشاء اختبار من المستند',
+      'generateQuizFromDocument': 'إنشاء اختبار',
       'regenerateQuiz': 'إعادة إنشاء الاختبار',
       'checkAnswers': 'التحقق من الإجابات',
       'uploadPdfFirstForQuiz': 'يرجى رفع ملف PDF أولاً لإنشاء اختبار',
@@ -583,7 +583,7 @@ class AppLocalizations {
       'documentQuiz': '文档测验',
       'generateQuizDescription': '基于您上传的文档生成测验',
       'testUnderstanding': '测试您对文档的理解',
-      'generateQuizFromDocument': '从文档生成测验',
+      'generateQuizFromDocument': '生成测验',
       'regenerateQuiz': '重新生成测验',
       'checkAnswers': '检查答案',
       'uploadPdfFirstForQuiz': '请先上传PDF以生成测验',

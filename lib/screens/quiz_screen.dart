@@ -195,79 +195,83 @@ class _QuizScreenState extends State<QuizScreen> {
                   }),
 
                 // Action Buttons (placed at the end of content)
+                // Action Buttons (placed at the end of content)
                 if (_mcqs.isNotEmpty)
                   Container(
                     margin: const EdgeInsets.fromLTRB(20, 20, 20, 40),
-                    child: Row(
+                    child: Column(
+                      // ← Changed from Row to Column
                       children: [
-                        // Regenerate Quiz Button
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: () => _generateQuiz(pdfProvider),
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: const Color(0xFF8A2BE2),
-                              side: const BorderSide(color: Color(0xFF8A2BE2)),
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                        // Check Answers Button
+                        ElevatedButton(
+                          onPressed: _answersChecked
+                              ? _tryAgain
+                              : _checkAnswers,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF8A2BE2),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 14,
+                              horizontal: 16,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            elevation: 4,
+                            shadowColor: const Color(
+                              0xFF8A2BE2,
+                            ).withOpacity(0.3),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                _answersChecked
+                                    ? Icons.refresh
+                                    : Icons.check_circle,
+                                size: 18,
                               ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.refresh, size: 18),
-                                const SizedBox(width: 8),
-                                Text(
-                                  AppLocalizations.of(context).regenerateQuiz,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                              const SizedBox(width: 8),
+                              Text(
+                                _answersChecked
+                                    ? AppLocalizations.of(context).tryAgain
+                                    : AppLocalizations.of(context).checkAnswers,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 10),
-                        // Check Answers Button
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: _answersChecked
-                                ? _tryAgain
-                                : _checkAnswers,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF8A2BE2),
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                        const SizedBox(
+                          height: 10,
+                        ), // ← Changed from width to height
+                        // Regenerate Quiz Button
+                        OutlinedButton(
+                          onPressed: () => _generateQuiz(pdfProvider),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: const Color(0xFF8A2BE2),
+                            side: const BorderSide(color: Color(0xFF8A2BE2)),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 14,
+                              horizontal: 16,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.refresh, size: 18),
+                              const SizedBox(width: 8),
+                              Text(
+                                AppLocalizations.of(context).regenerateQuiz,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                              elevation: 4,
-                              shadowColor: const Color(
-                                0xFF8A2BE2,
-                              ).withOpacity(0.3),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  _answersChecked
-                                      ? Icons.refresh
-                                      : Icons.check_circle,
-                                  size: 18,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  _answersChecked
-                                      ? AppLocalizations.of(context).tryAgain
-                                      : AppLocalizations.of(
-                                          context,
-                                        ).checkAnswers,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            ],
                           ),
                         ),
                       ],
