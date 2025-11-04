@@ -39,7 +39,7 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget _buildLoading() {
     return Column(
       children: [
-        const FileHeader(showInfoButton: false),
+        const FileHeader(showInfoButton: true),
         Expanded(
           child: Center(
             child: Column(
@@ -78,7 +78,7 @@ class _QuizScreenState extends State<QuizScreen> {
     return Column(
       children: [
         // File Header - Using the shared widget
-        const FileHeader(showInfoButton: false),
+        const FileHeader(showInfoButton: true),
 
         // Scrollable Quiz Content
         Expanded(

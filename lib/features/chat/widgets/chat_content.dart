@@ -1,6 +1,4 @@
 import 'package:docusense_ai/utils/constants.dart';
-import 'package:docusense_ai/widgets/app_bar.dart';
-import 'package:docusense_ai/widgets/file_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
@@ -21,12 +19,6 @@ class ChatContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Custom App Bar
-        const CustomAppBar(),
-
-        // File Header
-        const FileHeader(),
-
         // Chat UI Section
         Expanded(
           child: Container(

@@ -1,13 +1,13 @@
 import 'package:docusense_ai/app_localization.dart';
+import 'package:docusense_ai/features/chat/widgets/chat_content.dart';
 import 'package:docusense_ai/providers/pdf_provider.dart';
 import 'package:docusense_ai/utils/gemini_service.dart';
+import 'package:docusense_ai/widgets/app_bar.dart';
+import 'package:docusense_ai/widgets/file_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
-import 'package:uuid/uuid.dart';
 import 'package:provider/provider.dart';
-
-// Import chat widgets
-import 'widgets/chat_content.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -96,12 +96,18 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: ChatContent(
-          chatController: _chatController,
-          botUser: botUser,
-          onMessageSend: _handleMessageSend,
-        ),
+      appBar: const CustomAppBar(), // ← Add this line
+      body: Column(
+        children: [
+          const FileHeader(showInfoButton: true), // ← Add this line
+          Expanded(
+            child: ChatContent(
+              chatController: _chatController,
+              botUser: botUser,
+              onMessageSend: _handleMessageSend,
+            ),
+          ),
+        ],
       ),
     );
   }
