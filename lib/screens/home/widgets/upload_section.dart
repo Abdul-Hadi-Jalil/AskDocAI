@@ -1,3 +1,5 @@
+import 'package:docusense_ai/providers/auth_state.dart';
+import 'package:docusense_ai/screens/signin_screen.dart' as signin;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/pdf_provider.dart';
@@ -38,7 +40,16 @@ class _UploadSectionState extends State<UploadSection> {
             children: [
               // Upload Area
               GestureDetector(
-                onTap: () => pdfProvider.selectAndUploadFile(),
+                onTap: () {
+                  if (!Provider.of<AuthState>(
+                    context,
+                    listen: false,
+                  ).isUserSignedIn) {
+                    signin.showSignInDialog(context);
+                  } else {
+                    pdfProvider.selectAndUploadFile();
+                  }
+                },
                 child: Container(
                   padding: const EdgeInsets.all(40),
                   decoration: BoxDecoration(
@@ -82,7 +93,16 @@ class _UploadSectionState extends State<UploadSection> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => pdfProvider.selectAndUploadFile(),
+                  onPressed: () {
+                    if (!Provider.of<AuthState>(
+                      context,
+                      listen: false,
+                    ).isUserSignedIn) {
+                      signin.showSignInDialog(context);
+                    } else {
+                      pdfProvider.selectAndUploadFile();
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppConstants.primaryColor,
                     foregroundColor: Colors.white,

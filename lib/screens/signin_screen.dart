@@ -1,6 +1,7 @@
+import 'package:docusense_ai/Auth/google_auth.dart' as authService;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-//import 'package:docusense_ai/Auth/google_auth.dart' as authService;
+import "package:docusense_ai/Auth/apple_auth.dart";
 
 Future<void> showSignInDialog(BuildContext context) {
   return showDialog(
@@ -31,39 +32,38 @@ Future<void> showSignInDialog(BuildContext context) {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              //SizedBox(
-              // width: double.infinity,
-              //child: OutlinedButton.icon(
-              // style: OutlinedButton.styleFrom(
-              //  padding: const EdgeInsets.symmetric(vertical: 14),
-              // shape: RoundedRectangleBorder(
-              //  borderRadius: BorderRadius.circular(12),
-              // ),
-              //side: const BorderSide(color: Colors.transparent),
-              // backgroundColor: Colors.white,
-              // shadowColor: Colors.black12,
-              //elevation: 1,
-              // ),
-              //onPressed: () async {
-              // Navigator.pop(context);
-              //await authService.signInWithGoogle();
-              // AuthState will automatically update via Firebase listener
-              //},
-              //icon: const Icon(
-              // FontAwesomeIcons.google,
-              //color: Colors.black54,
-              // size: 18,
-              // ),
-              //label: const Text(
-              // "Sign in with Google",
-              //style: TextStyle(
-              // color: Colors.black87,
-              //fontSize: 16,
-              //fontWeight: FontWeight.w600,
-              // ),
-              //),
-              //),
-              //),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    side: const BorderSide(color: Colors.transparent),
+                    backgroundColor: Colors.white,
+                    shadowColor: Colors.black12,
+                    elevation: 1,
+                  ),
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    await authService.signInWithGoogle();
+                  },
+                  icon: const Icon(
+                    FontAwesomeIcons.google,
+                    color: Colors.black54,
+                    size: 18,
+                  ),
+                  label: const Text(
+                    "Sign in with Google",
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
@@ -75,9 +75,9 @@ Future<void> showSignInDialog(BuildContext context) {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.pop(context);
-                    // TODO: Handle Apple Sign-In
+                    await AppleAuth.signInWithApple();
                   },
                   icon: const Icon(
                     FontAwesomeIcons.apple,

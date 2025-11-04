@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:docusense_ai/providers/language_provider.dart';
+import 'package:docusense_ai/screens/signin_screen.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -66,6 +67,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: ElevatedButton(
             onPressed: () {
               // Sign in functionality
+              showSignInDialog(context);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppConstants.primaryColor,

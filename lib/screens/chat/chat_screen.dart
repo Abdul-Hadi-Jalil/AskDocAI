@@ -1,5 +1,5 @@
 import 'package:docusense_ai/app_localization.dart';
-import 'package:docusense_ai/features/chat/widgets/chat_content.dart';
+import 'package:docusense_ai/screens/chat/widgets/chat_content.dart';
 import 'package:docusense_ai/providers/pdf_provider.dart';
 import 'package:docusense_ai/utils/gemini_service.dart';
 import 'package:docusense_ai/widgets/app_bar.dart';
