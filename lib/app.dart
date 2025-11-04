@@ -1,12 +1,12 @@
 // Updated App.dart
+import 'package:docusense_ai/features/chat/chat_screen.dart';
+import 'package:docusense_ai/features/home/home_screen.dart';
 import 'package:docusense_ai/models/app_state.dart';
 import 'package:docusense_ai/screens/summay_screen.dart';
 import 'package:docusense_ai/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/pdf_provider.dart';
-import 'screens/home_screen.dart';
-import 'screens/chat_screen.dart';
 import 'screens/quiz_screen.dart';
 
 class App extends StatelessWidget {
