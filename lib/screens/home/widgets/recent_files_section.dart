@@ -173,8 +173,78 @@ class _RecentFileItem extends StatelessWidget {
                   ),
                 ),
               ],
+
+              // Action Buttons
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildActionButton(
+                      icon: Icons.chat,
+                      label: 'Chat',
+                      onTap: () {
+                        fileProvider.selectRecentFile(file);
+                        Navigator.pushNamed(context, '/chat');
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _buildActionButton(
+                      icon: Icons.summarize,
+                      label: 'Summary',
+                      onTap: () {
+                        fileProvider.selectRecentFile(file);
+                        Navigator.pushNamed(context, '/summary');
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _buildActionButton(
+                      icon: Icons.quiz,
+                      label: 'Quiz',
+                      onTap: () {
+                        fileProvider.selectRecentFile(file);
+                        Navigator.pushNamed(context, '/quiz');
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+        decoration: BoxDecoration(
+          color: const Color(0xFF8A2BE2).withOpacity(0.1),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Column(
+          children: [
+            Icon(icon, size: 16, color: const Color(0xFF8A2BE2)),
+            const SizedBox(height: 2),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 10,
+                color: Color(0xFF8A2BE2),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
       ),
     );

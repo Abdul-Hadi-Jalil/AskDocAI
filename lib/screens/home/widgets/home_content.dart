@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:docusense_ai/screens/home/widgets/features_section.dart';
 import 'package:docusense_ai/screens/home/widgets/recent_files_section.dart';
 import 'package:docusense_ai/screens/home/widgets/upload_section.dart';
 
@@ -16,8 +15,6 @@ class HomeContent extends StatelessWidget {
         child: Column(
           children: [
             const WelcomeSection(),
-            const SizedBox(height: 30),
-            FeaturesSection(),
             const SizedBox(height: 30),
             const UploadSection(),
             const RecentFilesSection(),

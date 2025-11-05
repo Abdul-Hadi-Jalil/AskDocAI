@@ -41,10 +41,12 @@ class _UploadSectionState extends State<UploadSection> {
               // Upload Area
               GestureDetector(
                 onTap: () {
-                  if (!Provider.of<AuthState>(
+                  final authState = Provider.of<AuthState>(
                     context,
                     listen: false,
-                  ).isUserSignedIn) {
+                  );
+
+                  if (!authState.isUserSignedIn) {
                     signin.showSignInDialog(context);
                   } else {
                     pdfProvider.selectAndUploadFile();

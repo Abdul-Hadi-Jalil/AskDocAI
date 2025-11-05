@@ -4,6 +4,8 @@ import '../utils/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:docusense_ai/providers/language_provider.dart';
 import 'package:docusense_ai/screens/signin_screen.dart';
+import '../providers/auth_state.dart';
+import '../Auth/google_sign_out.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -13,7 +15,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authState = Provider.of<AuthState>(context);
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       elevation: 4,
       shadowColor: Colors.black.withOpacity(0.5),
@@ -66,8 +70,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           margin: const EdgeInsets.only(right: 16),
           child: ElevatedButton(
             onPressed: () {
-              // Sign in functionality
-              showSignInDialog(context);
+              if (authState.isUserSignedIn) {
+                // Sign out logic
+                googleSignout(context); // Call your sign out function
+                authState.signOut(); // Update auth state
+              } else {
+                showSignInDialog(context);
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppConstants.primaryColor,
@@ -79,7 +88,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               elevation: 0,
             ),
             child: Text(
-              AppLocalizations.of(context).signIn,
+              authState.isUserSignedIn
+                  ? AppLocalizations.of(context).signOut
+                  : AppLocalizations.of(context).signIn,
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),

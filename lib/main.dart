@@ -1,7 +1,10 @@
 import 'package:docusense_ai/firebase_options.dart';
 import 'package:docusense_ai/providers/auth_state.dart';
 import 'package:docusense_ai/providers/summary_provider.dart';
+import 'package:docusense_ai/screens/chat/chat_screen.dart';
+import 'package:docusense_ai/screens/quiz_screen.dart';
 import 'package:docusense_ai/screens/splash_screen.dart';
+import 'package:docusense_ai/screens/summay_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -48,7 +51,7 @@ class SecureVault extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             scaffoldMessengerKey: scaffoldMessengerKey,
             localizationsDelegates: const [
-              AppLocalizationsDelegate(), // Use our manual delegate
+              AppLocalizationsDelegate(),
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
@@ -62,8 +65,7 @@ class SecureVault extends StatelessWidget {
               Locale('ar'), // Arabic
               Locale('zh'), // Chinese
             ],
-            locale: languageProvider
-                .currentLocale, // Use provider's locale instead of fixed 'en'
+            locale: languageProvider.currentLocale,
             theme: ThemeData(
               primaryColor: const Color(0xFF8A2BE2),
               colorScheme: ColorScheme.fromSwatch().copyWith(
@@ -73,6 +75,11 @@ class SecureVault extends StatelessWidget {
               useMaterial3: true,
             ),
             home: const SplashScreen(),
+            routes: {
+              '/chat': (context) => ChatScreen(),
+              '/summary': (context) => SummaryScreen(),
+              '/quiz': (context) => QuizScreen(),
+            },
           );
         },
       ),
