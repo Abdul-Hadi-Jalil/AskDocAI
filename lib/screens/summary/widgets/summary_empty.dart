@@ -3,6 +3,7 @@ import 'package:docusense_ai/models/app_state.dart';
 import 'package:docusense_ai/providers/file_provider.dart';
 import 'package:docusense_ai/providers/pdf_provider.dart';
 import 'package:docusense_ai/providers/summary_provider.dart';
+import 'package:docusense_ai/utils/ads_manager.dart';
 import 'package:docusense_ai/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +56,28 @@ class SummaryEmpty extends StatelessWidget {
             const SizedBox(height: 20),
             if (fileProvider.hasFile)
               ElevatedButton(
-                onPressed: summaryProvider.generateSummary,
+                onPressed: () async {
+                  try {
+                    // 1️⃣ Start generating summary in background
+                    final generateFuture = summaryProvider.generateSummary();
+
+                    // 2️⃣ Show Interstitial Ad
+                    AdManager.showRewardedAd(
+                      onUserEarnedReward: (reward) async {
+                        debugPrint(
+                          '🎁 User watched ad and earned reward: $reward',
+                        );
+                      },
+                      onAdDismissed: () async {
+                        debugPrint('👋 Ad closed — now showing summary');
+                        await generateFuture;
+                        // UI auto updates from provider
+                      },
+                    );
+                  } catch (e) {
+                    debugPrint('❌ Failed to show Interstitial Ad: $e');
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppConstants.primaryColor,
                   foregroundColor: Colors.white,

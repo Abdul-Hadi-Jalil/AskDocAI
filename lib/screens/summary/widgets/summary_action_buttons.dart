@@ -1,23 +1,40 @@
 import 'package:docusense_ai/app_localization.dart';
 import 'package:docusense_ai/providers/summary_provider.dart';
+import 'package:docusense_ai/utils/ads_manager.dart';
 import 'package:docusense_ai/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SummaryActionButtons extends StatelessWidget {
   const SummaryActionButtons({super.key});
-
   @override
   Widget build(BuildContext context) {
     final summaryProvider = Provider.of<SummaryProvider>(
       context,
       listen: false,
     );
-
     return Column(
       children: [
         OutlinedButton(
-          onPressed: summaryProvider.generateSummary,
+          onPressed: () async {
+            try {
+              // 1️⃣ Start generating summary in background
+              final generateFuture = summaryProvider.generateSummary();
+
+              AdManager.showRewardedAd(
+                onUserEarnedReward: (reward) async {
+                  debugPrint('🎁 User watched ad and earned reward: $reward');
+                },
+                onAdDismissed: () async {
+                  debugPrint('👋 Ad closed — now showing summary');
+                  await generateFuture;
+                  // UI auto updates from provider
+                },
+              );
+            } catch (e) {
+              debugPrint('❌ Failed to show Interstitial Ad: $e');
+            }
+          },
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             shape: RoundedRectangleBorder(
@@ -44,6 +61,7 @@ class SummaryActionButtons extends StatelessWidget {
             ],
           ),
         ),
+
         const SizedBox(height: 10),
         ElevatedButton(
           onPressed: () {},

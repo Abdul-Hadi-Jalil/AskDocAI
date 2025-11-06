@@ -1,4 +1,5 @@
 import 'package:docusense_ai/app_localization.dart'; // Add this import
+import 'package:docusense_ai/utils/ads_manager.dart';
 import 'package:docusense_ai/utils/gemini_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,12 @@ class _QuizScreenState extends State<QuizScreen> {
   bool _answersChecked = false;
   bool _isLoading = false;
   String? _errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    AdManager.loadRewardedAd(); // ✅ preload
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +138,21 @@ class _QuizScreenState extends State<QuizScreen> {
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     child: ElevatedButton(
-                      onPressed: () => _generateQuiz(pdfProvider),
+                      onPressed: () async {
+                        _generateQuiz(pdfProvider);
+                        AdManager.showRewardedAd(
+                          onUserEarnedReward: (reward) async {
+                            debugPrint(
+                              '🎁 User watched ad and earned reward: $reward',
+                            );
+                          },
+                          onAdDismissed: () async {
+                            debugPrint('👋 Ad closed — now showing summary');
+                            //await generateFuture;
+                            // UI auto updates from provider
+                          },
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF8A2BE2),
                         foregroundColor: Colors.white,
@@ -195,7 +216,6 @@ class _QuizScreenState extends State<QuizScreen> {
                   }),
 
                 // Action Buttons (placed at the end of content)
-                // Action Buttons (placed at the end of content)
                 if (_mcqs.isNotEmpty)
                   Container(
                     margin: const EdgeInsets.fromLTRB(20, 20, 20, 40),
@@ -248,7 +268,22 @@ class _QuizScreenState extends State<QuizScreen> {
                         ), // ← Changed from width to height
                         // Regenerate Quiz Button
                         OutlinedButton(
-                          onPressed: () => _generateQuiz(pdfProvider),
+                          onPressed: () {
+                            _generateQuiz(pdfProvider);
+                            AdManager.showRewardedAd(
+                              onUserEarnedReward: (reward) async {
+                                debugPrint(
+                                  '🎁 User watched ad and earned reward: $reward',
+                                );
+                              },
+                              onAdDismissed: () async {
+                                debugPrint(
+                                  '👋 Ad closed — now showing summary',
+                                );
+                                // UI auto updates from provider
+                              },
+                            );
+                          },
                           style: OutlinedButton.styleFrom(
                             foregroundColor: const Color(0xFF8A2BE2),
                             side: const BorderSide(color: Color(0xFF8A2BE2)),
