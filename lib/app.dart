@@ -2,7 +2,7 @@
 import 'package:docusense_ai/screens/chat/chat_screen.dart';
 import 'package:docusense_ai/screens/home/home_screen.dart';
 import 'package:docusense_ai/models/app_state.dart';
-import 'package:docusense_ai/screens/summay_screen.dart';
+import 'package:docusense_ai/screens/summary/summary_screen.dart';
 import 'package:docusense_ai/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -4,10 +4,11 @@ import 'package:docusense_ai/providers/summary_provider.dart';
 import 'package:docusense_ai/screens/chat/chat_screen.dart';
 import 'package:docusense_ai/screens/quiz_screen.dart';
 import 'package:docusense_ai/screens/splash_screen.dart';
-import 'package:docusense_ai/screens/summay_screen.dart';
+import 'package:docusense_ai/screens/summary/summary_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'providers/pdf_provider.dart';
 import 'providers/file_provider.dart';
@@ -20,6 +21,7 @@ final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await MobileAds.instance.initialize();
   runApp(const SecureVault());
 }
 

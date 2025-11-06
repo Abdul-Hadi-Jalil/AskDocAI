@@ -52,6 +52,8 @@ dependencies:
     sdk: flutter
   shared_preferences: ^2.5.3
   sign_in_with_apple: ^7.0.1
+  google_mobile_ads:
+
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,10 @@
 import 'package:docusense_ai/providers/pdf_provider.dart';
 import 'package:docusense_ai/widgets/app_bar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+// Import home widgets
 import 'widgets/home_content.dart';
 
 class HomeScreen extends StatelessWidget {
