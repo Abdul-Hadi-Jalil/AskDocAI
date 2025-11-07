@@ -1,4 +1,4 @@
-import 'package:docusense_ai/app_localization.dart'; // Add this import
+import 'package:docusense_ai/app_localization.dart';
 import 'package:docusense_ai/utils/ads_manager.dart';
 import 'package:docusense_ai/utils/gemini_service.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import '../models/mcq.dart';
 import '../widgets/quiz/mcq_widget.dart';
 import '../widgets/quiz/results_banner.dart';
 import '../widgets/app_bar.dart';
-import '../widgets/file_header.dart'; // Add this import
+import '../widgets/file_header.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});

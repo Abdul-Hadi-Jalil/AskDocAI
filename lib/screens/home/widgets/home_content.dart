@@ -35,9 +35,9 @@ class _HomeContentState extends State<HomeContent> {
             if (_bannerAd != null)
               Container(
                 alignment: Alignment.center,
-                child: AdWidget(ad: _bannerAd!),
                 width: _bannerAd!.size.width.toDouble(),
                 height: _bannerAd!.size.height.toDouble(),
+                child: AdWidget(ad: _bannerAd!),
               ),
 
             const SizedBox(height: 20),

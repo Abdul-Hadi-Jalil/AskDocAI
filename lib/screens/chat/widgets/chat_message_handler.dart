@@ -10,6 +10,7 @@ class ChatMessageHandler {
   final ChatController chatController;
   final Uuid uuid;
   final User botUser;
+  int messageCount = 0;
 
   ChatMessageHandler({
     required this.chatController,
@@ -42,8 +43,14 @@ class ChatMessageHandler {
     // Add user message
     _addUserMessage(text);
 
+    // ad implementation comes here
+    messageCount++;
+    debugPrint("🎁 message incremented $messageCount");
+
     // Get AI response
     try {
+      debugPrint("🎁 gemini $messageCount");
+      print("🎁 gemini $messageCount");
       final response = await getGeminiResponse(
         text,
         fileContent: pdfProvider.uploadedFileContent,
