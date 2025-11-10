@@ -3,7 +3,6 @@ import 'package:docusense_ai/providers/file_provider.dart';
 import 'package:docusense_ai/utils/file_helper.dart';
 import 'package:flutter/material.dart';
 import '../models/app_state.dart';
-import "package:docusense_ai/main.dart";
 
 class PdfProvider extends ChangeNotifier {
   AppState _state = const AppState();
@@ -59,38 +58,15 @@ class PdfProvider extends ChangeNotifier {
           size: fileSize, // Real file size in bytes
         );
 
-        // Show success message using global key
-        scaffoldMessengerKey.currentState?.showSnackBar(
-          SnackBar(
-            content: Text('$fileName loaded successfully!'),
-            backgroundColor: Colors.green,
-            duration: const Duration(seconds: 3),
-          ),
-        );
+        // Removed scaffold message - progress indicator shows loading state instead
       } else if (fileInfo == null) {
-        // User canceled
-        scaffoldMessengerKey.currentState?.showSnackBar(
-          const SnackBar(
-            content: Text('File selection canceled'),
-            duration: Duration(seconds: 2),
-          ),
-        );
+        // User canceled - no message needed
       } else {
-        // Empty content or read error
-        scaffoldMessengerKey.currentState?.showSnackBar(
-          const SnackBar(
-            content: Text('Could not read file content'),
-            duration: Duration(seconds: 2),
-          ),
-        );
+        // Empty content or read error - no message needed
       }
     } catch (e) {
-      scaffoldMessengerKey.currentState?.showSnackBar(
-        SnackBar(
-          content: Text('Error: ${e.toString()}'),
-          duration: const Duration(seconds: 3),
-        ),
-      );
+      // Error handling - you might want to show an error state in the UI
+      print('Error uploading file: $e');
     } finally {
       _setState(isProcessingFile: false);
     }

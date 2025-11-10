@@ -91,20 +91,48 @@ class _UploadSectionState extends State<UploadSection> {
                 ),
               ),
               const SizedBox(height: 20),
+
+              // Progress Indicator
+              if (pdfProvider.isProcessingFile) ...[
+                Column(
+                  children: [
+                    LinearProgressIndicator(
+                      backgroundColor: AppConstants.borderColor,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        AppConstants.primaryColor,
+                      ),
+                      minHeight: 6,
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Loading file...',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppConstants.subtitleColor,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                ),
+              ],
+
               // Upload Button
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (!Provider.of<AuthState>(
-                      context,
-                      listen: false,
-                    ).isUserSignedIn) {
-                      signin.showSignInDialog(context);
-                    } else {
-                      pdfProvider.selectAndUploadFile();
-                    }
-                  },
+                  onPressed: pdfProvider.isProcessingFile
+                      ? null
+                      : () {
+                          if (!Provider.of<AuthState>(
+                            context,
+                            listen: false,
+                          ).isUserSignedIn) {
+                            signin.showSignInDialog(context);
+                          } else {
+                            pdfProvider.selectAndUploadFile();
+                          }
+                        },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppConstants.primaryColor,
                     foregroundColor: Colors.white,
@@ -115,20 +143,44 @@ class _UploadSectionState extends State<UploadSection> {
                     elevation: 4,
                     shadowColor: AppConstants.primaryColor.withOpacity(0.3),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.cloud_upload, size: 20),
-                      SizedBox(width: 8),
-                      Text(
-                        AppLocalizations.of(context).uploadPdf,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                  child: pdfProvider.isProcessingFile
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Loading...',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.cloud_upload, size: 20),
+                            SizedBox(width: 8),
+                            Text(
+                              AppLocalizations.of(context).uploadPdf,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
             ],
@@ -136,7 +188,8 @@ class _UploadSectionState extends State<UploadSection> {
         ),
         const SizedBox(height: 20),
         // File Status Section
-        if (fileProvider.hasFile) _buildFileStatusSection(fileProvider),
+        if (fileProvider.hasFile && !pdfProvider.isProcessingFile)
+          _buildFileStatusSection(fileProvider),
       ],
     );
   }
