@@ -350,19 +350,42 @@ class _QuizScreenState extends State<QuizScreen> {
       }
 
       setState(() {
-        _mcqs.clear();
-        _mcqs.addAll(generatedMCQs);
+        _mcqs
+          ..clear()
+          ..addAll(generatedMCQs);
         _isLoading = false;
         _errorMessage = null;
       });
     } catch (e) {
+      String userFriendlyMessage;
+
+      // 🧠 Match common failure cases
+      if (e.toString().toLowerCase().contains('token') ||
+          e.toString().toLowerCase().contains('limit')) {
+        userFriendlyMessage =
+            'Token limit reached. Please upgrade your plan or try again later.';
+      } else if (e.toString().toLowerCase().contains('timeout')) {
+        userFriendlyMessage =
+            'Server took too long to respond. Please check your connection.';
+      } else if (e.toString().toLowerCase().contains('network') ||
+          e.toString().toLowerCase().contains('socket')) {
+        userFriendlyMessage = 'Network issue. Please reconnect and try again.';
+      } else if (e.toString().toLowerCase().contains('failed') ||
+          e.toString().toLowerCase().contains('error')) {
+        userFriendlyMessage =
+            'Server is busy right now. Please try again in a moment.';
+      } else {
+        userFriendlyMessage =
+            'Server is busy right now. Please try again in a moment.';
+      }
+
       setState(() {
         _isLoading = false;
-        _errorMessage =
-            '${AppLocalizations.of(context).failedToGenerateQuiz}: ${e.toString()}';
+        _errorMessage = userFriendlyMessage;
         _mcqs.clear();
       });
-      print('Error generating quiz: $e');
+
+      debugPrint('❌ Error generating quiz: $e');
     }
   }
 

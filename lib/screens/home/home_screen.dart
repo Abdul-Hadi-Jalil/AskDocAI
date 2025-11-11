@@ -1,4 +1,5 @@
 import 'package:docusense_ai/models/app_state.dart';
+import 'package:docusense_ai/providers/auth_state.dart';
 import 'package:docusense_ai/providers/pdf_provider.dart';
 import 'package:docusense_ai/screens/quiz/quiz_screen.dart';
 import 'package:docusense_ai/widgets/app_bar.dart';
@@ -87,6 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildHomeContent() {
+    // auth state to check if user is signed in then display the recent files section.
+    final authState = Provider.of<AuthState>(context);
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -106,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 20),
             const UploadSection(),
-            const RecentFilesSection(),
+            if (authState.isUserSignedIn) const RecentFilesSection(),
           ],
         ),
       ),

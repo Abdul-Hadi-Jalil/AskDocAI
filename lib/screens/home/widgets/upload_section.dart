@@ -15,10 +15,15 @@ class UploadSection extends StatefulWidget {
 }
 
 class _UploadSectionState extends State<UploadSection> {
+  bool _isLocalLoading = false;
+
   @override
   Widget build(BuildContext context) {
     final pdfProvider = Provider.of<PdfProvider>(context);
     final fileProvider = Provider.of<FileProvider>(context);
+
+    // Combine both loading states
+    final bool isLoading = pdfProvider.isProcessingFile || _isLocalLoading;
 
     return Column(
       children: [
@@ -45,46 +50,65 @@ class _UploadSectionState extends State<UploadSection> {
                   padding: const EdgeInsets.all(40),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: AppConstants.borderColor,
+                      color: isLoading
+                          ? AppConstants.primaryColor.withOpacity(0.5)
+                          : AppConstants.borderColor,
                       width: 2,
                     ),
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.white,
+                    color: isLoading
+                        ? AppConstants.primaryColor.withOpacity(0.05)
+                        : Colors.white,
                   ),
                   child: Column(
                     children: [
-                      // Simple loading icon
-                      if (pdfProvider.isProcessingFile)
-                        const SizedBox(
-                          width: 48,
-                          height: 48,
-                          child: CircularProgressIndicator(),
-                        )
-                      else
-                        Icon(
-                          Icons.cloud_upload_outlined,
-                          size: 48,
-                          color: AppConstants.primaryColor,
-                        ),
+                      // Animated loading icon
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: isLoading
+                            ? const SizedBox(
+                                width: 48,
+                                height: 48,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 3,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    AppConstants.primaryColor,
+                                  ),
+                                ),
+                              )
+                            : Icon(
+                                Icons.cloud_upload_outlined,
+                                size: 48,
+                                color: AppConstants.primaryColor,
+                              ),
+                      ),
                       const SizedBox(height: 15),
-                      Text(
-                        pdfProvider.isProcessingFile
-                            ? 'Uploading...'
-                            : AppLocalizations.of(context).uploadPdf,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: AppConstants.textColor,
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: Text(
+                          isLoading
+                              ? 'Uploading...'
+                              : AppLocalizations.of(context).uploadPdf,
+                          key: ValueKey(isLoading),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: AppConstants.textColor,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        pdfProvider.isProcessingFile
-                            ? 'Please wait'
-                            : AppLocalizations.of(context).tapToSelectFile,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppConstants.subtitleColor,
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: Text(
+                          isLoading
+                              ? 'Processing your file...'
+                              : AppLocalizations.of(context).tapToSelectFile,
+                          key: ValueKey(isLoading),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppConstants.subtitleColor,
+                          ),
                         ),
                       ),
                     ],
@@ -93,76 +117,96 @@ class _UploadSectionState extends State<UploadSection> {
               ),
               const SizedBox(height: 20),
 
-              // Simple loading indicator
-              if (pdfProvider.isProcessingFile) ...[
-                const Column(
-                  children: [
-                    CircularProgressIndicator(),
-                    SizedBox(height: 16),
-                    Text(
-                      'Loading your file...',
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
-                    ),
-                    SizedBox(height: 16),
-                  ],
+              // Loading indicator with better animation
+              if (isLoading) ...[
+                AnimatedOpacity(
+                  opacity: isLoading ? 1.0 : 0.0,
+                  duration: const Duration(milliseconds: 300),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: 32,
+                        height: 32,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            AppConstants.primaryColor,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Loading your file...',
+                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
                 ),
               ],
 
               // Upload Button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: pdfProvider.isProcessingFile
-                      ? null
-                      : () => _handleUpload(pdfProvider, context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppConstants.primaryColor,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+              AnimatedOpacity(
+                opacity: isLoading ? 0.7 : 1.0,
+                duration: const Duration(milliseconds: 300),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: isLoading
+                        ? null
+                        : () => _handleUpload(pdfProvider, context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppConstants.primaryColor,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      elevation: isLoading ? 2 : 4,
+                      shadowColor: AppConstants.primaryColor.withOpacity(0.3),
                     ),
-                    elevation: 4,
-                    shadowColor: AppConstants.primaryColor.withOpacity(0.3),
-                  ),
-                  child: pdfProvider.isProcessingFile
-                      ? const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.white,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: isLoading
+                          ? const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Processing...',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.cloud_upload, size: 20),
+                                const SizedBox(width: 8),
+                                Text(
+                                  AppLocalizations.of(context).uploadPdf,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(width: 8),
-                            Text(
-                              'Loading...',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.cloud_upload, size: 20),
-                            const SizedBox(width: 8),
-                            Text(
-                              AppLocalizations.of(context).uploadPdf,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -170,25 +214,51 @@ class _UploadSectionState extends State<UploadSection> {
         ),
         const SizedBox(height: 20),
 
-        // File Status Section
-        if (fileProvider.hasFile && !pdfProvider.isProcessingFile)
+        // File Status Section with smooth appearance
+        if (fileProvider.hasFile && !isLoading)
           _buildFileStatusSection(fileProvider),
       ],
     );
   }
 
-  void _handleUpload(PdfProvider pdfProvider, BuildContext context) {
+  Future<void> _handleUpload(
+    PdfProvider pdfProvider,
+    BuildContext context,
+  ) async {
     final authState = Provider.of<AuthState>(context, listen: false);
 
     if (!authState.isUserSignedIn) {
       signin.showSignInDialog(context);
     } else {
-      pdfProvider.selectAndUploadFile();
+      // Set local loading state first for immediate feedback
+      setState(() {
+        _isLocalLoading = true;
+      });
+
+      // Add a small delay to ensure loading state is visible
+      await Future.delayed(const Duration(milliseconds: 50));
+
+      try {
+        // Start both the file processing and a minimum delay
+        final processingFuture = pdfProvider.selectAndUploadFile();
+        final minimumDelay = Future.delayed(const Duration(milliseconds: 1500));
+
+        // Wait for both to complete (whichever takes longer)
+        await Future.wait([processingFuture, minimumDelay]);
+      } finally {
+        // Ensure loading state is cleared even if there's an error
+        if (mounted) {
+          setState(() {
+            _isLocalLoading = false;
+          });
+        }
+      }
     }
   }
 
   Widget _buildFileStatusSection(FileProvider fileProvider) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 500),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppConstants.lightPurple,
