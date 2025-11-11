@@ -4,7 +4,7 @@ import 'package:docusense_ai/providers/auth_state.dart';
 import 'package:docusense_ai/providers/summary_provider.dart';
 import 'package:docusense_ai/screens/chat/chat_screen.dart';
 import 'package:docusense_ai/screens/quiz_screen.dart';
-import 'package:docusense_ai/screens/splash_screen.dart';
+import 'package:docusense_ai/screens/splash/splash_screen.dart';
 import 'package:docusense_ai/screens/summary/summary_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

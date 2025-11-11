@@ -1,9 +1,12 @@
+import 'package:docusense_ai/screens/splash/widgets/loading_dot.dart';
+import 'package:docusense_ai/screens/splash/widgets/shimer_effect.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:docusense_ai/app.dart';
-import 'package:docusense_ai/app_localization.dart'; // Add this import
+import 'package:docusense_ai/app_localization.dart';
+import 'package:docusense_ai/screens/splash/widgets/background_circles.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -76,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen>
         child: Stack(
           children: [
             // Background animated circles
-            _buildBackgroundCircles(),
+            const BackgroundCircles(),
 
             // Main content
             Center(
@@ -219,11 +222,11 @@ class _SplashScreenState extends State<SplashScreen>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              _LoadingDot(delay: 0),
+                              LoadingDot(delay: 0),
                               const SizedBox(width: 8),
-                              _LoadingDot(delay: 160),
+                              LoadingDot(delay: 160),
                               const SizedBox(width: 8),
-                              _LoadingDot(delay: 320),
+                              LoadingDot(delay: 320),
                             ],
                           ),
 
@@ -319,163 +322,6 @@ class _SplashScreenState extends State<SplashScreen>
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildBackgroundCircles() {
-    return Stack(
-      children: [
-        // Circle 1
-        Positioned(
-          top: -50,
-          left: -50,
-          child: Container(
-            width: 200,
-            height: 200,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.05),
-            ),
-          ),
-        ),
-        // Circle 2
-        Positioned(
-          bottom: -30,
-          right: -30,
-          child: Container(
-            width: 150,
-            height: 150,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.05),
-            ),
-          ),
-        ),
-        // Circle 3
-        Positioned(
-          top: MediaQuery.of(context).size.height * 0.5,
-          right: -20,
-          child: Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.05),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _LoadingDot extends StatefulWidget {
-  final int delay;
-
-  const _LoadingDot({required this.delay});
-
-  @override
-  State<_LoadingDot> createState() => _LoadingDotState();
-}
-
-class _LoadingDotState extends State<_LoadingDot>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 1400),
-      vsync: this,
-    );
-
-    _animation = Tween<double>(
-      begin: 0.8,
-      end: 1.0,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-
-    Future.delayed(Duration(milliseconds: widget.delay), () {
-      _controller.repeat(reverse: true);
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        return Opacity(
-          opacity: _animation.value > 0.9 ? 1.0 : 0.5,
-          child: Transform.scale(scale: _animation.value, child: child),
-        );
-      },
-      child: Container(
-        width: 12,
-        height: 12,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-        ),
-      ),
-    );
-  }
-}
-
-class ShimmerEffect extends StatefulWidget {
-  const ShimmerEffect({super.key});
-
-  @override
-  State<ShimmerEffect> createState() => _ShimmerEffectState();
-}
-
-class _ShimmerEffectState extends State<ShimmerEffect>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(-200 + (_controller.value * 400), 0),
-          child: Container(
-            width: 100,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.transparent,
-                  Colors.white.withOpacity(0.4),
-                  Colors.transparent,
-                ],
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }
