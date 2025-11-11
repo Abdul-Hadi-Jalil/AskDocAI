@@ -1,4 +1,5 @@
 import 'package:docusense_ai/firebase_options.dart';
+import 'package:docusense_ai/providers/ad_provider.dart';
 import 'package:docusense_ai/providers/auth_state.dart';
 import 'package:docusense_ai/providers/summary_provider.dart';
 import 'package:docusense_ai/screens/chat/chat_screen.dart';
@@ -32,6 +33,7 @@ class SecureVault extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => AdProvider()),
         ChangeNotifierProvider(create: (_) => AuthState()),
         ChangeNotifierProvider(create: (_) => FileProvider()),
         ChangeNotifierProvider(create: (_) => LanguageProvider()),

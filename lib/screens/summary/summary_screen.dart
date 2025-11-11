@@ -1,7 +1,6 @@
 import 'package:docusense_ai/providers/file_provider.dart';
 import 'package:docusense_ai/providers/summary_provider.dart';
 import 'package:docusense_ai/utils/ads_manager.dart';
-import 'package:docusense_ai/widgets/app_bar.dart';
 import 'package:docusense_ai/widgets/file_header.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +32,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const CustomAppBar(),
       body: Column(
         children: [
           const FileHeader(),

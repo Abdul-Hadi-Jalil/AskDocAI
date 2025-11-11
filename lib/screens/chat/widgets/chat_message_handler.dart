@@ -1,6 +1,8 @@
 import 'package:docusense_ai/app_localization.dart';
 import 'package:docusense_ai/providers/pdf_provider.dart';
+import 'package:docusense_ai/providers/ad_provider.dart';
 import 'package:docusense_ai/utils/gemini_service.dart';
+import 'package:docusense_ai/utils/ads_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
 import 'package:uuid/uuid.dart';
@@ -10,7 +12,6 @@ class ChatMessageHandler {
   final ChatController chatController;
   final Uuid uuid;
   final User botUser;
-  int messageCount = 0;
 
   ChatMessageHandler({
     required this.chatController,
@@ -38,19 +39,24 @@ class ChatMessageHandler {
     required String text,
     required BuildContext context,
   }) async {
+    final adProvider = context.read<AdProvider>();
     final pdfProvider = context.read<PdfProvider>();
+
+    // Check if user has available prompts
+    if (adProvider.availablePrompts <= 0) {
+      showNoPromptsDialog(context);
+      return;
+    }
+
+    // Use one prompt
+    adProvider.usePrompt();
 
     // Add user message
     _addUserMessage(text);
 
-    // ad implementation comes here
-    messageCount++;
-    debugPrint("🎁 message incremented $messageCount");
-
     // Get AI response
     try {
-      debugPrint("🎁 gemini $messageCount");
-      print("🎁 gemini $messageCount");
+      debugPrint("🎁 Sending message to Gemini");
       final response = await getGeminiResponse(
         text,
         fileContent: pdfProvider.uploadedFileContent,
@@ -58,9 +64,80 @@ class ChatMessageHandler {
       );
 
       _addBotMessage(response);
+
+      // Show interstitial ad after every 3 messages (optional)
+      _checkAndShowInterstitialAd(adProvider);
     } catch (e) {
+      debugPrint("🎁 Error from Gemini: $e");
       _addBotMessage(AppLocalizations.of(context).errorTryAgain);
     }
+  }
+
+  void _checkAndShowInterstitialAd(AdProvider adProvider) {
+    // Show interstitial ad after every 3 messages
+    if (adProvider.messageCount % 3 == 0) {
+      AdManager.showInterstitialAd();
+    }
+    adProvider.incrementMessageCount();
+  }
+
+  void showNoPromptsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('No Prompts Available'),
+        content: const Text(
+          'Watch a short ad to get more prompts and continue chatting with your document.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Maybe Later'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              showRewardedAd(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange[700],
+            ),
+            child: const Text(
+              'Watch Ad',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void showRewardedAd(BuildContext context) {
+    final adProvider = context.read<AdProvider>();
+    adProvider.setAdLoading(true);
+
+    AdManager.showRewardedAd(
+      onUserEarnedReward: (int rewardAmount) {
+        adProvider.addPrompts(1);
+        adProvider.setAdLoading(false);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '+${rewardAmount > 0 ? rewardAmount : 1} prompt${rewardAmount > 1 ? 's' : ''} added!',
+            ),
+            duration: const Duration(seconds: 3),
+            backgroundColor: Colors.green,
+          ),
+        );
+      },
+      onAdDismissed: () {
+        // This is called when ad is dismissed regardless of reward
+        if (!adProvider.isAdLoading) {
+          adProvider.setAdLoading(false);
+        }
+      },
+    );
   }
 
   void _addUserMessage(String text) {

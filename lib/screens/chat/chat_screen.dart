@@ -1,8 +1,6 @@
-import 'package:docusense_ai/app_localization.dart';
 import 'package:docusense_ai/screens/chat/widgets/chat_content.dart';
-import 'package:docusense_ai/providers/pdf_provider.dart';
-import 'package:docusense_ai/utils/gemini_service.dart';
-import 'package:docusense_ai/widgets/app_bar.dart';
+import 'package:docusense_ai/providers/ad_provider.dart';
+import 'package:docusense_ai/screens/chat/widgets/chat_message_handler.dart';
 import 'package:docusense_ai/widgets/file_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
@@ -21,31 +19,28 @@ class _ChatScreenState extends State<ChatScreen> {
   final _chatController = InMemoryChatController();
   final uuid = const Uuid();
   final User botUser = User(id: 'bot', name: 'DocuBot');
+  late ChatMessageHandler _messageHandler;
 
   @override
   void initState() {
     super.initState();
+    _messageHandler = ChatMessageHandler(
+      chatController: _chatController,
+      uuid: uuid,
+      botUser: botUser,
+    );
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _addWelcomeMessage();
+      _messageHandler.addWelcomeMessage(context);
     });
 
+    // Load both ads when chat screen opens
     AdManager.loadRewardedAd();
+    AdManager.loadInterstitialAd();
   }
 
-  void _addWelcomeMessage() {
-    final pdfProvider = context.read<PdfProvider>();
-    final fileName = pdfProvider.uploadedFileName ?? 'your document';
-
-    _chatController.insertMessage(
-      TextMessage(
-        id: uuid.v4(),
-        authorId: botUser.id,
-        text: AppLocalizations.of(
-          context,
-        ).chatWelcomeMessage.replaceAll('%fileName', fileName),
-        createdAt: DateTime.now(),
-      ),
-    );
+  Future<void> _handleMessageSend(String text) async {
+    await _messageHandler.handleUserMessage(text: text, context: context);
   }
 
   @override
@@ -54,55 +49,77 @@ class _ChatScreenState extends State<ChatScreen> {
     super.dispose();
   }
 
-  Future<void> _handleMessageSend(String text) async {
-    final pdfProvider = context.read<PdfProvider>();
-
-    // Add user message
-    _chatController.insertMessage(
-      TextMessage(
-        id: uuid.v4(),
-        authorId: 'user_1',
-        text: text,
-        createdAt: DateTime.now(),
-      ),
-    );
-
-    // Get AI response
-    try {
-      final response = await getGeminiResponse(
-        text,
-        fileContent: pdfProvider.uploadedFileContent,
-        fileName: pdfProvider.uploadedFileName,
-      );
-
-      _chatController.insertMessage(
-        TextMessage(
-          id: uuid.v4(),
-          authorId: botUser.id,
-          text: response,
-          createdAt: DateTime.now(),
-        ),
-      );
-    } catch (e) {
-      _chatController.insertMessage(
-        TextMessage(
-          id: uuid.v4(),
-          authorId: botUser.id,
-          text: AppLocalizations.of(context).errorTryAgain,
-          createdAt: DateTime.now(),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const CustomAppBar(), // ← Add this line
       body: Column(
         children: [
-          const FileHeader(showInfoButton: true), // ← Add this line
+          const FileHeader(showInfoButton: true),
+          // Prompt counter header
+          Consumer<AdProvider>(
+            builder: (context, adProvider, child) {
+              return Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.blue[50],
+                  border: Border(
+                    bottom: BorderSide(color: Colors.grey.shade300),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.bolt, color: Colors.orange[700], size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      '${adProvider.availablePrompts} ${adProvider.availablePrompts == 1 ? 'prompt' : 'prompts'} available',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: Colors.blueGrey,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    if (adProvider.availablePrompts == 0)
+                      GestureDetector(
+                        onTap: () => _messageHandler.showRewardedAd(
+                          context,
+                        ), // ← Fixed this line
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.orange[700],
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.play_arrow,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                              const SizedBox(width: 4),
+                              const Text(
+                                'Watch Ad for Prompt',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            },
+          ),
           Expanded(
             child: ChatContent(
               chatController: _chatController,
