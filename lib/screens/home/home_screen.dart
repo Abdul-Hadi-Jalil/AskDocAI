@@ -1,6 +1,6 @@
 import 'package:docusense_ai/models/app_state.dart';
 import 'package:docusense_ai/providers/pdf_provider.dart';
-import 'package:docusense_ai/screens/quiz_screen.dart';
+import 'package:docusense_ai/screens/quiz/quiz_screen.dart';
 import 'package:docusense_ai/widgets/app_bar.dart';
 import 'package:docusense_ai/widgets/bottom_nav.dart';
 import 'package:docusense_ai/utils/ads_manager.dart';
