@@ -1,3 +1,4 @@
+import 'package:docusense_ai/app_localization.dart';
 import 'package:docusense_ai/providers/auth_state.dart';
 import 'package:docusense_ai/screens/signin_screen.dart' as signin;
 import 'package:flutter/material.dart';
@@ -5,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../../../providers/pdf_provider.dart';
 import '../../../providers/file_provider.dart';
 import '../../../utils/constants.dart';
-import 'package:docusense_ai/app_localization.dart';
 
 class UploadSection extends StatefulWidget {
   const UploadSection({super.key});
@@ -40,18 +40,7 @@ class _UploadSectionState extends State<UploadSection> {
             children: [
               // Upload Area
               GestureDetector(
-                onTap: () {
-                  final authState = Provider.of<AuthState>(
-                    context,
-                    listen: false,
-                  );
-
-                  if (!authState.isUserSignedIn) {
-                    signin.showSignInDialog(context);
-                  } else {
-                    pdfProvider.selectAndUploadFile();
-                  }
-                },
+                onTap: () => _handleUpload(pdfProvider, context),
                 child: Container(
                   padding: const EdgeInsets.all(40),
                   decoration: BoxDecoration(
@@ -64,23 +53,35 @@ class _UploadSectionState extends State<UploadSection> {
                   ),
                   child: Column(
                     children: [
-                      Icon(
-                        Icons.cloud_upload_outlined,
-                        size: 48,
-                        color: AppConstants.primaryColor,
-                      ),
-                      SizedBox(height: 15),
+                      // Simple loading icon
+                      if (pdfProvider.isProcessingFile)
+                        const SizedBox(
+                          width: 48,
+                          height: 48,
+                          child: CircularProgressIndicator(),
+                        )
+                      else
+                        Icon(
+                          Icons.cloud_upload_outlined,
+                          size: 48,
+                          color: AppConstants.primaryColor,
+                        ),
+                      const SizedBox(height: 15),
                       Text(
-                        AppLocalizations.of(context).uploadPdf,
+                        pdfProvider.isProcessingFile
+                            ? 'Uploading...'
+                            : AppLocalizations.of(context).uploadPdf,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           color: AppConstants.textColor,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
-                        AppLocalizations.of(context).tapToSelectFile,
+                        pdfProvider.isProcessingFile
+                            ? 'Please wait'
+                            : AppLocalizations.of(context).tapToSelectFile,
                         style: TextStyle(
                           fontSize: 14,
                           color: AppConstants.subtitleColor,
@@ -92,27 +93,17 @@ class _UploadSectionState extends State<UploadSection> {
               ),
               const SizedBox(height: 20),
 
-              // Progress Indicator
+              // Simple loading indicator
               if (pdfProvider.isProcessingFile) ...[
-                Column(
+                const Column(
                   children: [
-                    LinearProgressIndicator(
-                      backgroundColor: AppConstants.borderColor,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        AppConstants.primaryColor,
-                      ),
-                      minHeight: 6,
-                      borderRadius: BorderRadius.circular(3),
-                    ),
-                    const SizedBox(height: 12),
+                    CircularProgressIndicator(),
+                    SizedBox(height: 16),
                     Text(
-                      'Loading file...',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: AppConstants.subtitleColor,
-                      ),
+                      'Loading your file...',
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                   ],
                 ),
               ],
@@ -123,16 +114,7 @@ class _UploadSectionState extends State<UploadSection> {
                 child: ElevatedButton(
                   onPressed: pdfProvider.isProcessingFile
                       ? null
-                      : () {
-                          if (!Provider.of<AuthState>(
-                            context,
-                            listen: false,
-                          ).isUserSignedIn) {
-                            signin.showSignInDialog(context);
-                          } else {
-                            pdfProvider.selectAndUploadFile();
-                          }
-                        },
+                      : () => _handleUpload(pdfProvider, context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppConstants.primaryColor,
                     foregroundColor: Colors.white,
@@ -144,7 +126,7 @@ class _UploadSectionState extends State<UploadSection> {
                     shadowColor: AppConstants.primaryColor.withOpacity(0.3),
                   ),
                   child: pdfProvider.isProcessingFile
-                      ? Row(
+                      ? const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
@@ -171,10 +153,10 @@ class _UploadSectionState extends State<UploadSection> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.cloud_upload, size: 20),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             Text(
                               AppLocalizations.of(context).uploadPdf,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -187,11 +169,22 @@ class _UploadSectionState extends State<UploadSection> {
           ),
         ),
         const SizedBox(height: 20),
+
         // File Status Section
         if (fileProvider.hasFile && !pdfProvider.isProcessingFile)
           _buildFileStatusSection(fileProvider),
       ],
     );
+  }
+
+  void _handleUpload(PdfProvider pdfProvider, BuildContext context) {
+    final authState = Provider.of<AuthState>(context, listen: false);
+
+    if (!authState.isUserSignedIn) {
+      signin.showSignInDialog(context);
+    } else {
+      pdfProvider.selectAndUploadFile();
+    }
   }
 
   Widget _buildFileStatusSection(FileProvider fileProvider) {

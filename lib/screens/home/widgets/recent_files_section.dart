@@ -1,7 +1,9 @@
 import 'package:docusense_ai/app_localization.dart';
+import 'package:docusense_ai/models/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:docusense_ai/providers/file_provider.dart';
+import 'package:docusense_ai/providers/pdf_provider.dart'; // ADD THIS IMPORT
 
 class RecentFilesSection extends StatelessWidget {
   const RecentFilesSection({super.key});
@@ -85,6 +87,7 @@ class _RecentFileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fileProvider = Provider.of<FileProvider>(context, listen: false);
+    final pdfProvider = Provider.of<PdfProvider>(context, listen: false);
 
     return Card(
       elevation: 2,
@@ -174,7 +177,7 @@ class _RecentFileItem extends StatelessWidget {
                 ),
               ],
 
-              // Action Buttons
+              // Action Buttons - UPDATED
               const SizedBox(height: 12),
               Row(
                 children: [
@@ -183,8 +186,10 @@ class _RecentFileItem extends StatelessWidget {
                       icon: Icons.chat,
                       label: 'Chat',
                       onTap: () {
-                        fileProvider.selectRecentFile(file);
-                        Navigator.pushNamed(context, '/chat');
+                        pdfProvider.selectRecentFileAndNavigate(
+                          file,
+                          BottomNavItem.chat,
+                        );
                       },
                     ),
                   ),
@@ -194,8 +199,10 @@ class _RecentFileItem extends StatelessWidget {
                       icon: Icons.summarize,
                       label: 'Summary',
                       onTap: () {
-                        fileProvider.selectRecentFile(file);
-                        Navigator.pushNamed(context, '/summary');
+                        pdfProvider.selectRecentFileAndNavigate(
+                          file,
+                          BottomNavItem.summarize,
+                        );
                       },
                     ),
                   ),
@@ -205,8 +212,10 @@ class _RecentFileItem extends StatelessWidget {
                       icon: Icons.quiz,
                       label: 'Quiz',
                       onTap: () {
-                        fileProvider.selectRecentFile(file);
-                        Navigator.pushNamed(context, '/quiz');
+                        pdfProvider.selectRecentFileAndNavigate(
+                          file,
+                          BottomNavItem.quiz,
+                        );
                       },
                     ),
                   ),

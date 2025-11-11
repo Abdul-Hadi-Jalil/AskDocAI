@@ -7,7 +7,6 @@ import '../providers/pdf_provider.dart';
 import '../models/mcq.dart';
 import '../widgets/quiz/mcq_widget.dart';
 import '../widgets/quiz/results_banner.dart';
-import '../widgets/app_bar.dart';
 import '../widgets/file_header.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -36,7 +35,6 @@ class _QuizScreenState extends State<QuizScreen> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: const CustomAppBar(),
         backgroundColor: Colors.white,
         body: _isLoading ? _buildLoading() : _buildQuizContent(pdfProvider),
       ),

@@ -151,6 +151,9 @@ class FileProvider extends ChangeNotifier {
   }
 
   void selectRecentFile(RecentFile file) {
+    // Clear current selection
+    _clearAllSelections();
+
     // Create a new list to ensure proper state updates
     final updatedFiles = <RecentFile>[];
 
@@ -182,6 +185,14 @@ class FileProvider extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  // ADD THIS METHOD: Clear all selections
+  void _clearAllSelections() {
+    for (int i = 0; i < _recentFiles.length; i++) {
+      _recentFiles[i] = _recentFiles[i].copyWith(isSelected: false);
+    }
+    _selectedFile = null;
   }
 
   void clearRecentFiles() {

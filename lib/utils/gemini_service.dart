@@ -1,3 +1,5 @@
+import 'package:docusense_ai/main.dart';
+import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 const apiKey = 'AIzaSyDrWVSlKfmlHOEwmhqK1gYOPwS_wYfS1ls';
@@ -105,8 +107,12 @@ User's question:
     final response = await model.generateContent([Content.text(prompt)]);
 
     return response.text ?? "Hmm, I didn’t get that.";
+  } on GenerativeAIException {
+    _showTokenLimitSnackbar();
+    return "I'm currently experiencing high demand. Please try again in a moment.";
   } catch (e) {
-    return "⚠️ Sorry, I couldn’t process that request. ($e)";
+    _showTokenLimitSnackbar();
+    return "Service is temporarily unavailable. Please try again shortly.";
   }
 }
 
@@ -171,9 +177,12 @@ Future<String> generateFileSummary(String fileContent) async {
 
     final response = await model.generateContent(content);
     return response.text ?? "No summary could be generated.";
+  } on GenerativeAIException catch (e) {
+    _showTokenLimitSnackbar();
+    return "Unable to generate summary due to high demand. Please try again later.";
   } catch (e) {
-    print('Error generating summary: $e');
-    return "An error occurred while summarizing the file.";
+    _showTokenLimitSnackbar();
+    return "Summary service is temporarily unavailable.";
   }
 }
 
@@ -243,16 +252,24 @@ Future<String> generateQuiz({required String? fileContent}) async {
         $fileContent
         ''';
 
-    try {
-      final response = await model.generateContent([Content.text(prompt)]);
-      //print('Response from gemini about quiz: ${response.text.toString()}');
-      return response.text ?? "Hmm, I didn’t get that.";
-    } catch (e) {
-      //print("Problem is here in model.generatecontent");
-    }
-
-    return "the try block did not work";
+    final response = await model.generateContent([Content.text(prompt)]);
+    //print('Response from gemini about quiz: ${response.text.toString()}');
+    return response.text ?? "Hmm, I didn’t get that.";
+  } on GenerativeAIException {
+    _showTokenLimitSnackbar();
+    return "Unable to generate quiz due to high demand. Please try again later.";
   } catch (e) {
-    return "⚠️ Sorry, I couldn’t process that request. ($e)";
+    _showTokenLimitSnackbar();
+    return "Quiz service is temporarily unavailable.";
   }
+}
+
+void _showTokenLimitSnackbar() {
+  scaffoldMessengerKey.currentState?.showSnackBar(
+    SnackBar(
+      content: Text('Token limit reached. Please try again later.'),
+      backgroundColor: Colors.orange,
+      duration: Duration(seconds: 3),
+    ),
+  );
 }

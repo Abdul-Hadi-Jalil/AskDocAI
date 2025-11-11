@@ -30,17 +30,22 @@ class PdfProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void selectRecentFileAndNavigate(RecentFile file, BottomNavItem tab) {
+    _fileProvider.selectRecentFile(file);
+    changeTab(tab);
+  }
+
+  bool get hasFileLoaded => _fileProvider.hasFile;
+
   Future<void> selectAndUploadFile() async {
     if (_isProcessingFile) return;
 
     _setState(isProcessingFile: true);
 
     try {
-      // Use the method that returns both content and file info
       final fileInfo = await FileHelper.pickAndReadFileWithInfo();
 
       if (fileInfo != null && fileInfo['content'] != null) {
-        // Extract values with proper type handling
         final String fileName = fileInfo['name']?.toString() ?? 'document.pdf';
         final String fileContent = fileInfo['content']?.toString() ?? '';
         final String? filePath = fileInfo['path']?.toString();
@@ -50,22 +55,14 @@ class PdfProvider extends ChangeNotifier {
                   ? int.tryParse(fileInfo['size'].toString())
                   : null);
 
-        // Set file with real metadata
         _fileProvider.setFile(
-          fileName, // Real file name
-          fileContent, // File content
-          path: filePath, // Real file path
-          size: fileSize, // Real file size in bytes
+          fileName,
+          fileContent,
+          path: filePath,
+          size: fileSize,
         );
-
-        // Removed scaffold message - progress indicator shows loading state instead
-      } else if (fileInfo == null) {
-        // User canceled - no message needed
-      } else {
-        // Empty content or read error - no message needed
       }
     } catch (e) {
-      // Error handling - you might want to show an error state in the UI
       print('Error uploading file: $e');
     } finally {
       _setState(isProcessingFile: false);
