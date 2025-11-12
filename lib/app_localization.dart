@@ -64,8 +64,6 @@ class AppLocalizations {
       'noValidQuizQuestions': 'No valid quiz questions were generated',
       'answerAllQuestions':
           'Please answer all %total questions. You have answered %answered.',
-
-      // Add to each language in _localizedValues:
       'analyzingDocument': 'Analyzing document and generating summary...',
       'mayTakeFewMoments': 'This may take a few moments',
       'failedToGenerateSummary': 'Failed to generate summary',
@@ -87,8 +85,6 @@ class AppLocalizations {
       'regenerate': 'Regenerate',
       'shareSummary': 'Share Summary',
       'shareFunctionality': 'Share functionality would open here',
-
-      // New strings for features section
       'whatYouCanDo': 'What You Can Do',
       'chatDescription':
           'Chat with your document and ask questions about its content',
@@ -97,6 +93,30 @@ class AppLocalizations {
       'quizDescription':
           'Test your knowledge with questions based on your document',
       'recentFiles': 'Recent Files',
+      'signInToUpload': 'Sign in to upload documents',
+      'signInDescription':
+          'Please sign in with your Google or Apple account to continue with document uploads.',
+      'signInWithGoogle': 'Sign in with Google',
+      'signInWithApple': 'Sign in with Apple',
+      'signingInWithGoogle': 'Signing in with Google...',
+      'signingInWithApple': 'Signing in with Apple...',
+      'googleSignInSuccess': 'Signed in with Google successfully!',
+      'appleSignInSuccess': 'Signed in with Apple successfully!',
+      'googleSignInFailed': 'Google sign-in failed. Please try again.',
+      'appleSignInFailed': 'Apple sign-in failed. Please try again.',
+      'googleSignInError': 'Error during Google sign-in:',
+      'appleSignInError': 'Error during Apple sign-in:',
+      'cancel': 'Cancel',
+      'english': 'English',
+      'spanish': 'Spanish',
+      'french': 'French',
+      'german': 'German',
+      'dutch': 'Dutch',
+      'arabic': 'Arabic',
+      'chinese': 'Chinese',
+      'confirmSignOut': 'Are you sure you want to sign out?',
+      'confirm': 'Confirm',
+      'signedInSuccessfully': 'Signed in successfully',
     },
     'es': {
       'appTitle': 'DocuSense AI',
@@ -185,6 +205,32 @@ class AppLocalizations {
       'recentFiles': 'Archivos Recientes',
       'quizDescription':
           'Pon a prueba tu conocimiento con preguntas basadas en el documento',
+      'signInToUpload': 'Inicia sesión para subir documentos',
+      'signInDescription':
+          'Por favor, inicia sesión con tu cuenta de Google o Apple para continuar con la subida de documentos.',
+      'signInWithGoogle': 'Iniciar sesión con Google',
+      'signInWithApple': 'Iniciar sesión con Apple',
+      'signingInWithGoogle': 'Iniciando sesión con Google...',
+      'signingInWithApple': 'Iniciando sesión con Apple...',
+      'googleSignInSuccess': '¡Sesión iniciada con Google exitosamente!',
+      'appleSignInSuccess': '¡Sesión iniciada con Apple exitosamente!',
+      'googleSignInFailed':
+          'Error al iniciar sesión con Google. Por favor, inténtalo de nuevo.',
+      'appleSignInFailed':
+          'Error al iniciar sesión con Apple. Por favor, inténtalo de nuevo.',
+      'googleSignInError': 'Error durante el inicio de sesión con Google:',
+      'appleSignInError': 'Error durante el inicio de sesión con Apple:',
+      'cancel': 'Cancelar',
+      'confirmSignOut': '¿Estás seguro de que quieres cerrar sesión?',
+      'confirm': 'Confirmar',
+      'signedInSuccessfully': 'Sesión iniciada exitosamente',
+      'english': 'Inglés',
+      'spanish': 'Español',
+      'french': 'Francés',
+      'german': 'Alemán',
+      'dutch': 'Neerlandés',
+      'arabic': 'Árabe',
+      'chinese': 'Chino',
     },
     'fr': {
       'appTitle': 'DocuSense AI',
@@ -273,6 +319,31 @@ class AppLocalizations {
           'Obtenez un résumé concis des points clés du document',
       'quizDescription':
           'Testez vos connaissances avec des questions basées sur le document',
+
+      'signInToUpload': 'Connectez-vous pour télécharger des documents',
+      'signInDescription':
+          'Veuillez vous connecter avec votre compte Google ou Apple pour continuer le téléchargement de documents.',
+      'signInWithGoogle': 'Se connecter avec Google',
+      'signInWithApple': 'Se connecter avec Apple',
+      'signingInWithGoogle': 'Connexion avec Google...',
+      'signingInWithApple': 'Connexion avec Apple...',
+      'googleSignInSuccess': 'Connecté avec Google avec succès !',
+      'appleSignInSuccess': 'Connecté avec Apple avec succès !',
+      'googleSignInFailed': 'Échec de la connexion Google. Veuillez réessayer.',
+      'appleSignInFailed': 'Échec de la connexion Apple. Veuillez réessayer.',
+      'googleSignInError': 'Erreur lors de la connexion Google :',
+      'appleSignInError': 'Erreur lors de la connexion Apple :',
+      'confirmSignOut': 'Êtes-vous sûr de vouloir vous déconnecter ?',
+      'confirm': 'Confirmer',
+      'signedInSuccessfully': 'Connecté avec succès',
+      'cancel': 'Annuler',
+      'english': 'Anglais',
+      'spanish': 'Espagnol',
+      'french': 'Français',
+      'german': 'Allemand',
+      'dutch': 'Néerlandais',
+      'arabic': 'Arabe',
+      'chinese': 'Chinois',
     },
     'de': {
       'appTitle': 'DocuSense AI',
@@ -359,6 +430,32 @@ class AppLocalizations {
           'Erhalten Sie eine prägnante Zusammenfassung der wichtigsten Punkte des Dokuments',
       'quizDescription':
           'Testen Sie Ihr Wissen mit Fragen basierend auf dem Dokument',
+      'signInToUpload': 'Melden Sie sich an, um Dokumente hochzuladen',
+      'signInDescription':
+          'Bitte melden Sie sich mit Ihrem Google- oder Apple-Konto an, um mit dem Hochladen von Dokumenten fortzufahren.',
+      'signInWithGoogle': 'Mit Google anmelden',
+      'signInWithApple': 'Mit Apple anmelden',
+      'signingInWithGoogle': 'Anmeldung mit Google...',
+      'signingInWithApple': 'Anmeldung mit Apple...',
+      'googleSignInSuccess': 'Erfolgreich mit Google angemeldet!',
+      'appleSignInSuccess': 'Erfolgreich mit Apple angemeldet!',
+      'googleSignInFailed':
+          'Google-Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.',
+      'appleSignInFailed':
+          'Apple-Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.',
+      'googleSignInError': 'Fehler bei der Google-Anmeldung:',
+      'appleSignInError': 'Fehler bei der Apple-Anmeldung:',
+      'cancel': 'Abbrechen',
+      'confirmSignOut': 'Sind Sie sicher, dass Sie sich abmelden möchten?',
+      'confirm': 'Bestätigen',
+      'signedInSuccessfully': 'Erfolgreich angemeldet',
+      'english': 'Englisch',
+      'spanish': 'Spanisch',
+      'french': 'Französisch',
+      'german': 'Deutsch',
+      'dutch': 'Niederländisch',
+      'arabic': 'Arabisch',
+      'chinese': 'Chinesisch',
     },
     'nl': {
       'recentFiles': 'Recente Bestanden',
@@ -443,6 +540,30 @@ class AppLocalizations {
       'summaryDescription':
           'Krijg een beknopte samenvatting van de belangrijkste punten in het document',
       'quizDescription': 'Test je kennis met vragen gebaseerd op het document',
+      'signInToUpload': 'Log in om documenten te uploaden',
+      'signInDescription':
+          'Log in met uw Google- of Apple-account om door te gaan met het uploaden van documenten.',
+      'signInWithGoogle': 'Inloggen met Google',
+      'signInWithApple': 'Inloggen met Apple',
+      'signingInWithGoogle': 'Inloggen met Google...',
+      'signingInWithApple': 'Inloggen met Apple...',
+      'googleSignInSuccess': 'Succesvol ingelogd met Google!',
+      'appleSignInSuccess': 'Succesvol ingelogd met Apple!',
+      'googleSignInFailed': 'Google-inloggen mislukt. Probeer het opnieuw.',
+      'appleSignInFailed': 'Apple-inloggen mislukt. Probeer het opnieuw.',
+      'googleSignInError': 'Fout tijdens Google-inloggen:',
+      'appleSignInError': 'Fout tijdens Apple-inloggen:',
+      'cancel': 'Annuleren',
+      'confirmSignOut': 'Weet u zeker dat u wilt uitloggen?',
+      'confirm': 'Bevestigen',
+      'signedInSuccessfully': 'Succesvol ingelogd',
+      'english': 'Engels',
+      'spanish': 'Spaans',
+      'french': 'Frans',
+      'german': 'Duits',
+      'dutch': 'Nederlands',
+      'arabic': 'Arabisch',
+      'chinese': 'Chinees',
     },
     'ar': {
       'appTitle': 'DocuSense AI',
@@ -520,6 +641,32 @@ class AppLocalizations {
       'chatDescription': 'تحدث مع مستندك واطرح أسئلة حول محتواه',
       'summaryDescription': 'احصل على ملخص موجز للنقاط الرئيسية في المستند',
       'quizDescription': 'اختبر معرفتك بأسئلة مبنية على المستند',
+      'signInToUpload': 'سجل الدخول لرفع المستندات',
+      'signInDescription':
+          'يرجى تسجيل الدخول باستخدام حساب Google أو Apple للمتابعة في رفع المستندات.',
+      'signInWithGoogle': 'تسجيل الدخول باستخدام Google',
+      'signInWithApple': 'تسجيل الدخول باستخدام Apple',
+      'signingInWithGoogle': 'جاري تسجيل الدخول باستخدام Google...',
+      'signingInWithApple': 'جاري تسجيل الدخول باستخدام Apple...',
+      'googleSignInSuccess': 'تم تسجيل الدخول باستخدام Google بنجاح!',
+      'appleSignInSuccess': 'تم تسجيل الدخول باستخدام Apple بنجاح!',
+      'googleSignInFailed':
+          'فشل تسجيل الدخول باستخدام Google. يرجى المحاولة مرة أخرى.',
+      'appleSignInFailed':
+          'فشل تسجيل الدخول باستخدام Apple. يرجى المحاولة مرة أخرى.',
+      'googleSignInError': 'خطأ أثناء تسجيل الدخول باستخدام Google:',
+      'appleSignInError': 'خطأ أثناء تسجيل الدخول باستخدام Apple:',
+      'cancel': 'إلغاء',
+      'confirmSignOut': 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
+      'confirm': 'تأكيد',
+      'signedInSuccessfully': 'تم تسجيل الدخول بنجاح',
+      'english': 'الإنجليزية',
+      'spanish': 'الإسبانية',
+      'french': 'الفرنسية',
+      'german': 'الألمانية',
+      'dutch': 'الهولندية',
+      'arabic': 'العربية',
+      'chinese': 'الصينية',
     },
     'zh': {
       'appTitle': 'DocuSense AI',
@@ -596,6 +743,29 @@ class AppLocalizations {
       'chatDescription': '与您的文档聊天并就其内容提问',
       'summaryDescription': '获取文档关键要点的简明摘要',
       'quizDescription': '通过基于文档的问题测试您的知识',
+      'signInToUpload': '登录以上传文档',
+      'signInDescription': '请使用您的 Google 或 Apple 账户登录以继续上传文档。',
+      'signInWithGoogle': '使用 Google 登录',
+      'signInWithApple': '使用 Apple 登录',
+      'signingInWithGoogle': '正在使用 Google 登录...',
+      'signingInWithApple': '正在使用 Apple 登录...',
+      'googleSignInSuccess': '使用 Google 登录成功！',
+      'appleSignInSuccess': '使用 Apple 登录成功！',
+      'googleSignInFailed': 'Google 登录失败。请重试。',
+      'appleSignInFailed': 'Apple 登录失败。请重试。',
+      'googleSignInError': 'Google 登录期间出错：',
+      'appleSignInError': 'Apple 登录期间出错：',
+      'cancel': '取消',
+      'confirmSignOut': '您确定要退出登录吗？',
+      'confirm': '确认',
+      'english': '英语',
+      'spanish': '西班牙语',
+      'french': '法语',
+      'german': '德语',
+      'dutch': '荷兰语',
+      'arabic': '阿拉伯语',
+      'chinese': '中文',
+      'signedInSuccessfully': '登录成功',
     },
   };
 
@@ -823,6 +993,49 @@ class AppLocalizations {
       _localizedValues[locale.languageCode]!['summaryDescription']!;
   String get quizDescription =>
       _localizedValues[locale.languageCode]!['quizDescription']!;
+
+  // Add these to AppLocalizations class:
+
+  String get signInToUpload =>
+      _localizedValues[locale.languageCode]!['signInToUpload']!;
+  String get signInDescription =>
+      _localizedValues[locale.languageCode]!['signInDescription']!;
+  String get signInWithGoogle =>
+      _localizedValues[locale.languageCode]!['signInWithGoogle']!;
+  String get signInWithApple =>
+      _localizedValues[locale.languageCode]!['signInWithApple']!;
+  String get signingInWithGoogle =>
+      _localizedValues[locale.languageCode]!['signingInWithGoogle']!;
+  String get signingInWithApple =>
+      _localizedValues[locale.languageCode]!['signingInWithApple']!;
+  String get googleSignInSuccess =>
+      _localizedValues[locale.languageCode]!['googleSignInSuccess']!;
+  String get appleSignInSuccess =>
+      _localizedValues[locale.languageCode]!['appleSignInSuccess']!;
+  String get googleSignInFailed =>
+      _localizedValues[locale.languageCode]!['googleSignInFailed']!;
+  String get appleSignInFailed =>
+      _localizedValues[locale.languageCode]!['appleSignInFailed']!;
+  String get googleSignInError =>
+      _localizedValues[locale.languageCode]!['googleSignInError']!;
+  String get appleSignInError =>
+      _localizedValues[locale.languageCode]!['appleSignInError']!;
+  String get cancel => _localizedValues[locale.languageCode]!['cancel']!;
+
+  // Add these to AppLocalizations class:
+
+  String get confirmSignOut =>
+      _localizedValues[locale.languageCode]!['confirmSignOut']!;
+  String get confirm => _localizedValues[locale.languageCode]!['confirm']!;
+  String get signedInSuccessfully =>
+      _localizedValues[locale.languageCode]!['signedInSuccessfully']!;
+  String get english => _localizedValues[locale.languageCode]!['english']!;
+  String get spanish => _localizedValues[locale.languageCode]!['spanish']!;
+  String get french => _localizedValues[locale.languageCode]!['french']!;
+  String get german => _localizedValues[locale.languageCode]!['german']!;
+  String get dutch => _localizedValues[locale.languageCode]!['dutch']!;
+  String get arabic => _localizedValues[locale.languageCode]!['arabic']!;
+  String get chinese => _localizedValues[locale.languageCode]!['chinese']!;
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

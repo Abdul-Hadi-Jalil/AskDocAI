@@ -23,9 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       shadowColor: Colors.black.withOpacity(0.5),
       surfaceTintColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(20), // adjust radius as you like
-        ),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
       ),
       title: Row(
         children: [
@@ -55,12 +53,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           const SizedBox(width: 12),
-          const Text(
-            'DocuSense AI',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context).appTitle,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
               color: AppConstants.textColor,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],
@@ -71,7 +70,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: ElevatedButton(
             onPressed: () async {
               if (authState.isUserSignedIn) {
-                // dialog to ask user if he really wants to sign out or cancel it
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -81,12 +79,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                       backgroundColor: const Color(0xFFF5F5FF),
                       child: Padding(
-                        padding: EdgeInsetsGeometry.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('Are you sure you want to sign out'),
-                            SizedBox(height: 24),
+                            Text(AppLocalizations.of(context).confirmSignOut),
+                            const SizedBox(height: 24),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -94,7 +92,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('Cancel'),
+                                  child: Text(
+                                    AppLocalizations.of(context).cancel,
+                                  ),
                                 ),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -102,14 +102,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                     foregroundColor: Colors.white,
                                   ),
                                   onPressed: () {
-                                    // Sign out logic
-                                    googleSignout(
-                                      context,
-                                    ); // Call your sign out function
-                                    authState.signOut(); // Update auth state
+                                    googleSignout(context);
+                                    authState.signOut();
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('Confirm'),
+                                  child: Text(
+                                    AppLocalizations.of(context).confirm,
+                                  ),
                                 ),
                               ],
                             ),
@@ -122,14 +121,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               } else {
                 final signInAttempted = await showSignInDialog(context);
                 if (signInAttempted && context.mounted) {
-                  // Check if user is actually signed in (authState should be updated by now)
                   if (authState.isUserSignedIn) {
-                    // Show success dialog
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Signed in successfully'),
+                        content: Text(
+                          AppLocalizations.of(context).signedInSuccessfully,
+                        ),
                         backgroundColor: AppConstants.primaryColor,
-                        duration: Duration(seconds: 2),
+                        duration: const Duration(seconds: 2),
                       ),
                     );
                   }
@@ -149,12 +148,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               authState.isUserSignedIn
                   ? AppLocalizations.of(context).signOut
                   : AppLocalizations.of(context).signIn,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),
         ),
-
-        // settings option
         IconButton(
           icon: const Icon(Icons.language),
           onPressed: () {
@@ -165,7 +162,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  // Add this method to show language selection dialog
   void _showLanguageDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -177,13 +173,41 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: ListView(
               shrinkWrap: true,
               children: [
-                _buildLanguageOption(context, 'English', 'en'),
-                _buildLanguageOption(context, 'Español', 'es'),
-                _buildLanguageOption(context, 'Français', 'fr'),
-                _buildLanguageOption(context, 'Deutsch', 'de'),
-                _buildLanguageOption(context, 'Nederlands', 'nl'),
-                _buildLanguageOption(context, 'العربية', 'ar'),
-                _buildLanguageOption(context, '中文', 'zh'),
+                _buildLanguageOption(
+                  context,
+                  AppLocalizations.of(context).english,
+                  'en',
+                ),
+                _buildLanguageOption(
+                  context,
+                  AppLocalizations.of(context).spanish,
+                  'es',
+                ),
+                _buildLanguageOption(
+                  context,
+                  AppLocalizations.of(context).french,
+                  'fr',
+                ),
+                _buildLanguageOption(
+                  context,
+                  AppLocalizations.of(context).german,
+                  'de',
+                ),
+                _buildLanguageOption(
+                  context,
+                  AppLocalizations.of(context).dutch,
+                  'nl',
+                ),
+                _buildLanguageOption(
+                  context,
+                  AppLocalizations.of(context).arabic,
+                  'ar',
+                ),
+                _buildLanguageOption(
+                  context,
+                  AppLocalizations.of(context).chinese,
+                  'zh',
+                ),
               ],
             ),
           ),

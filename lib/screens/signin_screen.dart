@@ -1,4 +1,5 @@
 import 'package:docusense_ai/Auth/google_auth.dart' as authService;
+import 'package:docusense_ai/app_localization.dart'; // Add this import
 import 'package:docusense_ai/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,9 +18,9 @@ Future<bool> showSignInDialog(BuildContext context) async {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                "Sign in to upload documents",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context).signInToUpload,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: Colors.black87,
@@ -27,9 +28,9 @@ Future<bool> showSignInDialog(BuildContext context) async {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
-              const Text(
-                "Please sign in with your Google or Apple account to continue with document uploads.",
-                style: TextStyle(fontSize: 14, color: Colors.black54),
+              Text(
+                AppLocalizations.of(context).signInDescription,
+                style: const TextStyle(fontSize: 14, color: Colors.black54),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
@@ -48,13 +49,9 @@ Future<bool> showSignInDialog(BuildContext context) async {
                   ),
                   onPressed: () async {
                     try {
-                      // Show loading indicator
                       final scaffoldMessenger = ScaffoldMessenger.of(context);
-
-                      // Close the dialog first
                       Navigator.of(context).pop(true);
 
-                      // Show loading snackbar
                       scaffoldMessenger.showSnackBar(
                         SnackBar(
                           content: Row(
@@ -65,54 +62,52 @@ Future<bool> showSignInDialog(BuildContext context) async {
                                 ),
                                 strokeWidth: 2,
                               ),
-                              SizedBox(width: 12),
-                              Text('Signing in with Google...'),
+                              const SizedBox(width: 12),
+                              Text(
+                                AppLocalizations.of(
+                                  context,
+                                ).signingInWithGoogle,
+                              ),
                             ],
                           ),
                           backgroundColor: AppConstants.primaryColor,
-                          duration: Duration(seconds: 3),
+                          duration: const Duration(seconds: 3),
                         ),
                       );
 
-                      // Perform Google sign-in
                       final success = await authService.signInWithGoogle();
-
-                      // Dismiss loading snackbar
                       scaffoldMessenger.hideCurrentSnackBar();
 
                       if (success != null) {
-                        // Show success message
                         scaffoldMessenger.showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Signed in with Google successfully!',
+                              AppLocalizations.of(context).googleSignInSuccess,
                             ),
                             backgroundColor: Colors.green,
-                            duration: Duration(seconds: 2),
+                            duration: const Duration(seconds: 2),
                           ),
                         );
                       } else {
-                        // Show error message
                         scaffoldMessenger.showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Google sign-in failed. Please try again.',
+                              AppLocalizations.of(context).googleSignInFailed,
                             ),
                             backgroundColor: Colors.red,
-                            duration: Duration(seconds: 3),
+                            duration: const Duration(seconds: 3),
                           ),
                         );
                       }
                     } catch (e) {
-                      // Dismiss loading snackbar if any
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-                      // Show error message
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Error during Google sign-in: $e'),
+                          content: Text(
+                            '${AppLocalizations.of(context).googleSignInError} $e',
+                          ),
                           backgroundColor: Colors.red,
-                          duration: Duration(seconds: 3),
+                          duration: const Duration(seconds: 3),
                         ),
                       );
                     }
@@ -122,9 +117,9 @@ Future<bool> showSignInDialog(BuildContext context) async {
                     color: Colors.black54,
                     size: 18,
                   ),
-                  label: const Text(
-                    "Sign in with Google",
-                    style: TextStyle(
+                  label: Text(
+                    AppLocalizations.of(context).signInWithGoogle,
+                    style: const TextStyle(
                       color: Colors.black87,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -145,13 +140,9 @@ Future<bool> showSignInDialog(BuildContext context) async {
                   ),
                   onPressed: () async {
                     try {
-                      // Show loading indicator
                       final scaffoldMessenger = ScaffoldMessenger.of(context);
-
-                      // Close the dialog first
                       Navigator.of(context).pop(true);
 
-                      // Show loading snackbar
                       scaffoldMessenger.showSnackBar(
                         SnackBar(
                           content: Row(
@@ -162,52 +153,50 @@ Future<bool> showSignInDialog(BuildContext context) async {
                                 ),
                                 strokeWidth: 2,
                               ),
-                              SizedBox(width: 12),
-                              Text('Signing in with Apple...'),
+                              const SizedBox(width: 12),
+                              Text(
+                                AppLocalizations.of(context).signingInWithApple,
+                              ),
                             ],
                           ),
                           backgroundColor: Colors.black,
-                          duration: Duration(seconds: 3),
+                          duration: const Duration(seconds: 3),
                         ),
                       );
 
-                      // Perform Apple sign-in
                       final success = await AppleAuth.signInWithApple();
-
-                      // Dismiss loading snackbar
                       scaffoldMessenger.hideCurrentSnackBar();
 
                       if (success != null) {
-                        // Show success message
-                        scaffoldMessenger.showSnackBar(
-                          SnackBar(
-                            content: Text('Signed in with Apple successfully!'),
-                            backgroundColor: Colors.green,
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                      } else {
-                        // Show error message
                         scaffoldMessenger.showSnackBar(
                           SnackBar(
                             content: Text(
-                              'Apple sign-in failed. Please try again.',
+                              AppLocalizations.of(context).appleSignInSuccess,
+                            ),
+                            backgroundColor: Colors.green,
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      } else {
+                        scaffoldMessenger.showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              AppLocalizations.of(context).appleSignInFailed,
                             ),
                             backgroundColor: Colors.red,
-                            duration: Duration(seconds: 3),
+                            duration: const Duration(seconds: 3),
                           ),
                         );
                       }
                     } catch (e) {
-                      // Dismiss loading snackbar if any
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-                      // Show error message
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Error during Apple sign-in: $e'),
+                          content: Text(
+                            '${AppLocalizations.of(context).appleSignInError} $e',
+                          ),
                           backgroundColor: Colors.red,
-                          duration: Duration(seconds: 3),
+                          duration: const Duration(seconds: 3),
                         ),
                       );
                     }
@@ -217,9 +206,9 @@ Future<bool> showSignInDialog(BuildContext context) async {
                     color: Colors.white,
                     size: 20,
                   ),
-                  label: const Text(
-                    "Sign in with Apple",
-                    style: TextStyle(
+                  label: Text(
+                    AppLocalizations.of(context).signInWithApple,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -232,9 +221,9 @@ Future<bool> showSignInDialog(BuildContext context) async {
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
-                child: const Text(
-                  "Cancel",
-                  style: TextStyle(color: Colors.black54, fontSize: 14),
+                child: Text(
+                  AppLocalizations.of(context).cancel,
+                  style: const TextStyle(color: Colors.black54, fontSize: 14),
                 ),
               ),
             ],
@@ -244,6 +233,5 @@ Future<bool> showSignInDialog(BuildContext context) async {
     },
   );
 
-  // Return true if user attempted to sign in, false if cancelled
   return result ?? false;
 }
