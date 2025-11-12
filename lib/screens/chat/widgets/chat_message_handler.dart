@@ -54,6 +54,10 @@ class ChatMessageHandler {
     // Add user message
     _addUserMessage(text);
 
+    // ⭐⭐⭐ SHOW TYPING BUBBLE/Loading ANIMATION ⭐⭐⭐
+
+    //_showTypingBubble();
+
     // Get AI response
     try {
       debugPrint("🎁 Sending message to Gemini");
@@ -62,6 +66,10 @@ class ChatMessageHandler {
         fileContent: pdfProvider.uploadedFileContent,
         fileName: pdfProvider.uploadedFileName,
       );
+
+      // ⭐⭐⭐ REMOVE TYPING INDICATOR BEFORE ADDING ACTUAL RESPONSE ⭐⭐⭐
+
+      //_removeTypingBubble();
 
       _addBotMessage(response);
 

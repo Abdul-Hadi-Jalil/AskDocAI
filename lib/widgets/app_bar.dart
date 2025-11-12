@@ -69,7 +69,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         Container(
           margin: const EdgeInsets.only(right: 16),
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (authState.isUserSignedIn) {
                 // dialog to ask user if he really wants to sign out or cancel it
                 showDialog(
@@ -120,7 +120,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   },
                 );
               } else {
-                showSignInDialog(context);
+                final signInAttempted = await showSignInDialog(context);
+                if (signInAttempted && context.mounted) {
+                  // Check if user is actually signed in (authState should be updated by now)
+                  if (authState.isUserSignedIn) {
+                    // Show success dialog
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Signed in successfully'),
+                        backgroundColor: AppConstants.primaryColor,
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  }
+                }
               }
             },
             style: ElevatedButton.styleFrom(
