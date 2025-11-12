@@ -177,7 +177,7 @@ Future<String> generateFileSummary(String fileContent) async {
 
     final response = await model.generateContent(content);
     return response.text ?? "No summary could be generated.";
-  } on GenerativeAIException catch (e) {
+  } on GenerativeAIException {
     _showTokenLimitSnackbar();
     return "Unable to generate summary due to high demand. Please try again later.";
   } catch (e) {

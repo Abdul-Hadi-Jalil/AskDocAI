@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/pdf_provider.dart';
 import '../../models/mcq.dart';
-import '../../widgets/quiz/mcq_widget.dart';
-import '../../widgets/quiz/results_banner.dart';
+import 'widgets/mcq_widget.dart';
+import 'widgets/results_banner.dart';
 import '../../widgets/file_header.dart';
 
 class QuizScreen extends StatefulWidget {

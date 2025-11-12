@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class LoadingDot extends StatefulWidget {
   final int delay;
 
-  const LoadingDot({required this.delay});
+  const LoadingDot({super.key, required this.delay});
 
   @override
   State<LoadingDot> createState() => _LoadingDotState();

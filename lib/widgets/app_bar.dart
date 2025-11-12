@@ -71,9 +71,54 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: ElevatedButton(
             onPressed: () {
               if (authState.isUserSignedIn) {
-                // Sign out logic
-                googleSignout(context); // Call your sign out function
-                authState.signOut(); // Update auth state
+                // dialog to ask user if he really wants to sign out or cancel it
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      backgroundColor: const Color(0xFFF5F5FF),
+                      child: Padding(
+                        padding: EdgeInsetsGeometry.all(20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('Are you sure you want to sign out'),
+                            SizedBox(height: 24),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppConstants.primaryColor,
+                                    foregroundColor: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    // Sign out logic
+                                    googleSignout(
+                                      context,
+                                    ); // Call your sign out function
+                                    authState.signOut(); // Update auth state
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Confirm'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
               } else {
                 showSignInDialog(context);
               }

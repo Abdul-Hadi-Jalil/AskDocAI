@@ -1,6 +1,6 @@
 // widgets/quiz/mcq_widget.dart
 import 'package:flutter/material.dart';
-import '../../models/mcq.dart';
+import '../../../models/mcq.dart';
 
 class MCQWidget extends StatefulWidget {
   final MCQ mcq;
