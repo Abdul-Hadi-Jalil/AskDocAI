@@ -1,5 +1,5 @@
 import 'package:docusense_ai/Auth/google_auth.dart' as authService;
-import 'package:docusense_ai/app_localization.dart'; // Add this import
+import 'package:docusense_ai/app_localization.dart';
 import 'package:docusense_ai/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -50,7 +50,9 @@ Future<bool> showSignInDialog(BuildContext context) async {
                   onPressed: () async {
                     try {
                       final scaffoldMessenger = ScaffoldMessenger.of(context);
-                      Navigator.of(context).pop(true);
+                      Navigator.of(
+                        context,
+                      ).pop(true); // Return true for sign-in attempt
 
                       scaffoldMessenger.showSnackBar(
                         SnackBar(
@@ -141,7 +143,9 @@ Future<bool> showSignInDialog(BuildContext context) async {
                   onPressed: () async {
                     try {
                       final scaffoldMessenger = ScaffoldMessenger.of(context);
-                      Navigator.of(context).pop(true);
+                      Navigator.of(
+                        context,
+                      ).pop(true); // Return true for sign-in attempt
 
                       scaffoldMessenger.showSnackBar(
                         SnackBar(
@@ -219,7 +223,7 @@ Future<bool> showSignInDialog(BuildContext context) async {
               const SizedBox(height: 12),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop(false);
+                  Navigator.of(context).pop(false); // Return false for cancel
                 },
                 child: Text(
                   AppLocalizations.of(context).cancel,

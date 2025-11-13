@@ -16,6 +16,7 @@ class UploadSection extends StatefulWidget {
 
 class _UploadSectionState extends State<UploadSection> {
   bool _isLocalLoading = false;
+  bool _showFileStatus = false;
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +216,7 @@ class _UploadSectionState extends State<UploadSection> {
         const SizedBox(height: 20),
 
         // File Status Section with smooth appearance
-        if (fileProvider.hasFile && !isLoading)
+        if (_showFileStatus && fileProvider.hasFile && !isLoading)
           _buildFileStatusSection(fileProvider),
       ],
     );
@@ -233,18 +234,26 @@ class _UploadSectionState extends State<UploadSection> {
       // Set local loading state first for immediate feedback
       setState(() {
         _isLocalLoading = true;
+        _showFileStatus = false; // Hide file status while loading
       });
 
       // Add a small delay to ensure loading state is visible
       await Future.delayed(const Duration(milliseconds: 50));
 
       try {
-        // Start both the file processing and a minimum delay
+        // Start both the file processing and a 5-second delay
         final processingFuture = pdfProvider.selectAndUploadFile();
-        final minimumDelay = Future.delayed(const Duration(milliseconds: 1500));
+        final fiveSecondDelay = Future.delayed(const Duration(seconds: 5));
 
         // Wait for both to complete (whichever takes longer)
-        await Future.wait([processingFuture, minimumDelay]);
+        await Future.wait([processingFuture, fiveSecondDelay]);
+
+        // After 5 seconds, show the file status
+        if (mounted) {
+          setState(() {
+            _showFileStatus = true;
+          });
+        }
       } finally {
         // Ensure loading state is cleared even if there's an error
         if (mounted) {
@@ -307,6 +316,9 @@ class _UploadSectionState extends State<UploadSection> {
             onPressed: () {
               fileProvider.clearFile();
               fileProvider.clearSelection();
+              setState(() {
+                _showFileStatus = false; // Hide file status when cleared
+              });
             },
             icon: Icon(Icons.close, color: AppConstants.subtitleColor),
           ),

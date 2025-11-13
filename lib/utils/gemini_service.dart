@@ -83,7 +83,8 @@ Future<String> getGeminiResponse(
   required String? fileName,
 }) async {
   try {
-    const apiKey = 'AIzaSyDrWVSlKfmlHOEwmhqK1gYOPwS_wYfS1ls';
+    //const apiKey = 'AIzaSyDrWVSlKfmlHOEwmhqK1gYOPwS_wYfS1ls';
+    const apiKey = 'AIzaSyBZE2d4x_-WSFmuR7mkTZuJS3rM--0Dbz8';
 
     // ✅ Create the model with systemInstruction
     final model = GenerativeModel(

@@ -63,32 +63,32 @@ class SummaryActionButtons extends StatelessWidget {
         ),
 
         const SizedBox(height: 10),
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            backgroundColor: AppConstants.primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            elevation: 4,
-            shadowColor: AppConstants.primaryColor.withOpacity(0.3),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.share, color: Colors.white, size: 16),
-              const SizedBox(width: 8),
-              Text(
-                AppLocalizations.of(context).shareSummary,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        ),
+        //ElevatedButton(
+        //  onPressed: () {},
+        //  style: ElevatedButton.styleFrom(
+        //    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        //    backgroundColor: AppConstants.primaryColor,
+        //    shape: RoundedRectangleBorder(
+        //      borderRadius: BorderRadius.circular(8),
+        //    ),
+        //    elevation: 4,
+        //    shadowColor: AppConstants.primaryColor.withOpacity(0.3),
+        //  ),
+        //  child: Row(
+        //    mainAxisAlignment: MainAxisAlignment.center,
+        //    children: [
+        //      const Icon(Icons.share, color: Colors.white, size: 16),
+        //      const SizedBox(width: 8),
+        //      Text(
+        //        AppLocalizations.of(context).shareSummary,
+        //        style: const TextStyle(
+        //          color: Colors.white,
+        //          fontWeight: FontWeight.w600,
+        //        ),
+        //      ),
+        //    ],
+        //  ),
+        //),
       ],
     );
   }
