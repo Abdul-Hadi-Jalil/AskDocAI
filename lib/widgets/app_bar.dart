@@ -104,7 +104,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                     foregroundColor: Colors.white,
                                   ),
                                   onPressed: () {
-                                    googleSignout(context);
+                                    unifiedSignOut(context);
                                     authState.signOut();
                                     Navigator.of(context).pop();
                                   },
