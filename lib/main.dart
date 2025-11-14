@@ -15,6 +15,7 @@ import 'providers/pdf_provider.dart';
 import 'providers/file_provider.dart';
 import 'app_localization.dart';
 import 'providers/language_provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
@@ -23,6 +24,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await MobileAds.instance.initialize();
+  await dotenv.load(fileName: ".env");
   runApp(const SecureVault());
 }
 

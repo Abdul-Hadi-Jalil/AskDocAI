@@ -1,8 +1,7 @@
 import 'package:docusense_ai/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-
-const apiKey = 'AIzaSyDrWVSlKfmlHOEwmhqK1gYOPwS_wYfS1ls';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// 🧠 System prompt that defines how Gemini should behave.
 const String _systemPrompt = '''
@@ -83,13 +82,10 @@ Future<String> getGeminiResponse(
   required String? fileName,
 }) async {
   try {
-    //const apiKey = 'AIzaSyDrWVSlKfmlHOEwmhqK1gYOPwS_wYfS1ls';
-    const apiKey = 'AIzaSyBZE2d4x_-WSFmuR7mkTZuJS3rM--0Dbz8';
-
     // ✅ Create the model with systemInstruction
     final model = GenerativeModel(
       model: 'gemini-2.5-pro', // or 'gemini-2.5-pro' depending on your access
-      apiKey: apiKey,
+      apiKey: dotenv.env['API_KEY'] ?? "API not fount",
       systemInstruction: Content.text(_systemPrompt),
     );
 
@@ -166,7 +162,7 @@ Future<String> generateFileSummary(String fileContent) async {
   try {
     final model = GenerativeModel(
       model: 'gemini-2.5-pro',
-      apiKey: apiKey,
+      apiKey: dotenv.env['API_KEY'] ?? "API not fount",
       systemInstruction: Content.text(_summaryPrompt),
     );
 
@@ -236,12 +232,10 @@ Additional rules:
 
 Future<String> generateQuiz({required String? fileContent}) async {
   try {
-    const apiKey = 'AIzaSyDrWVSlKfmlHOEwmhqK1gYOPwS_wYfS1ls';
-
     // ✅ Create the model with systemInstruction
     final model = GenerativeModel(
       model: 'gemini-2.5-pro', // or 'gemini-2.5-pro' depending on your access
-      apiKey: apiKey,
+      apiKey: dotenv.env['API_KEY'] ?? "API not fount",
       systemInstruction: Content.text(quizPrompt),
     );
 

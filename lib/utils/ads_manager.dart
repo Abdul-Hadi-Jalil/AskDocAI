@@ -7,11 +7,11 @@ class AdManager {
 
   /// ✅ Replace with your real Ad Unit IDs
   static const String interstitialAdUnitId = kReleaseMode
-      ? 'ca-app-pub-xxxxxxxxxxxxxxxx/interstitial'
+      ? 'ca-app-pub-~~~~~~~~~~~~~~~~~~~~~₹/interstitial'
       : 'ca-app-pub-3940256099942544/1033173712'; // test ID
 
   static const String rewardedAdUnitId = kReleaseMode
-      ? 'ca-app-pub-xxxxxxxxxxxxxxxx/rewarded'
+      ? 'ca-app-pub-~~~~~~~~~~~~~~~~~~~~~₹/rewarded'
       : 'ca-app-pub-3940256099942544/5224354917'; // test ID
 
   // ---------------------------------------------------------------------------
