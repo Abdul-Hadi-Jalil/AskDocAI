@@ -22,7 +22,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
   @override
   void initState() {
     super.initState();
-    AdManager.loadRewardedAd(); // ✅ preload
+    AdManager.loadRewardedSummaryAd(); // ✅ preload
   }
 
   @override

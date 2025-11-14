@@ -22,12 +22,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  BannerAd? _bannerAd;
+  NativeAd? _nativeAd;
 
   @override
   void initState() {
     super.initState();
-    _bannerAd = AdManager.createBannerAd();
+    _nativeAd = AdManager.createNativeAd();
   }
 
   @override
@@ -99,13 +99,13 @@ class _HomeScreenState extends State<HomeScreen> {
             const WelcomeSection(),
             const SizedBox(height: 30),
 
-            // banner ad implementation
-            if (_bannerAd != null)
+            // native ad implementation
+            if (_nativeAd != null)
               Container(
                 alignment: Alignment.center,
-                width: _bannerAd!.size.width.toDouble(),
-                height: _bannerAd!.size.height.toDouble(),
-                child: AdWidget(ad: _bannerAd!),
+                width: double.infinity,
+                height: 100, // Small size for native ad
+                child: AdWidget(ad: _nativeAd!),
               ),
 
             const SizedBox(height: 20),
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    _bannerAd?.dispose();
+    _nativeAd?.dispose();
     super.dispose();
   }
 }

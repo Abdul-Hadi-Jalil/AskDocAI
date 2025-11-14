@@ -26,7 +26,7 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
-    AdManager.loadRewardedAd(); // ✅ preload
+    AdManager.loadRewardedQuizAd(); // ✅ preload
   }
 
   @override

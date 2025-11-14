@@ -169,9 +169,8 @@ class _ChatScreenState extends State<ChatScreen> {
       _messageHandler.addWelcomeMessage(context);
     });
 
-    // Load both ads when chat screen opens
-    AdManager.loadRewardedAd();
-    AdManager.loadInterstitialAd();
+    // Load rewarded chat ad when chat screen opens
+    AdManager.loadRewardedChatAd(); // Changed from loadRewardedAd()
   }
 
   Future<void> _handleMessageSend(String text) async {
