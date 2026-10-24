@@ -1,6 +1,6 @@
-import 'package:docusense_ai/utils/constants.dart';
-import 'package:docusense_ai/app_localization.dart';
-import 'package:docusense_ai/utils/gemini_service.dart';
+import 'package:askdocai/utils/constants.dart';
+import 'package:askdocai/app_localization.dart';
+import 'package:askdocai/utils/gemini_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/pdf_provider.dart';

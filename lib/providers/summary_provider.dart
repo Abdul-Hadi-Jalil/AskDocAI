@@ -1,5 +1,5 @@
 // providers/summary_provider.dart
-import 'package:docusense_ai/utils/gemini_service.dart';
+import 'package:askdocai/utils/gemini_service.dart';
 import 'package:flutter/material.dart';
 import './file_provider.dart';
 

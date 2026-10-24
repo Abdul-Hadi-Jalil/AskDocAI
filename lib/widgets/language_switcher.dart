@@ -1,8 +1,8 @@
-import 'package:docusense_ai/utils/constants.dart';
+import 'package:askdocai/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:docusense_ai/providers/language_provider.dart';
-import 'package:docusense_ai/app_localization.dart';
+import 'package:askdocai/providers/language_provider.dart';
+import 'package:askdocai/app_localization.dart';
 
 class LanguageSwitcher extends StatelessWidget {
   const LanguageSwitcher({super.key});

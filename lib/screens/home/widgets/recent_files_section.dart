@@ -1,10 +1,10 @@
-import 'package:docusense_ai/utils/constants.dart';
-import 'package:docusense_ai/app_localization.dart';
-import 'package:docusense_ai/models/app_state.dart';
+import 'package:askdocai/utils/constants.dart';
+import 'package:askdocai/app_localization.dart';
+import 'package:askdocai/models/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:docusense_ai/providers/file_provider.dart';
-import 'package:docusense_ai/providers/pdf_provider.dart'; // ADD THIS IMPORT
+import 'package:askdocai/providers/file_provider.dart';
+import 'package:askdocai/providers/pdf_provider.dart'; // ADD THIS IMPORT
 
 class RecentFilesSection extends StatelessWidget {
   const RecentFilesSection({super.key});

@@ -1,7 +1,10 @@
-import 'package:docusense_ai/utils/constants.dart';
-import 'package:docusense_ai/screens/chat/widgets/chat_content.dart';
-import 'package:docusense_ai/screens/chat/widgets/chat_message_handler.dart';
-import 'package:docusense_ai/widgets/file_header.dart';
+import 'package:askdocai/utils/constants.dart';
+import 'package:askdocai/screens/chat/widgets/chat_content.dart';
+import 'package:askdocai/screens/chat/widgets/chat_message_handler.dart';
+import 'package:askdocai/widgets/file_header.dart';
+import 'package:askdocai/providers/auth_state.dart';
+import 'package:askdocai/providers/pdf_provider.dart';
+import 'package:askdocai/services/chat_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
 import 'package:provider/provider.dart';
@@ -23,14 +26,27 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
+    final userId = context.read<AuthState>().user?.uid;
+    final pdf = context.read<PdfProvider>();
     _messageHandler = ChatMessageHandler(
       chatController: _chatController,
       uuid: uuid,
       botUser: botUser,
+      store: userId == null
+          ? null
+          : FirestoreChatStore(
+              userId: userId,
+              documentName: pdf.uploadedFileName ?? 'document',
+              documentContent: pdf.uploadedFileContent ?? '',
+            ),
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _messageHandler.addWelcomeMessage(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      await _messageHandler.loadHistory();
+      if (mounted && _chatController.messages.isEmpty) {
+        _messageHandler.addWelcomeMessage(context);
+      }
     });
   }
 
@@ -57,11 +73,37 @@ class _ChatScreenState extends State<ChatScreen> {
             Expanded(
               child: Consumer<ChatMessageHandler>(
                 builder: (context, handler, child) {
-                  return ChatContent(
-                    chatController: _chatController,
-                    botUser: botUser,
-                    onMessageSend: _handleMessageSend,
-                    isTyping: handler.isTyping,
+                  return Column(
+                    children: [
+                      if (handler.isLoadingHistory)
+                        const LinearProgressIndicator(),
+                      if (handler.hasPersistenceError)
+                        MaterialBanner(
+                          content: const Text(
+                            'Chat history could not sync. Check your connection and retry.',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed:
+                                  handler.isSaving || handler.isLoadingHistory
+                                  ? null
+                                  : handler.retryPersistence,
+                              child: const Text('Retry'),
+                            ),
+                          ],
+                        ),
+                      Expanded(
+                        child: IgnorePointer(
+                          ignoring: handler.isLoadingHistory,
+                          child: ChatContent(
+                            chatController: _chatController,
+                            botUser: botUser,
+                            onMessageSend: _handleMessageSend,
+                            isTyping: handler.isTyping,
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 },
               ),

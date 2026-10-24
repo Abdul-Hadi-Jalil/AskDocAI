@@ -1,4 +1,4 @@
-import 'package:docusense_ai/main.dart';
+import 'package:askdocai/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

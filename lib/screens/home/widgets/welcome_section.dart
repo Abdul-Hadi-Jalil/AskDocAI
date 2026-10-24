@@ -1,5 +1,5 @@
-import 'package:docusense_ai/utils/constants.dart';
-import 'package:docusense_ai/app_localization.dart';
+import 'package:askdocai/utils/constants.dart';
+import 'package:askdocai/app_localization.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeSection extends StatelessWidget {

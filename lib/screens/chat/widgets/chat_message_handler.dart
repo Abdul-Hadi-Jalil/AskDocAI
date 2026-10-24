@@ -1,6 +1,7 @@
-import 'package:docusense_ai/app_localization.dart';
-import 'package:docusense_ai/providers/pdf_provider.dart';
-import 'package:docusense_ai/utils/gemini_service.dart';
+import 'package:askdocai/app_localization.dart';
+import 'package:askdocai/providers/pdf_provider.dart';
+import 'package:askdocai/utils/gemini_service.dart';
+import 'package:askdocai/services/chat_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_core/flutter_chat_core.dart';
 import 'package:uuid/uuid.dart';
@@ -11,6 +12,17 @@ class ChatMessageHandler extends ChangeNotifier {
   final Uuid uuid;
   final User botUser;
   bool _isTyping = false;
+  bool _disposed = false;
+  bool _isLoadingHistory = false;
+  bool _isSaving = false;
+  bool _loadFailed = false;
+  bool _saveFailed = false;
+  final List<SavedChatExchange> _unsaved = [];
+  final ChatStore? store;
+
+  bool get isLoadingHistory => _isLoadingHistory;
+  bool get isSaving => _isSaving;
+  bool get hasPersistenceError => _loadFailed || _saveFailed;
 
   bool get isTyping => _isTyping;
 
@@ -18,7 +30,90 @@ class ChatMessageHandler extends ChangeNotifier {
     required this.chatController,
     required this.uuid,
     required this.botUser,
+    this.store,
   });
+
+  Future<void> loadHistory() async {
+    if (store == null || _disposed || _isLoadingHistory) return;
+    _isLoadingHistory = true;
+    notifyListeners();
+    try {
+      final exchanges = await store!.load().timeout(
+        const Duration(seconds: 12),
+      );
+      if (_disposed) return;
+      final existingIds = chatController.messages
+          .map((message) => message.id)
+          .toSet();
+      final messages = <Message>[
+        ...chatController.messages.where(
+          (message) => !message.id.startsWith('welcome-'),
+        ),
+      ];
+      for (final exchange in exchanges) {
+        if (!existingIds.contains('${exchange.id}-user')) {
+          messages.add(
+            TextMessage(
+              id: '${exchange.id}-user',
+              authorId: 'user_1',
+              text: exchange.question,
+              createdAt: exchange.createdAt,
+            ),
+          );
+        }
+        if (!existingIds.contains('${exchange.id}-bot')) {
+          messages.add(
+            TextMessage(
+              id: '${exchange.id}-bot',
+              authorId: botUser.id,
+              text: exchange.answer,
+              createdAt: exchange.createdAt.add(
+                const Duration(microseconds: 1),
+              ),
+            ),
+          );
+        }
+      }
+      messages.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
+      await chatController.setMessages(messages);
+      _loadFailed = false;
+    } catch (_) {
+      _loadFailed = true;
+    } finally {
+      _isLoadingHistory = false;
+      if (!_disposed) notifyListeners();
+    }
+  }
+
+  Future<void> retryPersistence() async {
+    if (_loadFailed) await loadHistory();
+    await _savePending();
+  }
+
+  Future<void> _savePending() async {
+    if (store == null || _isSaving || _disposed) return;
+    _isSaving = true;
+    notifyListeners();
+    try {
+      while (_unsaved.isNotEmpty && !_disposed) {
+        await store!.save(_unsaved.first).timeout(const Duration(seconds: 12));
+        _unsaved.removeAt(0);
+      }
+      _saveFailed = false;
+    } catch (_) {
+      _saveFailed = true;
+      // Keep pending exchanges for an explicit retry; never report a save as successful.
+    } finally {
+      _isSaving = false;
+      if (!_disposed) notifyListeners();
+    }
+  }
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
 
   void addWelcomeMessage(BuildContext context) {
     final pdfProvider = context.read<PdfProvider>();
@@ -26,7 +121,7 @@ class ChatMessageHandler extends ChangeNotifier {
 
     chatController.insertMessage(
       TextMessage(
-        id: uuid.v4(),
+        id: 'welcome-${uuid.v4()}',
         authorId: botUser.id,
         text: AppLocalizations.of(
           context,
@@ -40,12 +135,17 @@ class ChatMessageHandler extends ChangeNotifier {
     required String text,
     required BuildContext context,
   }) async {
+    if (_disposed || _isTyping || _isLoadingHistory || text.trim().isEmpty) {
+      return;
+    }
     final pdfProvider = context.read<PdfProvider>();
 
     final errorMessage = AppLocalizations.of(context).errorTryAgain;
 
     // Add user message
-    _addUserMessage(text);
+    final exchangeId = uuid.v4();
+    final createdAt = DateTime.now();
+    _addUserMessage(text, '$exchangeId-user');
 
     // Show typing indicator
     _setTyping(true);
@@ -59,27 +159,44 @@ class ChatMessageHandler extends ChangeNotifier {
         fileName: pdfProvider.uploadedFileName,
       );
 
+      // A screen can be closed or its account changed while Gemini is responding.
+      if (_disposed) return;
+
       // Hide typing indicator
       _setTyping(false);
 
       // Add bot response
-      _addBotMessage(response);
+      _addBotMessage(response, id: '$exchangeId-bot');
+      if (store != null) {
+        _unsaved.add(
+          SavedChatExchange(
+            id: exchangeId,
+            question: text,
+            answer: response,
+            createdAt: createdAt,
+          ),
+        );
+        await _savePending();
+      }
     } catch (e) {
       debugPrint("🎁 Error from Gemini: $e");
-      _setTyping(false);
-      _addBotMessage(errorMessage);
+      if (!_disposed) {
+        _setTyping(false);
+        _addBotMessage(errorMessage);
+      }
     }
   }
 
   void _setTyping(bool value) {
+    if (_disposed) return;
     _isTyping = value;
     notifyListeners();
   }
 
-  void _addUserMessage(String text) {
+  void _addUserMessage(String text, String id) {
     chatController.insertMessage(
       TextMessage(
-        id: uuid.v4(),
+        id: id,
         authorId: 'user_1',
         text: text,
         createdAt: DateTime.now(),
@@ -87,10 +204,10 @@ class ChatMessageHandler extends ChangeNotifier {
     );
   }
 
-  void _addBotMessage(String text) {
+  void _addBotMessage(String text, {String? id}) {
     chatController.insertMessage(
       TextMessage(
-        id: uuid.v4(),
+        id: id ?? uuid.v4(),
         authorId: botUser.id,
         text: text,
         createdAt: DateTime.now(),

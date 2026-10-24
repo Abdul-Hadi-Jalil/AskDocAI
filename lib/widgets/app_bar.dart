@@ -1,9 +1,9 @@
-import 'package:docusense_ai/app_localization.dart';
+import 'package:askdocai/app_localization.dart';
 import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 import 'package:provider/provider.dart';
-import 'package:docusense_ai/providers/language_provider.dart';
-import 'package:docusense_ai/screens/signin_screen.dart';
+import 'package:askdocai/providers/language_provider.dart';
+import 'package:askdocai/screens/signin_screen.dart';
 import '../providers/auth_state.dart';
 import '../Auth/google_sign_out.dart';
 

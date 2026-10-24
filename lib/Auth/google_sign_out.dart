@@ -1,6 +1,6 @@
-import 'package:docusense_ai/providers/file_provider.dart';
-import 'package:docusense_ai/providers/pdf_provider.dart';
-import 'package:docusense_ai/providers/summary_provider.dart';
+import 'package:askdocai/providers/file_provider.dart';
+import 'package:askdocai/providers/pdf_provider.dart';
+import 'package:askdocai/providers/summary_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';

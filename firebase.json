@@ -3,20 +3,57 @@
     "platforms": {
       "dart": {
         "lib/firebase_options.dart": {
-          "projectId": "vault-99bd4",
+          "projectId": "askdocai-b699d",
           "configurations": {
-            "android": "1:29947398865:android:9f8690f5b888dd05e9d3f0",
-            "macos": "1:29947398865:ios:da3fcee8c12a9011e9d3f0"
+            "android": "1:5628303335:android:e1339ba542a2c2eb048f42",
+            "web": "1:5628303335:web:e6d343f1c56d3ffd048f42",
+            "windows": "1:5628303335:web:e6d343f1c56d3ffd048f42",
+            "macos": "1:5628303335:ios:f38f4bd787d65fa9048f42"
           }
         }
       },
       "android": {
         "default": {
-          "projectId": "vault-99bd4",
-          "appId": "1:29947398865:android:9f8690f5b888dd05e9d3f0",
+          "projectId": "askdocai-b699d",
+          "appId": "1:5628303335:android:e1339ba542a2c2eb048f42",
           "fileOutput": "android/app/google-services.json"
         }
       }
+    }
+  },
+  "auth": {
+    "providers": {
+      "emailPassword": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "AskDocAI",
+        "supportEmail": "abdulhadijalil34@gmail.com",
+        "authorizedRedirectUris": [
+          "https://askdocai-b699d.firebaseapp.com/__/auth/handler",
+          "http://localhost"
+        ]
+      }
+    }
+  },
+  "firestore": {
+    "database": "askdocai",
+    "location": "asia-south1",
+    "edition": "enterprise",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "emulators": {
+    "firestore": {
+      "host": "127.0.0.1",
+      "port": 8080,
+      "edition": "enterprise"
+    },
+    "ui": {
+      "enabled": false
+    },
+    "singleProjectMode": true,
+    "auth": {
+      "host": "127.0.0.1",
+      "port": 9099
     }
   }
 }

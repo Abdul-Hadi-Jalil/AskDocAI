@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/pdf_provider.dart';
 import '../models/app_state.dart';
 import '../utils/constants.dart';
-import 'package:docusense_ai/app_localization.dart';
+import 'package:askdocai/app_localization.dart';
 
 class CustomBottomNav extends StatelessWidget {
   const CustomBottomNav({super.key});

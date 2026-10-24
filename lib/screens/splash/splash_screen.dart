@@ -1,13 +1,13 @@
-import 'package:docusense_ai/utils/constants.dart';
-import 'package:docusense_ai/screens/splash/widgets/loading_dot.dart';
-import 'package:docusense_ai/screens/splash/widgets/shimer_effect.dart';
+import 'package:askdocai/utils/constants.dart';
+import 'package:askdocai/screens/splash/widgets/loading_dot.dart';
+import 'package:askdocai/screens/splash/widgets/shimer_effect.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
-import 'package:docusense_ai/app.dart';
-import 'package:docusense_ai/app_localization.dart';
-import 'package:docusense_ai/screens/splash/widgets/background_circles.dart';
+import 'package:askdocai/app.dart';
+import 'package:askdocai/app_localization.dart';
+import 'package:askdocai/screens/splash/widgets/background_circles.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

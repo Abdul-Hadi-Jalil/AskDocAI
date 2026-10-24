@@ -1,6 +1,6 @@
-import 'package:docusense_ai/app_localization.dart';
-import 'package:docusense_ai/providers/auth_state.dart';
-import 'package:docusense_ai/screens/signin_screen.dart' as signin;
+import 'package:askdocai/app_localization.dart';
+import 'package:askdocai/providers/auth_state.dart';
+import 'package:askdocai/screens/signin_screen.dart' as signin;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/pdf_provider.dart';

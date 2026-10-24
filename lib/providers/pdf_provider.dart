@@ -1,6 +1,6 @@
 // providers/pdf_provider.dart
-import 'package:docusense_ai/providers/file_provider.dart';
-import 'package:docusense_ai/utils/file_helper.dart';
+import 'package:askdocai/providers/file_provider.dart';
+import 'package:askdocai/utils/file_helper.dart';
 import 'package:flutter/material.dart';
 import '../models/app_state.dart';
 

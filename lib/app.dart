@@ -1,4 +1,4 @@
-import 'package:docusense_ai/screens/home/home_screen.dart';
+import 'package:askdocai/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/pdf_provider.dart';

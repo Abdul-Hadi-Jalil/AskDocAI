@@ -1,4 +1,4 @@
-package com.example.docusense_ai
+package com.example.askdocai
 
 import io.flutter.embedding.android.FlutterActivity
 

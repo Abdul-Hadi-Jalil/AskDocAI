@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:docusense_ai/screens/home/widgets/recent_files_section.dart';
-import 'package:docusense_ai/screens/home/widgets/upload_section.dart';
+import 'package:askdocai/screens/home/widgets/recent_files_section.dart';
+import 'package:askdocai/screens/home/widgets/upload_section.dart';
 import 'welcome_section.dart';
 
 class HomeContent extends StatelessWidget {

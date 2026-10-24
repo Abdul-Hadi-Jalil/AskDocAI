@@ -1,26 +1,51 @@
 {
   "project_info": {
-    "project_number": "29947398865",
-    "project_id": "vault-99bd4",
-    "storage_bucket": "vault-99bd4.firebasestorage.app"
+    "project_number": "5628303335",
+    "project_id": "askdocai-b699d",
+    "storage_bucket": "askdocai-b699d.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:29947398865:android:9f8690f5b888dd05e9d3f0",
+        "mobilesdk_app_id": "1:5628303335:android:e1339ba542a2c2eb048f42",
         "android_client_info": {
-          "package_name": "com.example.docusense_ai"
+          "package_name": "com.example.askdocai"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "5628303335-1sf7au57pcpnc8lrjudtkk1p7fbp764q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.askdocai",
+            "certificate_hash": "49697fbc40a04269fe0d1366ce12a7b0edae6af8"
+          }
+        },
+        {
+          "client_id": "5628303335-er9lbcqgqgt6ekibkrtec198eg6tu8gg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAXkfWcENInor6OpUBBWHR7PjNiPN8Ay_U"
+          "current_key": "AIzaSyDdZud2xmkI-fS4a9iFNsGV1P-Ej1GEr6I"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "5628303335-er9lbcqgqgt6ekibkrtec198eg6tu8gg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "5628303335-kdbfh9darvg4s51frdqna80l45tmlept.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.askdocai"
+              }
+            }
+          ]
         }
       }
     }

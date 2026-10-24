@@ -1,4 +1,4 @@
-import 'package:docusense_ai/utils/constants.dart';
+import 'package:askdocai/utils/constants.dart';
 // widgets/quiz/mcq_widget.dart
 import 'package:flutter/material.dart';
 import '../../../models/mcq.dart';

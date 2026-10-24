@@ -1,7 +1,7 @@
-import 'package:docusense_ai/utils/constants.dart';
-import 'package:docusense_ai/providers/file_provider.dart';
-import 'package:docusense_ai/providers/summary_provider.dart';
-import 'package:docusense_ai/widgets/file_header.dart';
+import 'package:askdocai/utils/constants.dart';
+import 'package:askdocai/providers/file_provider.dart';
+import 'package:askdocai/providers/summary_provider.dart';
+import 'package:askdocai/widgets/file_header.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

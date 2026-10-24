@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:docusense_ai/app_localization.dart';
-import 'package:docusense_ai/screens/signin_screen.dart';
-import 'package:docusense_ai/utils/gemini_service.dart' as gemini;
+import 'package:askdocai/app_localization.dart';
+import 'package:askdocai/screens/signin_screen.dart';
+import 'package:askdocai/utils/gemini_service.dart' as gemini;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

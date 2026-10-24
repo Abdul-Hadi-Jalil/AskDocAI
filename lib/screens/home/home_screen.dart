@@ -1,15 +1,15 @@
-import 'package:docusense_ai/utils/constants.dart';
-import 'package:docusense_ai/models/app_state.dart';
-import 'package:docusense_ai/providers/auth_state.dart';
-import 'package:docusense_ai/providers/pdf_provider.dart';
-import 'package:docusense_ai/screens/quiz/quiz_screen.dart';
-import 'package:docusense_ai/widgets/app_bar.dart';
-import 'package:docusense_ai/widgets/bottom_nav.dart';
-import 'package:docusense_ai/screens/home/widgets/welcome_section.dart';
-import 'package:docusense_ai/screens/home/widgets/upload_section.dart';
-import 'package:docusense_ai/screens/home/widgets/recent_files_section.dart';
-import 'package:docusense_ai/screens/chat/chat_screen.dart';
-import 'package:docusense_ai/screens/summary/summary_screen.dart';
+import 'package:askdocai/utils/constants.dart';
+import 'package:askdocai/models/app_state.dart';
+import 'package:askdocai/providers/auth_state.dart';
+import 'package:askdocai/providers/pdf_provider.dart';
+import 'package:askdocai/screens/quiz/quiz_screen.dart';
+import 'package:askdocai/widgets/app_bar.dart';
+import 'package:askdocai/widgets/bottom_nav.dart';
+import 'package:askdocai/screens/home/widgets/welcome_section.dart';
+import 'package:askdocai/screens/home/widgets/upload_section.dart';
+import 'package:askdocai/screens/home/widgets/recent_files_section.dart';
+import 'package:askdocai/screens/chat/chat_screen.dart';
+import 'package:askdocai/screens/summary/summary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +50,14 @@ class _HomeScreenState extends State<HomeScreen> {
         return _buildHomeContent();
       case BottomNavItem.chat:
         if (pdfProvider.hasFileLoaded) {
-          return const ChatScreen();
+          final userId = context.watch<AuthState>().user?.uid;
+          return ChatScreen(
+            key: ValueKey((
+              userId,
+              pdfProvider.uploadedFileName,
+              pdfProvider.uploadedFileContent.hashCode,
+            )),
+          );
         } else {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _showNoPdfMessage(context, pdfProvider);

@@ -1,7 +1,7 @@
 # AskDocAI
 
 Flutter document upload, chat, summaries, and quizzes with Firebase authentication.
-The app is ad-free, uses Google Sign-In, and has a navy-and-blue Material 3 theme.
+The app is ad-free, uses email/password and Google Sign-In, and has a navy-and-blue Material 3 theme.
 Android is the primary development target. Web, Windows, Linux, and macOS projects
 are retained; see the validation report for platform-specific limitations. iOS
 project support has been removed.
@@ -37,14 +37,17 @@ For legacy dotenv loading, explicitly register your local `.env` under Flutter
 assets; prefer the ignored JSON file and Dart defines for repeatable builds.
 Keys embedded in a client build are extractable; use a backend before production.
 
-Firebase Android client configuration exists and matches
-`com.example.docusense_ai`. Google OAuth client entries are missing from the
-checked-in JSON. Enable Google authentication, register your signing certificate
-fingerprints, and download refreshed configuration before testing account login.
-Email/password registration and password reset are not implemented.
+The Dart package is `askdocai`; Android/macOS/Linux identifiers use
+`com.example.askdocai`. Firebase uses the existing project `askdocai-b699d` with
+registered Android, web/Windows, and macOS apps. Email/password sign-in, account
+creation, and password reset are available alongside Google Sign-In. Android
+debug signing fingerprints are registered; release certificates still need to
+be registered when release signing is configured. See
+[package rename and Firebase setup](docs/PACKAGE_RENAME_AND_FIREBASE_SETUP.md).
 
 ## Change and validation records
 
+- [Package rename and Firebase backend setup](docs/PACKAGE_RENAME_AND_FIREBASE_SETUP.md)
 - [Ad-free blue theme refactor](docs/AD_FREE_THEME_REFACTOR.md)
 
 - [Android migration report](docs/ANDROID_MIGRATION_REPORT.md)

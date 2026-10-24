@@ -1,0 +1,58 @@
+// Prototype data model (all fields required, private to the path's uid):
+// users/{uid}/chats/{chatId}: ownerId (string, 1..128, immutable),
+// documentName (string, 1..512, immutable), createdAt (server timestamp,
+// immutable), updatedAt (server timestamp).
+// chats/{chatId}/exchanges/{exchangeId}: ownerId (string, 1..128),
+// question/answer (strings, 1..24000), createdAt (server timestamp).
+// Exchanges are append-only. Client-provided answers are private history,
+// never trusted as server-generated claims, permissions, or executable content.
+// Source document contents and authentication credentials are not stored here.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuthenticated() { return request.auth != null; }
+    function isOwner(uid) { return isAuthenticated() && request.auth.uid == uid; }
+    function uidUnchanged(uid) { return request.resource.data.ownerId == uid; }
+    function uidNotModified() { return request.resource.data.ownerId == resource.data.ownerId; }
+    function validText(value, maxLength) {
+      return value is string && value.size() > 0 && value.size() <= maxLength;
+    }
+    function isValidChat(data, uid) {
+      let fields = ['ownerId', 'documentName', 'createdAt', 'updatedAt'];
+      return data.keys().hasAll(fields) && data.keys().hasOnly(fields)
+        && validText(data.ownerId, 128) && uidUnchanged(uid)
+        && validText(data.documentName, 512)
+        && data.createdAt is timestamp && data.updatedAt is timestamp
+        && data.updatedAt == request.time;
+    }
+    function isValidExchange(data, uid) {
+      let fields = ['ownerId', 'question', 'answer', 'createdAt'];
+      return data.keys().hasAll(fields) && data.keys().hasOnly(fields)
+        && validText(data.ownerId, 128) && uidUnchanged(uid)
+        && validText(data.question, 24000) && validText(data.answer, 24000)
+        && data.createdAt is timestamp && data.createdAt == request.time;
+    }
+    match /users/{uid}/chats/{chatId} {
+      // Nonexistent chat lookups are allowed so the app can create its first chat.
+      allow read: if isOwner(uid);
+      allow create: if isOwner(uid) && isValidChat(request.resource.data, uid)
+        && request.resource.data.createdAt == request.time;
+      allow update: if isOwner(uid) && isValidChat(request.resource.data, uid)
+        && uidNotModified()
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.documentName == resource.data.documentName;
+      allow delete: if false;
+
+      match /exchanges/{exchangeId} {
+        allow read: if isOwner(uid)
+          && exists(/databases/$(database)/documents/users/$(uid)/chats/$(chatId));
+        allow create: if isOwner(uid) && isValidExchange(request.resource.data, uid)
+          && getAfter(/databases/$(database)/documents/users/$(uid)/chats/$(chatId)).data.ownerId == uid;
+        allow update, delete: if false;
+      }
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
