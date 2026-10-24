@@ -9,7 +9,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appTitle => 'DocuSense AI';
+  String get appTitle => 'AskDocAI';
 
   @override
   String get tagline => '您的AI驱动文档助手';
@@ -60,5 +60,5 @@ class AppLocalizationsZh extends AppLocalizations {
   String get error => '发生错误';
 
   @override
-  String get copyright => '© 2025 DocuSense AI';
+  String get copyright => '© 2025 AskDocAI';
 }

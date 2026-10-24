@@ -1,10 +1,10 @@
+import 'package:docusense_ai/utils/constants.dart';
 import 'package:docusense_ai/models/app_state.dart';
 import 'package:docusense_ai/providers/auth_state.dart';
 import 'package:docusense_ai/providers/pdf_provider.dart';
 import 'package:docusense_ai/screens/quiz/quiz_screen.dart';
 import 'package:docusense_ai/widgets/app_bar.dart';
 import 'package:docusense_ai/widgets/bottom_nav.dart';
-import 'package:docusense_ai/utils/ads_manager.dart';
 import 'package:docusense_ai/screens/home/widgets/welcome_section.dart';
 import 'package:docusense_ai/screens/home/widgets/upload_section.dart';
 import 'package:docusense_ai/screens/home/widgets/recent_files_section.dart';
@@ -12,7 +12,6 @@ import 'package:docusense_ai/screens/chat/chat_screen.dart';
 import 'package:docusense_ai/screens/summary/summary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,14 +21,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  NativeAd? _nativeAd;
-
-  @override
-  void initState() {
-    super.initState();
-    _nativeAd = AdManager.createNativeAd();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<PdfProvider>(
@@ -39,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.white, Colors.grey[50]!],
+              colors: [AppConstants.backgroundColor, AppConstants.surfaceTint],
             ),
           ),
           child: Scaffold(
@@ -99,16 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
             const WelcomeSection(),
             const SizedBox(height: 30),
 
-            // native ad implementation
-            if (_nativeAd != null)
-              Container(
-                alignment: Alignment.center,
-                width: double.infinity,
-                height: 100, // Small size for native ad
-                child: AdWidget(ad: _nativeAd!),
-              ),
-
-            const SizedBox(height: 20),
             const UploadSection(),
             if (authState.isUserSignedIn) const RecentFilesSection(),
           ],
@@ -125,11 +106,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
     pdfProvider.changeTab(BottomNavItem.home);
-  }
-
-  @override
-  void dispose() {
-    _nativeAd?.dispose();
-    super.dispose();
   }
 }

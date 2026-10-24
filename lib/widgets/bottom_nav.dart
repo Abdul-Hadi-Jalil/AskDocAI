@@ -87,7 +87,7 @@ class _NavItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
         decoration: BoxDecoration(
-          color: isActive ? AppConstants.lightPurple : Colors.transparent,
+          color: isActive ? AppConstants.surfaceTint : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(

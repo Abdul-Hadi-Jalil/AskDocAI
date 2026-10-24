@@ -1,5 +1,5 @@
 {
-    "appTitle": "DocuSense AI",
+    "appTitle": "AskDocAI",
     "tagline": "مساعدك الذكي للمستندات",
     "loadingApplication": "جاري تحميل التطبيق",
     "pleaseUploadPdfFirst": "يرجى تحميل ملف PDF أولاً للبدء في الدردشة",
@@ -16,5 +16,5 @@
     "submit": "إرسال",
     "loading": "جاري التحميل...",
     "error": "حدث خطأ",
-    "copyright": "© 2025 DocuSense AI"
+    "copyright": "© 2025 AskDocAI"
 }

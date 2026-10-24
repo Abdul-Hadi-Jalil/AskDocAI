@@ -9,7 +9,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get appTitle => 'DocuSense AI';
+  String get appTitle => 'AskDocAI';
 
   @override
   String get tagline => 'مساعدك الذكي للمستندات';
@@ -61,5 +61,5 @@ class AppLocalizationsAr extends AppLocalizations {
   String get error => 'حدث خطأ';
 
   @override
-  String get copyright => '© 2025 DocuSense AI';
+  String get copyright => '© 2025 AskDocAI';
 }

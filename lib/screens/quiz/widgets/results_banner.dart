@@ -1,3 +1,4 @@
+import 'package:docusense_ai/utils/constants.dart';
 // widgets/quiz/results_banner.dart
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class ResultsBanner extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF8A2BE2), Color(0xFF6A0DAD)],
+          colors: [AppConstants.primaryColor, AppConstants.secondaryColor],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

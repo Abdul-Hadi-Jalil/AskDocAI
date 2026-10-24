@@ -37,7 +37,7 @@ class SummarySection extends StatelessWidget {
                 width: 32,
                 height: 32,
                 decoration: BoxDecoration(
-                  color: AppConstants.lightPurple,
+                  color: AppConstants.surfaceTint,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(icon, color: AppConstants.primaryColor, size: 16),

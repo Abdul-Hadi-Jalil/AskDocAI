@@ -1,3 +1,4 @@
+import 'package:docusense_ai/utils/constants.dart';
 // widgets/quiz/quiz_progress.dart
 import 'package:flutter/material.dart';
 
@@ -44,14 +45,14 @@ class QuizProgress extends StatelessWidget {
                   'Questions: $totalQuestions',
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF666666),
+                    color: AppConstants.subtitleColor,
                   ),
                 ),
                 Text(
                   'Answered: $answeredCount/$totalQuestions',
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF666666),
+                    color: AppConstants.subtitleColor,
                   ),
                 ),
               ],
@@ -65,7 +66,7 @@ class QuizProgress extends StatelessWidget {
               height: 6,
               margin: const EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
-                color: const Color(0xFFF0F0F0),
+                color: AppConstants.surfaceTint,
                 borderRadius: BorderRadius.circular(3),
               ),
               child: FractionallySizedBox(
@@ -74,7 +75,10 @@ class QuizProgress extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF8A2BE2), Color(0xFF6A0DAD)],
+                      colors: [
+                        AppConstants.primaryColor,
+                        AppConstants.secondaryColor,
+                      ],
                     ),
                     borderRadius: BorderRadius.circular(3),
                   ),
@@ -89,7 +93,7 @@ class QuizProgress extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF8A2BE2),
+              color: AppConstants.primaryColor,
             ),
           ),
         ],

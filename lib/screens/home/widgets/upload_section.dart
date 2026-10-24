@@ -138,7 +138,10 @@ class _UploadSectionState extends State<UploadSection> {
                       const SizedBox(height: 16),
                       Text(
                         'Loading your file...',
-                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppConstants.subtitleColor,
+                        ),
                       ),
                       const SizedBox(height: 16),
                     ],
@@ -270,7 +273,7 @@ class _UploadSectionState extends State<UploadSection> {
       duration: const Duration(milliseconds: 500),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppConstants.lightPurple,
+        color: AppConstants.surfaceTint,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppConstants.primaryColor.withOpacity(0.3)),
       ),

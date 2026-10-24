@@ -1,3 +1,4 @@
+import 'package:docusense_ai/utils/constants.dart';
 import 'package:docusense_ai/app_localization.dart';
 import 'package:docusense_ai/models/app_state.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class RecentFilesSection extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF333333),
+                    color: AppConstants.textColor,
                   ),
                 ),
               ),
@@ -95,8 +96,8 @@ class _RecentFileItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
           color: file.isSelected
-              ? const Color(0xFF8A2BE2)
-              : const Color(0xFFF0EAFA),
+              ? AppConstants.primaryColor
+              : AppConstants.surfaceTint,
           width: file.isSelected ? 2 : 1,
         ),
       ),
@@ -116,13 +117,13 @@ class _RecentFileItem extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF8A2BE2).withOpacity(0.1),
+                      color: AppConstants.primaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(
                       Icons.picture_as_pdf,
                       size: 20,
-                      color: Color(0xFF8A2BE2),
+                      color: AppConstants.primaryColor,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -132,7 +133,7 @@ class _RecentFileItem extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF333333),
+                        color: AppConstants.textColor,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -144,14 +145,20 @@ class _RecentFileItem extends StatelessWidget {
               // File Size
               Text(
                 _formatFileSize(file.size),
-                style: const TextStyle(fontSize: 12, color: Color(0xFF666666)),
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppConstants.subtitleColor,
+                ),
               ),
               const SizedBox(height: 4),
 
               // Upload Date
               Text(
                 _formatDate(file.uploadDate),
-                style: const TextStyle(fontSize: 12, color: Color(0xFF666666)),
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppConstants.subtitleColor,
+                ),
               ),
 
               // Selected Indicator
@@ -163,7 +170,7 @@ class _RecentFileItem extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF8A2BE2),
+                    color: AppConstants.primaryColor,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: const Text(
@@ -238,18 +245,18 @@ class _RecentFileItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
         decoration: BoxDecoration(
-          color: const Color(0xFF8A2BE2).withOpacity(0.1),
+          color: AppConstants.primaryColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(6),
         ),
         child: Column(
           children: [
-            Icon(icon, size: 16, color: const Color(0xFF8A2BE2)),
+            Icon(icon, size: 16, color: AppConstants.primaryColor),
             const SizedBox(height: 2),
             Text(
               label,
               style: const TextStyle(
                 fontSize: 10,
-                color: Color(0xFF8A2BE2),
+                color: AppConstants.primaryColor,
                 fontWeight: FontWeight.w500,
               ),
             ),

@@ -1,5 +1,5 @@
 {
-    "appTitle": "DocuSense AI",
+    "appTitle": "AskDocAI",
     "tagline": "Votre Assistant Documentaire IA",
     "loadingApplication": "Chargement de l'application",
     "pleaseUploadPdfFirst": "Veuillez d'abord télécharger un PDF pour chatter",
@@ -16,5 +16,5 @@
     "submit": "Soumettre",
     "loading": "Chargement...",
     "error": "Une erreur est survenue",
-    "copyright": "© 2025 DocuSense AI"
+    "copyright": "© 2025 AskDocAI"
 }

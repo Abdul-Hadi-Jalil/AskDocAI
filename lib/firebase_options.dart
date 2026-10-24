@@ -23,7 +23,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError('iOS support has been removed.');
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
@@ -48,15 +48,6 @@ class DefaultFirebaseOptions {
     authDomain: 'vault-99bd4.firebaseapp.com',
     storageBucket: 'vault-99bd4.firebasestorage.app',
     measurementId: 'G-6510JZNXW4',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyArAneRug9zvUrRCsI_oGrz_LHsKMmcmqo',
-    appId: '1:29947398865:ios:da3fcee8c12a9011e9d3f0',
-    messagingSenderId: '29947398865',
-    projectId: 'vault-99bd4',
-    storageBucket: 'vault-99bd4.firebasestorage.app',
-    iosBundleId: 'com.example.docusenseAi',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -85,5 +76,4 @@ class DefaultFirebaseOptions {
     projectId: 'vault-99bd4',
     storageBucket: 'vault-99bd4.firebasestorage.app',
   );
-
 }

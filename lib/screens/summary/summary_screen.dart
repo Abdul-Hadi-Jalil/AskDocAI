@@ -1,6 +1,6 @@
+import 'package:docusense_ai/utils/constants.dart';
 import 'package:docusense_ai/providers/file_provider.dart';
 import 'package:docusense_ai/providers/summary_provider.dart';
-import 'package:docusense_ai/utils/ads_manager.dart';
 import 'package:docusense_ai/widgets/file_header.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,18 +20,12 @@ class SummaryScreen extends StatefulWidget {
 
 class _SummaryScreenState extends State<SummaryScreen> {
   @override
-  void initState() {
-    super.initState();
-    AdManager.loadRewardedSummaryAd(); // ✅ preload
-  }
-
-  @override
   Widget build(BuildContext context) {
     final fileProvider = Provider.of<FileProvider>(context);
     final summaryProvider = Provider.of<SummaryProvider>(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppConstants.backgroundColor,
       body: Column(
         children: [
           const FileHeader(),

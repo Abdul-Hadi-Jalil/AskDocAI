@@ -8,6 +8,7 @@ class FileHelper {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowedExtensions: ['txt', 'docx', 'doc', 'pdf', 'md'],
       type: FileType.custom,
+      withData: true,
     );
 
     if (result == null) {
@@ -18,7 +19,8 @@ class FileHelper {
     String? content;
 
     // Extract text content based on file type
-    if (file.extension == "txt" && file.bytes != null) {
+    if ((file.extension == 'txt' || file.extension == 'md') &&
+        file.bytes != null) {
       content = utf8.decode(file.bytes!);
     } else if (file.extension == "pdf" && file.path != null) {
       try {

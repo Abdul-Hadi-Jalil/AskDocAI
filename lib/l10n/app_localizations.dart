@@ -111,7 +111,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'DocuSense AI'**
+  /// **'AskDocAI'**
   String get appTitle;
 
   /// No description provided for @tagline.
@@ -213,7 +213,7 @@ abstract class AppLocalizations {
   /// No description provided for @copyright.
   ///
   /// In en, this message translates to:
-  /// **'© 2025 DocuSense AI'**
+  /// **'© 2025 AskDocAI'**
   String get copyright;
 }
 

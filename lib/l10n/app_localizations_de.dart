@@ -9,7 +9,7 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
-  String get appTitle => 'DocuSense AI';
+  String get appTitle => 'AskDocAI';
 
   @override
   String get tagline => 'Ihr KI-gestützter Dokumentenassistent';
@@ -61,5 +61,5 @@ class AppLocalizationsDe extends AppLocalizations {
   String get error => 'Ein Fehler ist aufgetreten';
 
   @override
-  String get copyright => '© 2025 DocuSense AI';
+  String get copyright => '© 2025 AskDocAI';
 }

@@ -34,7 +34,7 @@ class MainTopicsSection extends StatelessWidget {
                 width: 32,
                 height: 32,
                 decoration: BoxDecoration(
-                  color: AppConstants.lightPurple,
+                  color: AppConstants.surfaceTint,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(

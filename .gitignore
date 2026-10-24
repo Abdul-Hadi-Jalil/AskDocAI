@@ -24,8 +24,9 @@ migrate_working_dir/
 #.vscode/
 
 # Flutter/Dart/Pub related
+# iOS support removed; preserve and ignore any local generated leftovers.
+/ios/
 **/doc/api/
-**/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins-dependencies
 .pub-cache/
@@ -47,3 +48,4 @@ app.*.map.json
 .env
 .env.local
 .env.*.local
+/config.local.json

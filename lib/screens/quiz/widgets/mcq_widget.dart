@@ -1,3 +1,4 @@
+import 'package:docusense_ai/utils/constants.dart';
 // widgets/quiz/mcq_widget.dart
 import 'package:flutter/material.dart';
 import '../../../models/mcq.dart';
@@ -60,7 +61,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF8A2BE2),
+                        color: AppConstants.primaryColor,
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -69,7 +70,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF333333),
+                        color: AppConstants.textColor,
                         height: 1.5,
                       ),
                     ),
@@ -84,7 +85,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                 },
                 icon: const Icon(
                   Icons.lightbulb_outline,
-                  color: Color(0xFF8A2BE2),
+                  color: AppConstants.primaryColor,
                   size: 20,
                 ),
               ),
@@ -101,10 +102,10 @@ class _MCQWidgetState extends State<MCQWidget> {
               final isSelected = widget.userAnswer == optionLetter;
               final isCorrectOption = optionLetter == widget.mcq.correctAnswer;
 
-              Color borderColor = const Color(0xFFF0F0F0);
+              Color borderColor = AppConstants.surfaceTint;
               Color backgroundColor = Colors.transparent;
-              Color letterColor = const Color(0xFF666666);
-              Color textColor = const Color(0xFF333333);
+              Color letterColor = AppConstants.subtitleColor;
+              Color textColor = AppConstants.textColor;
 
               if (showResults) {
                 if (isCorrectOption) {
@@ -117,8 +118,8 @@ class _MCQWidgetState extends State<MCQWidget> {
                   letterColor = Colors.white;
                 }
               } else if (isSelected) {
-                borderColor = const Color(0xFF8A2BE2);
-                backgroundColor = const Color(0xFFF0EAFA);
+                borderColor = AppConstants.primaryColor;
+                backgroundColor = AppConstants.surfaceTint;
                 letterColor = Colors.white;
               }
 
@@ -146,7 +147,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                             decoration: BoxDecoration(
                               color: letterColor == Colors.white
                                   ? borderColor
-                                  : const Color(0xFFF0F0F0),
+                                  : AppConstants.surfaceTint,
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Center(
@@ -182,7 +183,7 @@ class _MCQWidgetState extends State<MCQWidget> {
             Container(
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                color: const Color(0xFFF0EAFA),
+                color: AppConstants.surfaceTint,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -193,7 +194,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF8A2BE2),
+                      color: AppConstants.primaryColor,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -201,7 +202,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                     widget.mcq.hint,
                     style: const TextStyle(
                       fontSize: 13,
-                      color: Color(0xFF555555),
+                      color: AppConstants.subtitleColor,
                       height: 1.5,
                     ),
                   ),
@@ -216,7 +217,7 @@ class _MCQWidgetState extends State<MCQWidget> {
             Container(
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                color: const Color(0xFFF9F9F9),
+                color: AppConstants.backgroundColor,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -227,7 +228,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF333333),
+                      color: AppConstants.textColor,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -241,7 +242,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF8A2BE2),
+                          color: AppConstants.primaryColor,
                         ),
                       ),
                       const SizedBox(height: 5),
@@ -249,7 +250,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                         _getCorrectExplanation(),
                         style: const TextStyle(
                           fontSize: 13,
-                          color: Color(0xFF555555),
+                          color: AppConstants.subtitleColor,
                           height: 1.4,
                         ),
                       ),
@@ -264,7 +265,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF8A2BE2),
+                      color: AppConstants.primaryColor,
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -279,7 +280,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                               const Text(
                                 '• ',
                                 style: TextStyle(
-                                  color: Color(0xFF8A2BE2),
+                                  color: AppConstants.primaryColor,
                                   fontSize: 12,
                                 ),
                               ),
@@ -291,7 +292,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                                         text: '${entry.key}: ',
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w600,
-                                          color: Color(0xFF555555),
+                                          color: AppConstants.subtitleColor,
                                         ),
                                       ),
                                       TextSpan(
@@ -300,7 +301,7 @@ class _MCQWidgetState extends State<MCQWidget> {
                                                 .key] ??
                                             '',
                                         style: const TextStyle(
-                                          color: Color(0xFF555555),
+                                          color: AppConstants.subtitleColor,
                                         ),
                                       ),
                                     ],

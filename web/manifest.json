@@ -1,6 +1,6 @@
 {
-    "name": "docusense_ai",
-    "short_name": "docusense_ai",
+    "name": "AskDocAI",
+    "short_name": "AskDocAI",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

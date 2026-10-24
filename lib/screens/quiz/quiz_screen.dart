@@ -1,5 +1,5 @@
+import 'package:docusense_ai/utils/constants.dart';
 import 'package:docusense_ai/app_localization.dart';
-import 'package:docusense_ai/utils/ads_manager.dart';
 import 'package:docusense_ai/utils/gemini_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,18 +24,12 @@ class _QuizScreenState extends State<QuizScreen> {
   String? _errorMessage;
 
   @override
-  void initState() {
-    super.initState();
-    AdManager.loadRewardedQuizAd(); // ✅ preload
-  }
-
-  @override
   Widget build(BuildContext context) {
     final pdfProvider = Provider.of<PdfProvider>(context);
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppConstants.backgroundColor,
         body: _isLoading ? _buildLoading() : _buildQuizContent(pdfProvider),
       ),
     );
@@ -51,13 +45,15 @@ class _QuizScreenState extends State<QuizScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8A2BE2)),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    AppConstants.primaryColor,
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Text(
                   AppLocalizations.of(context).generatingQuiz,
                   style: const TextStyle(
-                    color: Color(0xFF666666),
+                    color: AppConstants.subtitleColor,
                     fontSize: 16,
                   ),
                 ),
@@ -100,7 +96,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF333333),
+                          color: AppConstants.textColor,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -112,7 +108,7 @@ class _QuizScreenState extends State<QuizScreen> {
                             : AppLocalizations.of(context).testUnderstanding,
                         style: const TextStyle(
                           fontSize: 14,
-                          color: Color(0xFF777777),
+                          color: AppConstants.subtitleColor,
                         ),
                       ),
                       if (_errorMessage != null)
@@ -136,23 +132,9 @@ class _QuizScreenState extends State<QuizScreen> {
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     child: ElevatedButton(
-                      onPressed: () async {
-                        _generateQuiz(pdfProvider);
-                        AdManager.showRewardedAd(
-                          onUserEarnedReward: (reward) async {
-                            debugPrint(
-                              '🎁 User watched ad and earned reward: $reward',
-                            );
-                          },
-                          onAdDismissed: () async {
-                            debugPrint('👋 Ad closed — now showing summary');
-                            //await generateFuture;
-                            // UI auto updates from provider
-                          },
-                        );
-                      },
+                      onPressed: () => _generateQuiz(pdfProvider),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF8A2BE2),
+                        backgroundColor: AppConstants.primaryColor,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 32,
@@ -226,7 +208,7 @@ class _QuizScreenState extends State<QuizScreen> {
                               ? _tryAgain
                               : _checkAnswers,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF8A2BE2),
+                            backgroundColor: AppConstants.primaryColor,
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(
                               vertical: 14,
@@ -236,9 +218,9 @@ class _QuizScreenState extends State<QuizScreen> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             elevation: 4,
-                            shadowColor: const Color(
-                              0xFF8A2BE2,
-                            ).withOpacity(0.3),
+                            shadowColor: AppConstants.primaryColor.withOpacity(
+                              0.3,
+                            ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -266,25 +248,12 @@ class _QuizScreenState extends State<QuizScreen> {
                         ), // ← Changed from width to height
                         // Regenerate Quiz Button
                         OutlinedButton(
-                          onPressed: () {
-                            _generateQuiz(pdfProvider);
-                            AdManager.showRewardedAd(
-                              onUserEarnedReward: (reward) async {
-                                debugPrint(
-                                  '🎁 User watched ad and earned reward: $reward',
-                                );
-                              },
-                              onAdDismissed: () async {
-                                debugPrint(
-                                  '👋 Ad closed — now showing summary',
-                                );
-                                // UI auto updates from provider
-                              },
-                            );
-                          },
+                          onPressed: () => _generateQuiz(pdfProvider),
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: const Color(0xFF8A2BE2),
-                            side: const BorderSide(color: Color(0xFF8A2BE2)),
+                            foregroundColor: AppConstants.primaryColor,
+                            side: const BorderSide(
+                              color: AppConstants.primaryColor,
+                            ),
                             padding: const EdgeInsets.symmetric(
                               vertical: 14,
                               horizontal: 16,

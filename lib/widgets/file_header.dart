@@ -57,7 +57,7 @@ class FileHeader extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppConstants.lightPurple,
+        color: AppConstants.surfaceTint,
         border: Border(
           bottom: BorderSide(color: AppConstants.borderColor, width: 1),
         ),

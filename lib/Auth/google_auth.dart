@@ -4,6 +4,12 @@ import 'package:flutter/foundation.dart'; // for debugPrint
 
 Future<UserCredential?> signInWithGoogle() async {
   try {
+    if (kIsWeb || defaultTargetPlatform == TargetPlatform.windows) {
+      final provider = GoogleAuthProvider();
+      return kIsWeb
+          ? await FirebaseAuth.instance.signInWithPopup(provider)
+          : await FirebaseAuth.instance.signInWithProvider(provider);
+    }
     // Start Google Sign-In flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     if (googleUser == null) {

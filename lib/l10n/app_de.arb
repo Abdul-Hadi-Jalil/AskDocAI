@@ -1,5 +1,5 @@
 {
-    "appTitle": "DocuSense AI",
+    "appTitle": "AskDocAI",
     "tagline": "Ihr KI-gestützter Dokumentenassistent",
     "loadingApplication": "Anwendung wird geladen",
     "pleaseUploadPdfFirst": "Bitte laden Sie zuerst eine PDF hoch, um zu chatten",
@@ -16,5 +16,5 @@
     "submit": "Einreichen",
     "loading": "Lädt...",
     "error": "Ein Fehler ist aufgetreten",
-    "copyright": "© 2025 DocuSense AI"
+    "copyright": "© 2025 AskDocAI"
 }

@@ -43,7 +43,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             child: const Center(
               child: Text(
-                'D',
+                'A',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -74,12 +74,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               if (authState.isUserSignedIn) {
                 showDialog(
                   context: context,
-                  builder: (context) {
+                  builder: (dialogContext) {
                     return Dialog(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      backgroundColor: const Color(0xFFF5F5FF),
+                      backgroundColor: AppConstants.surfaceTint,
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: Column(
@@ -103,10 +103,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                     backgroundColor: AppConstants.primaryColor,
                                     foregroundColor: Colors.white,
                                   ),
-                                  onPressed: () {
-                                    unifiedSignOut(context);
-                                    authState.signOut();
-                                    Navigator.of(context).pop();
+                                  onPressed: () async {
+                                    final messenger = ScaffoldMessenger.of(
+                                      context,
+                                    );
+                                    Navigator.of(dialogContext).pop();
+                                    try {
+                                      await unifiedSignOut(context);
+                                    } catch (_) {
+                                      if (messenger.mounted) {
+                                        messenger.showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Sign out failed. Please try again.',
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    }
                                   },
                                   child: Text(
                                     AppLocalizations.of(context).confirm,

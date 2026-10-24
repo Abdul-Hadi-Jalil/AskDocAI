@@ -3,6 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+String get _apiKey {
+  const definedKey = String.fromEnvironment('API_KEY');
+  final key = definedKey.isNotEmpty
+      ? definedKey
+      : (dotenv.isInitialized ? dotenv.env['API_KEY'] ?? '' : '');
+  if (key.trim().isEmpty) {
+    throw StateError(
+      'Gemini API_KEY is missing. Configure --dart-define=API_KEY before using AI features.',
+    );
+  }
+  return key;
+}
+
 /// 🧠 System prompt that defines how Gemini should behave.
 const String _systemPrompt = '''
 You are **DocuBot**, a smart, friendly AI assistant that helps users understand and explore the content of an uploaded file.
@@ -85,7 +98,7 @@ Future<String> getGeminiResponse(
     // ✅ Create the model with systemInstruction
     final model = GenerativeModel(
       model: 'gemini-2.5-pro', // or 'gemini-2.5-pro' depending on your access
-      apiKey: dotenv.env['API_KEY'] ?? "API not fount",
+      apiKey: _apiKey,
       systemInstruction: Content.text(_systemPrompt),
     );
 
@@ -107,6 +120,8 @@ User's question:
   } on GenerativeAIException {
     _showTokenLimitSnackbar();
     return "I'm currently experiencing high demand. Please try again in a moment.";
+  } on StateError catch (error) {
+    return error.message.toString();
   } catch (e) {
     _showTokenLimitSnackbar();
     return "Service is temporarily unavailable. Please try again shortly.";
@@ -115,7 +130,7 @@ User's question:
 
 // In your gemini_service.dart - update the _summaryPrompt
 const String _summaryPrompt = '''
-You are **DocuSense AI**, a professional document analysis tool that creates structured, comprehensive summaries.
+You are **AskDocAI**, a professional document analysis tool that creates structured, comprehensive summaries.
 
 ### SUMMARY FORMAT REQUIREMENTS:
 Generate a summary in the following EXACT structure:
@@ -162,7 +177,7 @@ Future<String> generateFileSummary(String fileContent) async {
   try {
     final model = GenerativeModel(
       model: 'gemini-2.5-pro',
-      apiKey: dotenv.env['API_KEY'] ?? "API not fount",
+      apiKey: _apiKey,
       systemInstruction: Content.text(_summaryPrompt),
     );
 
@@ -177,6 +192,8 @@ Future<String> generateFileSummary(String fileContent) async {
   } on GenerativeAIException {
     _showTokenLimitSnackbar();
     return "Unable to generate summary due to high demand. Please try again later.";
+  } on StateError catch (error) {
+    return error.message.toString();
   } catch (e) {
     _showTokenLimitSnackbar();
     return "Summary service is temporarily unavailable.";
@@ -235,7 +252,7 @@ Future<String> generateQuiz({required String? fileContent}) async {
     // ✅ Create the model with systemInstruction
     final model = GenerativeModel(
       model: 'gemini-2.5-pro', // or 'gemini-2.5-pro' depending on your access
-      apiKey: dotenv.env['API_KEY'] ?? "API not fount",
+      apiKey: _apiKey,
       systemInstruction: Content.text(quizPrompt),
     );
 
@@ -253,6 +270,8 @@ Future<String> generateQuiz({required String? fileContent}) async {
   } on GenerativeAIException {
     _showTokenLimitSnackbar();
     return "Unable to generate quiz due to high demand. Please try again later.";
+  } on StateError catch (error) {
+    return error.message.toString();
   } catch (e) {
     _showTokenLimitSnackbar();
     return "Quiz service is temporarily unavailable.";

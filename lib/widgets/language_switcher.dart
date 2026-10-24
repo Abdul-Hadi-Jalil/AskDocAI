@@ -1,3 +1,4 @@
+import 'package:docusense_ai/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:docusense_ai/providers/language_provider.dart';
@@ -20,7 +21,7 @@ class LanguageSwitcher extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
-                color: Colors.purple,
+                color: AppConstants.primaryColor,
                 borderRadius: BorderRadius.circular(6),
               ),
               constraints: const BoxConstraints(minWidth: 12, minHeight: 12),

@@ -1,5 +1,5 @@
 {
-    "appTitle": "DocuSense AI",
+    "appTitle": "AskDocAI",
     "tagline": "Uw AI-aangedreven Documentassistent",
     "loadingApplication": "Applicatie laden",
     "pleaseUploadPdfFirst": "Upload eerst een PDF om te chatten",
@@ -16,5 +16,5 @@
     "submit": "Indienen",
     "loading": "Laden...",
     "error": "Er is een fout opgetreden",
-    "copyright": "© 2025 DocuSense AI"
+    "copyright": "© 2025 AskDocAI"
 }

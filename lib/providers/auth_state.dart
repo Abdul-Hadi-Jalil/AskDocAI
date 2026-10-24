@@ -1,16 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class AuthState with ChangeNotifier {
   bool _isUserSignedIn = false;
   User? _user;
+  late final StreamSubscription<User?> _subscription;
 
   AuthState() {
     // Initialize auth state
     _user = FirebaseAuth.instance.currentUser;
     _isUserSignedIn = _user != null;
     // Listen for auth state changes
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    _subscription = FirebaseAuth.instance.authStateChanges().listen((
+      User? user,
+    ) {
       _user = user;
       _isUserSignedIn = user != null;
       notifyListeners();
@@ -19,6 +23,12 @@ class AuthState with ChangeNotifier {
 
   bool get isUserSignedIn => _isUserSignedIn;
   User? get user => _user;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
 
   void signOut() {
     _user = null;

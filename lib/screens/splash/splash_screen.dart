@@ -1,3 +1,4 @@
+import 'package:docusense_ai/utils/constants.dart';
 import 'package:docusense_ai/screens/splash/widgets/loading_dot.dart';
 import 'package:docusense_ai/screens/splash/widgets/shimer_effect.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
   double _progress = 0.0;
   late AnimationController _logoController;
   late Animation<double> _logoAnimation;
+  Timer? _progressTimer;
 
   @override
   void initState() {
@@ -40,7 +42,11 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _simulateProgress() {
-    Timer.periodic(const Duration(milliseconds: 300), (timer) {
+    _progressTimer = Timer.periodic(const Duration(milliseconds: 300), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
       if (_progress < 100) {
         setState(() {
           _progress +=
@@ -51,6 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
         timer.cancel();
         // Navigate to main app after completion
         Future.delayed(const Duration(milliseconds: 800), () {
+          if (!mounted) return;
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const App()),
           );
@@ -61,6 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
+    _progressTimer?.cancel();
     _logoController.dispose();
     super.dispose();
   }
@@ -73,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen>
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF8A2BE2), Color(0xFF6A0DAD)],
+            colors: [AppConstants.primaryColor, AppConstants.secondaryColor],
           ),
         ),
         child: Stack(
@@ -127,7 +135,10 @@ class _SplashScreenState extends State<SplashScreen>
                                     gradient: const LinearGradient(
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
-                                      colors: [Colors.white, Color(0xFFF0F0F0)],
+                                      colors: [
+                                        Colors.white,
+                                        AppConstants.surfaceTint,
+                                      ],
                                     ),
                                     borderRadius: BorderRadius.circular(24),
                                     boxShadow: [
@@ -170,8 +181,8 @@ class _SplashScreenState extends State<SplashScreen>
                                               begin: Alignment.topLeft,
                                               end: Alignment.bottomRight,
                                               colors: [
-                                                Color(0xFF8A2BE2),
-                                                Color(0xFF6A0DAD),
+                                                AppConstants.primaryColor,
+                                                AppConstants.secondaryColor,
                                               ],
                                             ).createShader(bounds);
                                           },
@@ -283,7 +294,7 @@ class _SplashScreenState extends State<SplashScreen>
                                         gradient: const LinearGradient(
                                           colors: [
                                             Colors.white,
-                                            Color(0xFFE0E0FF),
+                                            AppConstants.surfaceTint,
                                           ],
                                         ),
                                         borderRadius: BorderRadius.circular(4),

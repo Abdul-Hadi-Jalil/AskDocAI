@@ -1,5 +1,5 @@
+import 'package:docusense_ai/utils/app_theme.dart';
 import 'package:docusense_ai/firebase_options.dart';
-import 'package:docusense_ai/providers/ad_provider.dart';
 import 'package:docusense_ai/providers/auth_state.dart';
 import 'package:docusense_ai/providers/summary_provider.dart';
 import 'package:docusense_ai/screens/chat/chat_screen.dart';
@@ -9,7 +9,6 @@ import 'package:docusense_ai/screens/summary/summary_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'providers/pdf_provider.dart';
 import 'providers/file_provider.dart';
@@ -23,8 +22,7 @@ final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await MobileAds.instance.initialize();
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: '.env', isOptional: true);
   runApp(const SecureVault());
 }
 
@@ -35,17 +33,18 @@ class SecureVault extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AdProvider()),
         ChangeNotifierProvider(create: (_) => AuthState()),
         ChangeNotifierProvider(create: (_) => FileProvider()),
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
         ChangeNotifierProxyProvider<FileProvider, PdfProvider>(
-          create: (context) => PdfProvider(fileProvider: FileProvider()),
+          create: (context) =>
+              PdfProvider(fileProvider: context.read<FileProvider>()),
           update: (context, fileProvider, pdfProvider) =>
-              PdfProvider(fileProvider: fileProvider),
+              pdfProvider ?? PdfProvider(fileProvider: fileProvider),
         ),
         ChangeNotifierProxyProvider<FileProvider, SummaryProvider>(
-          create: (context) => SummaryProvider(fileProvider: FileProvider()),
+          create: (context) =>
+              SummaryProvider(fileProvider: context.read<FileProvider>()),
           update: (context, fileProvider, summaryProvider) =>
               SummaryProvider(fileProvider: fileProvider),
         ),
@@ -53,7 +52,7 @@ class SecureVault extends StatelessWidget {
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
           return MaterialApp(
-            title: 'DocuSense AI',
+            title: 'AskDocAI',
             debugShowCheckedModeBanner: false,
             scaffoldMessengerKey: scaffoldMessengerKey,
             localizationsDelegates: const [
@@ -72,14 +71,7 @@ class SecureVault extends StatelessWidget {
               Locale('zh'), // Chinese
             ],
             locale: languageProvider.currentLocale,
-            theme: ThemeData(
-              primaryColor: const Color(0xFF8A2BE2),
-              colorScheme: ColorScheme.fromSwatch().copyWith(
-                primary: const Color(0xFF8A2BE2),
-                secondary: const Color(0xFF6A0DAD),
-              ),
-              useMaterial3: true,
-            ),
+            theme: AppTheme.light,
             home: const SplashScreen(),
             routes: {
               '/chat': (context) => ChatScreen(),

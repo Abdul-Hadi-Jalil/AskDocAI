@@ -1,3 +1,4 @@
+import 'package:docusense_ai/utils/constants.dart';
 import 'package:docusense_ai/app_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class WelcomeSection extends StatelessWidget {
           AppLocalizations.of(context).uploadAndChatDescription,
           style: const TextStyle(
             fontSize: 16,
-            color: Color(0xFF666666),
+            color: AppConstants.subtitleColor,
             height: 1.5,
           ),
           textAlign: TextAlign.center,
@@ -39,7 +40,7 @@ class WelcomeSection extends StatelessWidget {
           style: const TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF333333),
+            color: AppConstants.textColor,
             height: 1.3,
           ),
           children: [
@@ -47,7 +48,7 @@ class WelcomeSection extends StatelessWidget {
             TextSpan(
               text: appLocalizations.document,
               style: TextStyle(
-                backgroundColor: const Color(0xFF8A2BE2),
+                backgroundColor: AppConstants.primaryColor,
                 color: Colors.white,
                 fontWeight: FontWeight.w800,
               ),
@@ -64,7 +65,7 @@ class WelcomeSection extends StatelessWidget {
         style: const TextStyle(
           fontSize: 26,
           fontWeight: FontWeight.w700,
-          color: Color(0xFF333333),
+          color: AppConstants.textColor,
           height: 1.3,
         ),
         textAlign: TextAlign.center,

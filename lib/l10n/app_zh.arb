@@ -1,5 +1,5 @@
 {
-    "appTitle": "DocuSense AI",
+    "appTitle": "AskDocAI",
     "tagline": "您的AI驱动文档助手",
     "loadingApplication": "正在加载应用程序",
     "pleaseUploadPdfFirst": "请先上传PDF文件开始聊天",
@@ -16,5 +16,5 @@
     "submit": "提交",
     "loading": "加载中...",
     "error": "发生错误",
-    "copyright": "© 2025 DocuSense AI"
+    "copyright": "© 2025 AskDocAI"
 }
