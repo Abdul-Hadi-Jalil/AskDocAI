@@ -6,6 +6,46 @@ Android is the primary development target. Web, Windows, Linux, and macOS projec
 are retained; see the validation report for platform-specific limitations. iOS
 project support has been removed.
 
+## Features and stack
+
+- Document selection and text extraction for chat, summaries, and quizzes.
+- Provider/ChangeNotifier state for files, document content, summaries, language, and authentication.
+- Gemini integration through `google_generative_ai`.
+- Email/password and Google Sign-In with Firebase Authentication.
+- User-scoped chat persistence in Cloud Firestore.
+- Seven configured interface locales and an ad-free Material 3 interface.
+
+Dependencies include `file_picker`, `doc_text_extractor`, `provider`, `cloud_firestore`, and the Firebase SDKs. [pubspec.yaml](pubspec.yaml) declares Dart `^3.9.2`; the validated development versions are recorded below.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    Screens[Flutter screens] --> Providers[Provider state]
+    Providers --> Files[Selected file and extracted content]
+    Files --> Gemini[Gemini service]
+    Gemini --> Outputs[Chat / summary / quiz]
+    Screens --> Auth[Firebase Authentication]
+    Screens --> Store[User-scoped chat store]
+    Store --> DB[Cloud Firestore]
+```
+
+`lib/main.dart` initializes Firebase and composes providers. `lib/providers/` holds observable app/document state, `lib/utils/gemini_service.dart` wraps AI requests, and `lib/services/chat_store.dart` persists chat exchanges below the authenticated user's conversation path. The Gemini service currently selects `gemini-2.5-pro`; provider access/model availability must be verified with your own account.
+
+The current design passes document content into model requests. It does not demonstrate a separate vector database or server-side retrieval service.
+
+## Repository map
+
+| Path | Responsibility |
+| --- | --- |
+| `lib/Auth/`, `lib/providers/auth_state.dart` | Account operations and auth state |
+| `lib/providers/` | Files, summaries, document content, language |
+| `lib/screens/` | Home/upload, chat, summary, quiz, sign-in |
+| `lib/utils/` | Text extraction helpers, AI calls, theme |
+| `lib/services/chat_store.dart` | Firestore chat persistence |
+| `test/` | Auth UI, chat persistence, and feature checks |
+| `docs/` | Setup and prior validation reports |
+
 ## Android development
 
 Use Flutter 3.38.9 / Dart 3.10.8 (validated host), Android SDK 36, and Android
@@ -54,3 +94,11 @@ be registered when release signing is configured. See
 - [Individual file staging guide](docs/FILE_BY_FILE_GIT_GUIDE.md)
 
 Release signing still requires owner configuration.
+
+## Demo and verification scope
+
+On a configured development project, sign in, select a small nonconfidential document, ask a document-specific question, generate a summary, and complete a quiz. Reopen a saved conversation and check language switching. Verify missing-key and network-error behavior separately.
+
+Document content can be sent to the configured AI provider. Review Firestore rules and user isolation before using real client documents. AI responses can be incorrect; a generated answer or quiz is not a verified source.
+
+The commands and prior reports above distinguish setup instructions from historical validation. This documentation update does not assert that builds, external APIs, or Firebase acceptance checks were rerun.
