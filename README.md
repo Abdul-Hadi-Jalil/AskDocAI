@@ -6,6 +6,14 @@ Android is the primary development target. Web, Windows, Linux, and macOS projec
 are retained; see the validation report for platform-specific limitations. iOS
 project support has been removed.
 
+## Mobile interface preview
+
+The launch experience introduces AskDocAI as an AI-powered document assistant before users enter its upload, chat, summary, and quiz workflows.
+
+<p align="center">
+  <img src="docs/images/askdocai-mobile-launch.png" alt="AskDocAI mobile launch interface" width="360">
+</p>
+
 ## Features and stack
 
 - Document selection and text extraction for chat, summaries, and quizzes.
